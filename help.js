@@ -87,6 +87,9 @@ word.charAt(0) // A // return "" if not found
 word.charCodeAt(0) // 65
 // slice
 word.slice(0, 4)  // ABCD
+word.slice(-2)  // CD  / takes last two elemnts
+word.slice(0, -2)  // AB  / drops two last elemnts
+word.slice(1, -2)  // B  / drops first elemen and two last elemnts
 word.substring(0, 4)  // ABCD
 // split by character, 
 word.split('')  // split every char ['A', 'B', 'C']
@@ -110,7 +113,7 @@ console.log('john\'s') // escape '
   // convert, digit to string
   (45).toString()  // 45
 console.log(String(45))  // 45
-numer.toString(2)  // decinal to binary
+number.toString(2)  // decinal to binary
 word.repeat(2)  // ABCDABCD
 word.replace('a', 'b') // method replaces only the first match:
 word.replace(/a/ig, 'b') // insensitive, global
@@ -120,12 +123,12 @@ let word = 'ABC';
 word.indexOf('A', 0)  // 0
 word.lastIndexOf('A', 0)  // 0  // strats from the end
 s.split('').join('').reverse();  // string reverse through an array
+word.includes('A')  // true
 word.search('A')  // 0
 word.search(/\d/) // -1
 word.match('A')  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
 word.match(/\w/)  // isalnum()
 word.match(/a/gi)  // [ 'A' ]
-word.includes('A')  // true
 word.startsWith('A', 0)  // true
 // string interpolation
 let word1 = 'AB';
@@ -137,6 +140,11 @@ String(false)      // returns "false"
 String(true)       // returns "true"
 false.toString()   // returns "false"
 true.toString()    // returns "true"
+
+
+
+
+
 
 
 
@@ -190,6 +198,7 @@ Number(true)  // 1
 
 // Array object
 bucket = Array.from({ length: nums.length + 1 }, () => []);
+board = Array.from({ length: n }, () => Array(n).fill('.'));  // n * n board filled with '.'
 bucket = new Array(nums.length + 1);
 for (let i = 0; i < bucket.length; i++) {
   bucket[i] = [];
@@ -199,11 +208,11 @@ const letters = ['B', 'C'];
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 Array.isArray(letters)  // true
 letters instanceof Array  // true
-letters.push('D')  // append the new value and returns the new array lenght
+letters.push('D')  // append the new value and returns the new array length
 letters.pop()  // pop the last value and returns it
 letters.shift()  // pop the first value and returns it
 fruits.splice(2, 1, val);  // insert(2, val), 1 is to revmove one substitute value
-letters.unshift('A')  // append the new value at the beginning and returns the new array lenght
+letters.unshift('A')  // append the new value at the beginning and returns the new array length
 delete fruits[0]  // removes value but leaves empy index
 letters[letters.length - 1] = 'D'
 letters  // [ 'B', 'C', 'D' ]
@@ -230,6 +239,7 @@ fruits.toSorted()  // creates new sorted obj
 fruits.toReversed()  // creates new reversed obj
 
 Math.max.apply(null, numbers)  // find max in array
+Math.max(...numbers)  // find max in array
 Math.max.apply(1, 2, 3)  // find max provided numbers
 Math.min.apply(null, numbers)  // find min in array
 Math.max(...window.values())  // find max in iterator
@@ -283,6 +293,7 @@ console.log(Object.entries(fruits))
 
 
 // joining arrays
+const Array3 = [...permutation, nums[index]]
 const Array3 = Array1.concat(Array2);
 fruits.copyWithin(2, 0);
 ([[1, 2], [3, 4]]).flat() // [ 1, 2, 3, 4 ]
@@ -329,6 +340,7 @@ fruits.forEach(fruit => console.log(fruit))
 // Object
 // Create a JavaScript object
 const person = { firstName: "John", lastName: "Doe" };
+const dp = {[code.length]: 1};
 
 // Add Properties
 person.age = 50;
@@ -484,7 +496,9 @@ letters.size  // 3
 letters.keys()  // [Set Iterator] { 'a', 'b', 'c' }
 letters.values()  // [Set Iterator] { 'a', 'b', 'c' }
 letters.entries()  // [Set Entries] { [ 'a', 'a' ], [ 'b', 'b' ], [ 'c', 'c' ] }
-
+for (let elem of new Set([2, 3])) {  // 'in' gives no answer
+  console.log(elem)
+}
 
 
 
@@ -806,6 +820,9 @@ const digits = [1, 2, 3, 4, 5, 6];
 const newDigits = digits.flatMap(digit => [digit, digit * 10]);
 
 
+solution.push(board.map(row => row.slice()));  // [ '.', '.', 'Q', '.' ],
+solution.push(board.map(row => row.join('')));  // [ '.Q..',
+
 
 
 // filter
@@ -888,6 +905,7 @@ points.sort(function (x, y) { return (x - y) })
 points.sort((x, y) => { return (x - y) })
 points.sort((x, y) => (x - y))
 
+
 // sort
 const cars = [
   { type: "Volvo", year: 2016 },
@@ -899,14 +917,19 @@ function myFunction() {
   cars.sort(function (a, b) {
     let x = a.type.toLowerCase();
     let y = b.type.toLowerCase();
-    if (x < y) { return -1; }
-    else if (x > y) { return 1; }
-    else { return 0; }
-  });
-};
-
+    if (x < y) { return -1 }
+    else if (x > y) { return 1 }
+    else { return 0 }
+  })
+}
 myFunction()
 console.log(cars)
+
+
+'a'.localeCompare('b') // -1
+'b'.localeCompare('a') // 1
+'1'.localeCompare('2') // -1
+'2'.localeCompare('1') // 1
 
 // call() apply() call an object method with another object as argument.
 const person1 = {
@@ -1035,8 +1058,10 @@ Math.log10(100)  // 2
 
 
 
-
 // reduce
+// sum (replacement)
+reduce((a, b) => a + b)
+
 let timeToEat = piles.reduce((totalTime, pile) => totalTime + Math.ceil(pile / mid), 0);
 
 

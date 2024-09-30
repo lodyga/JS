@@ -1056,16 +1056,16 @@ function dailyTemperatures(temps) {
   const stack = [];
 
   for (let index = 0; index < temps.length; index++) {
-      let temp = temps[index];
+    let temp = temps[index];
 
-      while (stack.length && stack[stack.length - 1][1] < temp) {    // check for lower temps
-          stack_index = stack[stack.length - 1][0];  // take top stack element index
-          
-          daysDelta[stack_index] = index - stack_index;  // update delta_days
-          stack.pop();  // pop lower temp
-      }
+    while (stack.length && stack[stack.length - 1][1] < temp) {    // check for lower temps
+      stack_index = stack[stack.length - 1][0];  // take top stack element index
 
-      stack.push([index, temp]);
+      daysDelta[stack_index] = index - stack_index;  // update delta_days
+      stack.pop();  // pop lower temp
+    }
+
+    stack.push([index, temp]);
   }
   return daysDelta
 }
@@ -1079,12 +1079,12 @@ function dailyTemperatures(temps) {
   const daysDelta = Array(temps.length).fill(0)
 
   for (let indL = 0; indL < temps.length - 1; indL++) {
-      for (let indR = indL + 1; indR < temps.length; indR++) {
-          if (temps[indL] < temps[indR]) {
-              daysDelta[indL] = indR - indL;
-              break
-          }
+    for (let indR = indL + 1; indR < temps.length; indR++) {
+      if (temps[indL] < temps[indR]) {
+        daysDelta[indL] = indR - indL;
+        break
       }
+    }
   }
   return daysDelta
 }
@@ -1102,7 +1102,7 @@ function dailyTemperatures(temps) {
  */
 function carFleet(target, positions, speeds) {
   const fleetStack = [];
-  
+
   // const cars = Array(positions.length).fill(0);
   // for (let index = 0; index < positions.length; index++) {  // zip positions and speed
   //     cars[index] = [positions[index], speeds[index]]
@@ -1113,11 +1113,11 @@ function carFleet(target, positions, speeds) {
   cars.sort((a, b) => (b[0] - a[0]));  // sort the cars so to start with the one closest to the target
 
   for (let [position, speed] of cars) {
-      let currDist = (target - position) / speed;  // distance to the target
-          if (fleetStack && currDist <= fleetStack[fleetStack.length - 1]) {  // if the car behind cought up next car
-              continue
-          }
-      fleetStack.push(currDist);  // push a car to a stack
+    let currDist = (target - position) / speed;  // distance to the target
+    if (fleetStack && currDist <= fleetStack[fleetStack.length - 1]) {  // if the car behind cought up next car
+      continue
+    }
+    fleetStack.push(currDist);  // push a car to a stack
   }
 
   return fleetStack.length
@@ -1140,18 +1140,18 @@ console.log(carFleet(10, [0, 4, 2], [2, 1, 3]), 1)
 function search(nums, target) {
   let left = 0;
   let right = nums.length - 1;
-  
-  while (left <= right) {  // two poionters
-      let mid = Math.trunc((left + right) / 2)  // find mid index
-      // let mid = ((left + right) >> 1);  // shift bits
 
-      if (target == nums[mid]) {  // if target found
-          return mid
-      } else if (target < nums[mid]) {  // if target is less than middle, choose left chunk
-          right = mid - 1;
-      } else {  // # if target is greater than middle, choose rigth chunk
-          left = mid + 1;
-      }
+  while (left <= right) {  // two poionters
+    let mid = Math.trunc((left + right) / 2)  // find mid index
+    // let mid = ((left + right) >> 1);  // shift bits
+
+    if (target == nums[mid]) {  // if target found
+      return mid
+    } else if (target < nums[mid]) {  // if target is less than middle, choose left chunk
+      right = mid - 1;
+    } else {  // # if target is greater than middle, choose rigth chunk
+      left = mid + 1;
+    }
   }
   return -1
 }
@@ -1180,28 +1180,28 @@ function searchMatrix(matrix, target) {
   let bottom = matrix.length - 1;
 
   while (top <= bottom) {  // two poionters to find the right row
-      mid_row = (top + bottom) >> 1;  // find middle row index
+    mid_row = (top + bottom) >> 1;  // find middle row index
 
-      if (target >= matrix[mid_row][left] &&
-          target <= matrix[mid_row][right]) {  // if target row found
-          break
-      } else if (target < matrix[mid_row][left]) {  // if target is less than the most left, choose top chunk
-          bottom = mid_row - 1;
-      } else {  // if target is grater than the most right, choose bottom chunk
-          top = mid_row + 1;
-      }
+    if (target >= matrix[mid_row][left] &&
+      target <= matrix[mid_row][right]) {  // if target row found
+      break
+    } else if (target < matrix[mid_row][left]) {  // if target is less than the most left, choose top chunk
+      bottom = mid_row - 1;
+    } else {  // if target is grater than the most right, choose bottom chunk
+      top = mid_row + 1;
+    }
   }
 
   while (left <= right) {  // two poionters to find the right column
-      mid_col = (left + right) >> 1;  // find middle column index
+    mid_col = (left + right) >> 1;  // find middle column index
 
-      if (target == matrix[mid_row][mid_col]) {  // if target column found
-          return true
-      } else if (target < matrix[mid_row][mid_col]) {  // if target is less than middle colum, choose left chunk
-          right = mid_col - 1;
-      } else {  // if target is greater than middle colum, choose rigth chunk
-          left = mid_col + 1;
-      }
+    if (target == matrix[mid_row][mid_col]) {  // if target column found
+      return true
+    } else if (target < matrix[mid_row][mid_col]) {  // if target is less than middle colum, choose left chunk
+      right = mid_col - 1;
+    } else {  // if target is greater than middle colum, choose rigth chunk
+      left = mid_col + 1;
+    }
   }
 
   return false
@@ -1225,22 +1225,22 @@ function minEatingSpeed(piles, hours) {
   let solution;  // Declare solution outside the loop
 
   while (left <= right) {
-      let mid = (left + right) >> 1;
+    let mid = (left + right) >> 1;
 
-      // let timeToEat = 0
-      // for (let pile of piles) {
-      //     timeToEat += Math.ceil(pile / mid);
-      // }
+    // let timeToEat = 0
+    // for (let pile of piles) {
+    //     timeToEat += Math.ceil(pile / mid);
+    // }
 
-      let timeToEat = piles.reduce((totalTime, pile) => totalTime + Math.ceil(pile / mid), 0);
+    let timeToEat = piles.reduce((totalTime, pile) => totalTime + Math.ceil(pile / mid), 0);
 
-      // time to guard to get back >= time to eat all bananas
-      if (hours >= timeToEat) {  // enough time, this might be the solution but also eat a little slower
-          solution = mid;  // Store the potential solution
-          right = --mid;  // Try to eat slower
-      } else {  // not enough time
-          left = ++mid;  // need to eat faster
-      }
+    // time to guard to get back >= time to eat all bananas
+    if (hours >= timeToEat) {  // enough time, this might be the solution but also eat a little slower
+      solution = mid;  // Store the potential solution
+      right = --mid;  // Try to eat slower
+    } else {  // not enough time
+      left = ++mid;  // need to eat faster
+    }
   }
 
   return solution
@@ -1266,14 +1266,14 @@ function findMin(nums) {
   let currMin = nums[0]; // assign some value
 
   while (left <= right) {  // two pointers
-      let mid = (left + right) >> 1;  // get the middle index
-      currMin = Math.min(currMin, nums[mid])  // check if the value in the middle it lower than currten min
+    let mid = (left + right) >> 1;  // get the middle index
+    currMin = Math.min(currMin, nums[mid])  // check if the value in the middle it lower than currten min
 
-      if (nums[mid] < nums[right]) {  // if the middle value is lower than the most right value
-          right = --mid;  // then the left part should be searched
-      } else {
-          left = ++mid;  // else the right part should be searched
-      }
+    if (nums[mid] < nums[right]) {  // if the middle value is lower than the most right value
+      right = --mid;  // then the left part should be searched
+    } else {
+      left = ++mid;  // else the right part should be searched
+    }
   }
   return currMin
 }
@@ -1306,23 +1306,23 @@ function search(nums, target) {
   let right = nums.length - 1;
 
   while (left <= right) {  // two pointers
-      let mid = (left + right) >> 1; // get middle index
+    let mid = (left + right) >> 1; // get middle index
 
-      if (target == nums[mid]) {  // if target found
-          return mid
-      } else if (nums[mid] < nums[right]) {  // [5, 1, 2, 3, 4] the right chunk [3, 4] is ascending the other has a pivot
-          if (nums[mid] < target && target <= nums[right]) {
-              left = ++mid;
-          } else {
-              right = --mid;
-          }
-      } else {  // [2, 3, 4, 5, 1] the left chunk [2, 3] is ascending the other has a pivot
-          if (nums[left] <= target && target < nums[mid]) {
-              right = --mid;
-          } else {
-              left = ++mid
-          }
+    if (target == nums[mid]) {  // if target found
+      return mid
+    } else if (nums[mid] < nums[right]) {  // [5, 1, 2, 3, 4] the right chunk [3, 4] is ascending the other has a pivot
+      if (nums[mid] < target && target <= nums[right]) {
+        left = ++mid;
+      } else {
+        right = --mid;
       }
+    } else {  // [2, 3, 4, 5, 1] the left chunk [2, 3] is ascending the other has a pivot
+      if (nums[left] <= target && target < nums[mid]) {
+        right = --mid;
+      } else {
+        left = ++mid
+      }
+    }
   }
   return -1
 }
@@ -1488,6 +1488,13 @@ console.log(obj.get("foo", 5))
 
 // Best Time to Buy and Sell Stock
 // pointers as indexes
+console.log(maxProfit([7, 1, 5, 3, 6, 4]), 5)
+console.log(maxProfit([7, 6, 4, 3, 1]), 0)
+console.log(maxProfit([2, 4, 1]), 2)
+console.log(maxProfit([2, 1, 2, 1, 0, 1, 2]), 2)
+console.log(maxProfit([1, 2]), 1)
+
+
 /**
  * @param {number[]} prices
  * @return {number}
@@ -1504,15 +1511,10 @@ function maxProfit(prices) {
       let currentProfit = prices[right] - prices[left];
       maxProfit = Math.max(maxProfit, currentProfit);
     }
-      right++;
+    right++;
   }
   return maxProfit
 }
-console.log(maxProfit([7, 1, 5, 3, 6, 4]), 5)
-console.log(maxProfit([7, 6, 4, 3, 1]), 0)
-console.log(maxProfit([2, 4, 1]), 2)
-console.log(maxProfit([2, 1, 2, 1, 0, 1, 2]), 2)
-console.log(maxProfit([1, 2]), 1)
 
 
 // pointers as values
@@ -1531,6 +1533,51 @@ function maxProfit(prices) {
       let currentProfit = right - left;
       maxProfit = Math.max(maxProfit, currentProfit);
     }
+  }
+  return maxProfit
+}
+
+
+/**
+ * treat as dp with O(n) cache
+ * O(n), O(n)
+ * @param {number[]} prices
+ * @return {number}
+ */
+function maxProfit(prices) {
+  let minPrice = prices[0]
+
+  for (index = 0; index < prices.length; index++) {
+    let price = prices[index];
+    if (price < minPrice) {
+      minPrice = price;
+    }
+
+    prices[index] -= minPrice;
+  }
+  return Math.max.apply(null, prices)
+}
+
+
+/**
+ * treat as dp with O(1) cache
+ * O(n), O(1)
+ * @param {number[]} prices
+ * @return {number}
+ */
+function maxProfit(prices) {
+  let minPrice = prices[0];
+  let maxProfit = 0;
+
+  for (index = 0; index < prices.length; index++) {
+    let price = prices[index];
+
+    if (price < minPrice) {
+      minPrice = price;
+    }
+
+    let profit = price - minPrice;
+    maxProfit = Math.max(maxProfit, profit)
   }
   return maxProfit
 }
@@ -1640,7 +1687,7 @@ function characterReplacement(word, joker) {
     window[word[right]] = (window[word[right]] ?? 0) + 1
 
     if ((right - left + 1) - Math.max(...Object.values(window)) > joker) {
-      window[word[left]] -=1;
+      window[word[left]] -= 1;
       left++;
     }
 
@@ -1666,35 +1713,36 @@ function checkInclusion(s1, s2) {
   const s1Count = new Map();  // Map() from s1
 
   for (letter of s1) {  // Map() from s1
-      s1Count.set(letter, (s1Count.get(letter) ?? 0) + 1);
+    s1Count.set(letter, (s1Count.get(letter) ?? 0) + 1);
   }
 
   for (right in s2) {  // right pointer
-      let letter = s2[right];
-      window.set(letter, (window.get(letter) ?? 0) + 1);  // add a letter to the window
+    let letter = s2[right];
+    window.set(letter, (window.get(letter) ?? 0) + 1);  // add a letter to the window
 
-      if (s1Count.get(letter) == window.get(letter)) {  // if letter occurences match
-          counter++;
+    if (s1Count.get(letter) == window.get(letter)) {  // if letter occurences match
+      counter++;
 
-          if (counter == s1Count.size) {  // if cunter is equal to s1Count that means all letter occurences are matching
-              return true
-          }
+      if (counter == s1Count.size) {  // if cunter is equal to s1Count that means all letter occurences are matching
+        return true
       }
+    }
 
-      if (s1.length > right - left + 1) {  // if window is not long enough
-          continue
-      }
+    if (s1.length > right - left + 1) {  // if window is not long enough
+      continue
+    }
 
-      // if the letter at left pointer that's going to be removed is significant then need to lower the 'counter'
-      if (s1Count.get(s2[left]) == window.get(s2[left])) { // if letter occurences match
-          counter--;
-      }
+    // if the letter at left pointer that's going to be removed is significant then need to lower the 'counter'
+    if (s1Count.get(s2[left]) == window.get(s2[left])) { // if letter occurences match
+      counter--;
+    }
 
-      window.set(s2[left], window.get(s2[left]) - 1)  // remove a letter at the left pointer from the window
-      left++;
+    window.set(s2[left], window.get(s2[left]) - 1)  // remove a letter at the left pointer from the window
+    left++;
   }
   return false
-u}
+  u
+}
 console.log(checkInclusion("ab", "eidbaooo"), true)
 console.log(checkInclusion("ab", "eidboaoo"), false)
 console.log(checkInclusion("ccc", "cbac"), false)
@@ -1735,11 +1783,11 @@ function minWindow(outer_string, substring) {
 
     if (substringCount.has(letter)) {  // if letter is significant
       window.set(letter, (window.get(letter) ?? 0) + 1);  // add letter to the window
-      
+
       if (window.get(letter) == substringCount.get(letter)) {  // if letter occurences match
         counter++;
       }
-      
+
     }
     while (counter == substringCount.size) {  // if all letter occurences are matching
       if ((right - left + 1) < minWindow.length) {  // if shorter window found
@@ -1810,7 +1858,7 @@ function maxSlidingWindow(nums, windowSize) {
       left++;  // update left pointer
     }
   }
-    return currentMax
+  return currentMax
 }
 console.log(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3), [3, 3, 5, 5, 6, 7])
 console.log(maxSlidingWindow([1], 1), [1])
@@ -1843,15 +1891,42 @@ var subsets = function (nums) {
       return
     }
 
-    subset.push(nums[level]);
-    dfs(level + 1);  // (left) decision to append current num
-    subset.pop();
-    dfs(level + 1);  // (right) decision to not append current num
+    subset.push(nums[level]);  // Include the current element in the subset
+    dfs(level + 1);  // Explore the path with the current element
+    subset.pop();  // Backtrack by removing the current element from the subset
+    dfs(level + 1);  // Explore the path without including the current element
   }
 
   dfs(0);  // start dfs with level = 0
 
   return subsetList
+}
+
+
+// "dfs" inside "subset" inside a class
+class Solution {
+  constructor() {
+    this.subset = [];
+    this.subsetList = [];
+  }
+
+  subsets(nums) {
+    const dfs = (level) => {
+      if (level === nums.length) {
+        this.subsetList.push(this.subset.slice())
+        return
+      }
+
+      dfs(level + 1)
+      this.subset.push(nums[level])
+
+      dfs(level + 1)
+      this.subset.pop()
+    }
+
+    dfs(0)
+    return this.subsetList
+  }
 }
 
 
@@ -1876,13 +1951,13 @@ class Solution {
   }
 
   // subsets = (nums) => {
-    subsets(nums) {
-      this.nums = nums;
-      this.dfs(0);
-  
-      return this.subsetList
-    }
-  
+  subsets(nums) {
+    this.nums = nums;
+    this.dfs(0);
+
+    return this.subsetList
+  }
+
 }
 
 
@@ -1903,17 +1978,17 @@ console.log(subsetsWithDup([4, 4, 4, 1, 4]), [[], [1], [1, 4], [1, 4, 4], [1, 4,
 var subsetsWithDup = function (nums) {
   nums.sort();
   const subset = [];  // current subcet
-  const subset_list = [];  // solution
+  const subsetList = [];  // solution
 
   function dfs(index) {
     if (index == nums.length) {  // target level reached
-      subset_list.push(subset.slice());  // push subset to subset_list
+      subsetList.push(subset.slice());  // push subset to subsetList
       return
     }
 
-    subset.push(nums[index]);
-    dfs(index + 1);  // (left) decision to append current num
-    subset.pop();
+    subset.push(nums[index]);  // Include the current element in the subset
+    dfs(index + 1);  // Explore the path with the current element
+    subset.pop();  // Backtrack by removing the current element from the subset
 
     // If num at the current index (that was poped previously) is the same as
     // the num at next index skip it.
@@ -1922,12 +1997,12 @@ var subsetsWithDup = function (nums) {
       index++;
     }
 
-    dfs(index + 1);  // (right) decision to not append current num
+    dfs(index + 1);  // Explore the path without including the current element
   }
 
   dfs(0);  // start dfs with level = 0
 
-  return subset_list
+  return subsetList
 }
 
 
@@ -1939,6 +2014,40 @@ var subsetsWithDup = function (nums) {
 console.log(combinationSum([2, 3, 6, 7], 7), [[2, 2, 3], [7]])
 console.log(combinationSum([2, 3, 5], 8), [[2, 2, 2, 2], [2, 3, 3], [3, 5]])
 console.log(combinationSum([2], 1), [])
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum = function (candidates, target) {
+  const combination = [];
+  const combinationList = [];
+
+  const dfs = (index) => {
+    const combinationSumValue = combination.reduce((a, b) => a + b, 0);
+
+    if (combinationSumValue === target) {  // target sum reached
+      combinationList.push(combination.slice());  // push combination to combination list
+      return
+    } else if (
+      combinationSumValue > target || // if value is too large or
+      index === candidates.length  // index out of bounds
+    ) {
+      return
+    }
+
+    combination.push(candidates[index]);  // Include the current element in the combinatioin
+    dfs(index);  // Explore the path with the current element
+    combination.pop();  // Backtrack by removing the current element from the subset 
+    dfs(index + 1);  // Explore the path without including the current element
+  }
+
+  dfs(0)
+
+  return combinationList
+}
 
 
 /**
@@ -1980,6 +2089,54 @@ var combinationSum = function (candidates, target) {
 
 // Combination Sum II
 // https://leetcode.com/problems/combination-sum-ii/
+console.log(combinationSum2([10, 1, 2, 7, 6, 1, 5], 8), [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]])
+console.log(combinationSum2([2, 5, 2, 1, 2], 5), [[1, 2, 2], [5]])
+console.log(combinationSum2([6], 6), [[6]])
+
+
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum2 = function (candidates, target) {
+  candidates.sort()
+  const combination = [];
+  const combinationList = [];
+
+  const dfs = (index) => {
+    const combinatioinSumValue = combination.reduce((a, b) => a + b, 0);
+
+    if (combinatioinSumValue === target) {
+      combinationList.push(combination.slice());
+      return
+    } else if (
+      combinatioinSumValue > target ||
+      index === candidates.length
+    ) {
+      return
+    }
+
+    combination.push(candidates[index]);
+    dfs(index + 1)
+
+    while (
+      index + 1 < candidates.length &&
+      candidates[index] === candidates[index + 1]
+    ) {
+      index++;
+    }
+
+    combination.pop();
+    dfs(index + 1)
+  }
+
+  dfs(0)
+
+  return combinationList
+}
+
+
 /**
  * @param {number[]} candidates
  * @param {number} target
@@ -1995,7 +2152,10 @@ var combinationSum2 = function (candidates, target) {
     if (value == target) {
       combinationList.push(combination.slice());
       return
-    } else if (index == candidates.length || value > target) {
+    } else if (
+      index == candidates.length || 
+      value > target
+    ) {
       return
     }
 
@@ -2003,7 +2163,10 @@ var combinationSum2 = function (candidates, target) {
     dfs(index + 1, value + candidates[index]);
     combination.pop();
 
-    while (index + 1 < candidates.length && candidates[index + 1] == candidates[index])
+    while (
+      index + 1 < candidates.length && 
+      candidates[index + 1] == candidates[index]
+    )
       index++
 
     dfs(index + 1, value);
@@ -2013,8 +2176,7 @@ var combinationSum2 = function (candidates, target) {
 
   return combinationList
 }
-console.log(combinationSum2([10, 1, 2, 7, 6, 1, 5], 8), [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]])
-console.log(combinationSum2([2, 5, 2, 1, 2], 5), [[1, 2, 2], [5]])
+
 
 
 
@@ -2026,28 +2188,3378 @@ console.log(permute([1, 2, 3]), [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3,
 console.log(permute([0, 1]), [[0, 1], [1, 0]])
 console.log(permute([1]), [[1]])
 
+
 /**
  * @param {number[]} nums
  * @return {number[][]}
  */
 var permute = function (nums) {
-  const perList = [];
+  const permutationList = [];
 
-  function dfs(prefix, postfix) {
-    if (prefix.length == nums.length) {
-      perList.push([...prefix]); // Copy prefix to perList
-      return
+  const dfs = (permutation, nums) => {
+    if (nums.length === 0) {
+      permutationList.push(permutation.slice());
+      return 
     }
 
-    for (let index = 0; index < postfix.length; index++) {
-      dfs([...prefix, postfix[index]],
-        [...postfix.slice(0, index), ...postfix.slice(index + 1)]);
+    for (let index = 0; index < nums.length; index++) {
+      dfs(
+        [...permutation, nums[index]], 
+        [...nums.slice(0, index), ...nums.slice(index + 1,)]
+        // nums.slice(0, index).concat(nums.slice(index + 1,))
+      )
     }
   }
 
   dfs([], nums)
-  return perList
+
+  return permutationList
 }
-console.log(permute([1, 2, 3]), [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])
-console.log(permute([0, 1]), [[0, 1], [1, 0]])
-console.log(permute([1]), [[1]])
+
+
+
+
+
+// Word Search
+// https://leetcode.com/problems/word-search/
+console.log(exist([["C", "A", "A"], ["A", "A", "A"], ["B", "C", "D"]], "AAB"), true)
+console.log(exist([["C", "A", "A"], ["A", "A", "A"], ["B", "C", "D"]], "AACA"), true)
+console.log(exist([["A", "A"]], "AAA"), false)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "E", "S"], ["A", "D", "E", "E"]], "ABCEFSADEESE"), true)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "AB"), true)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "AZ"), false)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABFS"), true)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCCED"), true)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "SEE"), true)
+console.log(exist([["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCB"), false)
+
+
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function (board, word) {
+  const rows = board.length;
+  const cols = board[0].length;
+  tabu = new Set();  // set of visited (forbidden) cells
+
+  const dfs = (row, col, index) => {
+    if (index === word.length) {
+      return true
+    }
+    
+    tabu.add(`${row},${col}`);  // add cell pair to tabu set
+
+    // check up, down, left, right for neighbouns
+    if (
+      col + 1 < cols &&  // check if out of bounds and
+      !tabu.has(`${row},${col + 1}`) &&  // if cell is not in tabo set
+      word[index] === board[row][col + 1] &&  // Check if the current position matches the word's character
+      dfs(row, col + 1, index + 1)  // Switch to that letter and check its neighbors
+    ) {
+      return true
+    }
+    if (
+      row + 1 < rows &&
+      !tabu.has(`${row + 1},${col}`) &&
+      word[index] === board[row + 1][col] &&
+      dfs(row + 1, col, index + 1)
+    ) {
+      return true
+    }
+    if (
+      col - 1 >= 0 &&
+      !tabu.has(`${row},${col - 1}`) &&
+      word[index] === board[row][col - 1] &&
+      dfs(row, col - 1, index + 1)
+    ) {
+      return true
+    }
+    if (
+      row - 1 >= 0 &&
+      !tabu.has(`${row - 1},${col}`) &&
+      word[index] === board[row - 1][col] &&
+      dfs(row - 1, col, index + 1)
+    ) {
+      return true
+    }
+
+    // Backtrack: remove from tabu
+    tabu.delete(`${row},${col}`);
+  }
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (word[0] === board[row][col]) {  // if first letter matches
+        if (dfs(row, col, 1)) {  // check its heighbors
+          return true
+        }
+      }
+    }
+  }
+  return false  // if word was not found return False
+}
+
+
+
+
+
+// Palindrome Partitioning
+// https://leetcode.com/problems/palindrome-partitioning/
+console.log(partition("aa"), [['a', 'a'], ['aa']])
+console.log(partition("a"), [["a"]])
+console.log(partition("ab"), [["a", "b"]])
+console.log(partition("aaa"), [['a', 'a', 'a'], ['a', 'aa'], ['aa', 'a'], ['aaa']])
+console.log(partition("aab"), [["a", "a", "b"], ["aa", "b"]])
+console.log(partition("aba"), [["a", "b", "a"], ["aba"]])
+
+
+
+/**
+ * passing "word" in dfs(), "palindrome" as a side effect
+ * @param {string} word
+ * @return {string[][]}
+ */
+var partition = function (word) {
+  const currenPartition = [];  // This will track the current partition
+  const partitionList = [];  // This will store all valid palindrome partitions
+
+  function isPalindrome(word) {
+    let l = 0;
+    let r = word.length - 1
+
+    while (l < r) {
+      if (word[l] !== word[r]) return false
+
+      l++;
+      r--;
+    }
+    return true
+  }
+
+  function dfs(word) {
+    if (word.length === 0) {  // if word is empty that means all letters folded into palindrom
+      partitionList.push(currenPartition.slice())
+    }
+
+    for (let index = 0; index < word.length; index++) {  // index starts from '1' because the first element is word[:index]
+      let substring = word.slice(0, index + 1);
+
+      if (isPalindrome(substring)) {  // if substring is a palindrme
+        currenPartition.push(substring);  // Add it to the current partition
+        dfs(word.slice(index + 1,));  // Explore the path with the current palindrome and look for the palindrome in the next part of the "word"
+        currenPartition.pop();  // Backtrack by removing the last added palindrome
+      }
+    }
+  }
+  dfs(word)  // Start DFS with "word"
+
+  return partitionList
+}
+
+
+/**
+ * passing current partition and "word" in dfs()
+ * @param {string} word
+ * @return {string[][]}
+ */
+var partition = (word) => {
+  const palindrmeList = []
+
+  const isPalindrome = (substring) => {
+    return substring === substring.split('').reverse().join('')
+  }
+
+  const dfs = (palindrome, word) => {
+    if (word.length === 0) {
+      palindrmeList.push(palindrome.slice())
+      return
+    }
+
+    for (let index = 0; index < word.length; index++) {
+      const substring = word.slice(0, index + 1)
+
+      if (isPalindrome(substring)) {
+        dfs([...palindrome, substring], word.slice(index + 1,))
+      }
+    }
+  }
+
+  dfs([], word)
+
+  return palindrmeList
+}
+
+
+
+
+
+// Letter Combinations of a Phone Number
+// https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+console.log(letterCombinations("2"), ["a", "b", "c"])
+console.log(letterCombinations("23"), ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
+console.log(letterCombinations(""), [])
+
+
+/**
+ * passing index to dfs, combination as a shared variable (side effect)
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function (digits) {
+  if (!digits) return []
+
+  const combination = [];
+  const combinationList = [];
+  const digitToLetter = {
+    "2": "abc",
+    "3": "def",
+    "4": "ghi",
+    "5": "jkl",
+    "6": "mno",
+    "7": "pqrs",
+    "8": "tuv",
+    "9": "wxyz"
+  };
+
+  function dfs(index) {
+    if (index === digits.length) {
+      combinationList.push(combination.join(''));
+      return
+    }
+
+    for (let digit of digitToLetter[digits[index]]) {
+      combination.push(digit)
+      dfs(index + 1)
+      combination.pop()
+    }
+  }
+
+  dfs(0)
+
+  return combinationList
+}
+
+
+/**
+ * passing index and combination to dfs
+ * @param {string} digits
+ * @return {string[]}
+ */
+const letterCombinations = (digits) => {
+  if (digits.length === 0) return []
+
+  const combinationList = [];
+  const digitToLetter = {
+    "2": "abc",
+    "3": "def",
+    "4": "ghi",
+    "5": "jkl",
+    "6": "mno",
+    "7": "pqrs",
+    "8": "tuv",
+    "9": "wxyz"
+  }
+
+  const dfs = (index, combination) => {
+    if (index === digits.length) {
+      combinationList.push(combination);
+      return
+    }
+
+    for (const letter of digitToLetter[digits[index]]) {
+      dfs(index + 1, combination + letter)
+    }
+  }
+
+  dfs(0, "")
+
+  return combinationList
+}
+
+
+
+
+
+// N-Queens
+// https://leetcode.com/problems/n-queens/
+console.log(solveNQueens(4), [[".Q..", "...Q", "Q...", "..Q."], ["..Q.", "Q...", "...Q", ".Q.."]])
+console.log(solveNQueens(1), [["Q"]])
+
+
+/**
+ * @param {number} n
+ * @return {string[][]}
+ */
+var solveNQueens = function (n) {
+  const boardList = [];
+  const tabuCol = new Set();
+  const tabuDiag = new Set();  // for each diagonal (col_ind - row_ind) = const
+  const tabuAdiag = new Set();  // for each aiti-diagonal (con_ind + row_ind) = const
+  const board = Array.from({ length: n }, () => Array(n).fill('.'));  // n * n board filled with '.'
+
+
+  function dfs(row) {
+    if (row === n) {  // if all rows are filled with Queens
+      // boardList.push(board.map(row => row.slice()));
+      joinedBoard = board.map(row => row.join(''))  // ['.', 'Q', '.', '.'] => ['.Q..']
+      boardList.push(joinedBoard);
+      return
+    }
+
+    for (let col = 0; col < n; col++) {
+      // if there is another Queen in the same diagonal or the same col
+      if (tabuCol.has(col) ||
+        tabuDiag.has(row - col) ||
+        tabuAdiag.has(row + col)) {
+        continue
+      }
+
+      // update tabu and board
+      board[row][col] = 'Q';
+      tabuCol.add(col);
+      tabuDiag.add(row - col)
+      tabuAdiag.add(row + col)
+
+      // check another row
+      dfs(row + 1)
+
+      // backtrack
+      board[row][col] = '.'
+      tabuCol.delete(col)
+      tabuDiag.delete(row - col);
+      tabuAdiag.delete(row + col);
+    }
+  }
+
+  dfs(0)
+
+  return boardList
+}
+
+
+
+
+
+// Generate Parentheses
+// https://leetcode.com/problems/generate-parentheses/description/
+console.log(generateParenthesis(1), ["()"])
+console.log(generateParenthesis(2), ["(())", "()()"])
+console.log(generateParenthesis(3), ["((()))", "(()())", "(())()", "()(())", "()()()"])
+
+
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function (num) {
+  const parenthesis = [];  // current parenthesis sequence
+  const parenthesisList = [];  // list of parenthesis sequences
+
+  function dfs(open, close) {
+    if (open + close === 2 * num) {  // if all opening and closing parenthesis are used
+      parenthesisList.push(parenthesis.join(''));  // push current sequence
+      return
+    }
+
+    if (open < num) {  // not all "(" have been used
+      parenthesis.push('(');
+      dfs(open + 1, close);  // check this branch
+      parenthesis.pop();  // backtrack
+    }
+
+    if (close < open) {  // the number of ")" must not be greater than "("
+      parenthesis.push(')');
+      dfs(open, close + 1);  // check this branch
+      parenthesis.pop();  // backtrack
+    }
+  }
+
+  dfs(0, 0)  // start with no parenthesis
+  return parenthesisList
+}
+
+
+
+
+
+// Climbing Stairs
+// https://leetcode.com/problems/climbing-stairs/
+console.log(climbStairs(0), 0)
+console.log(climbStairs(1), 1)
+console.log(climbStairs(2), 2)
+console.log(climbStairs(3), 3)
+console.log(climbStairs(4), 5)
+console.log(climbStairs(5), 8)
+
+
+/**
+ * Fibonnacci problem
+ * dp, bottom-up with no auxiliary memory space
+ * O(n), O(1)
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function (n) {
+  if (n < 4) return n
+
+  let a = 0;
+  let b = 1;
+
+  for (index = 0; index < n; index++) {
+    b = a + b;
+    a = b - a;
+    // [a, b] = [b, a + b]
+  }
+  return b
+}
+
+
+/**
+ * Fibonnacci problem
+ * dp, bottom-up
+ * O(n), O(n)
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function (n) {
+  if (n < 4) return n
+
+  const dp = new Array(n + 2).fill(0);
+  dp[1] = 1;
+
+  for (index = 2; index < n + 2; index++) {
+    dp[index] = dp[index - 1] + dp[index - 2];
+  }
+
+  return dp.slice(-1)[0]
+}
+
+
+/**
+ * Fibonnacci problem
+ * dp, top-down with memoization
+ * O(n), O(n)
+ * @param {number} n
+ * @return {number}
+ */
+
+const memo = new Map();
+
+var climbStairs = function (n) {
+  if (n < 4) return n
+
+  if (memo.has(n)) {
+    return memo.get(n)
+  } else {
+    memo.set(n, (climbStairs(n - 1) + climbStairs(n - 2)));
+    return memo.get(n);
+  }
+}
+
+
+/**
+ * Fibonnacci problem
+ * dp, top-down with memoization as a class variable
+ * O(n), O(n)
+ * @param {number} n
+ * @return {number}
+ */
+
+class Solution {
+  constructor() {
+    this.memo = new Map();
+  }
+
+  //climbStairs = function (n) {
+  climbStairs(n) {
+    if (n < 4) return n
+
+    if (this.memo.has(n)) {
+      return this.memo.get(n)
+    } else {
+      this.memo.set(n, (this.climbStairs(n - 1) + this.climbStairs(n - 2)));
+      return this.memo.get(n);
+    }
+  }
+}
+
+console.log(new Solution().climbStairs(0), 0)
+console.log(new Solution().climbStairs(1), 1)
+console.log(new Solution().climbStairs(2), 2)
+console.log(new Solution().climbStairs(3), 3)
+console.log(new Solution().climbStairs(4), 5)
+console.log(new Solution().climbStairs(5), 8)
+
+
+/**
+ * Fibonnacci problem
+ * dfs, unefficient
+ * O(2^n), O(n)
+ * counter as shared variable (list)
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function (n) {
+  const counter = [];
+
+  function dfs(index) {
+    if (index > n) return
+
+    if (index === n) {
+      counter.push(1)
+      return
+    }
+
+    dfs(index + 1);
+    dfs(index + 2);
+  }
+
+  dfs(0)
+
+  return counter.length
+}
+
+
+/**
+ * Fibonnacci problem
+ * dfs, unefficient
+ * O(2^n), O(n)
+ * 'counter' as a return statement from dfs
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function (n) {
+  function dfs(index) {
+    if (index > n) return 0
+
+    if (index === n) return 1
+
+    return dfs(index + 1) + dfs(index + 2);
+  }
+
+  return dfs(0)
+}
+
+
+
+
+
+// Min Cost Climbing Stairs
+// https://leetcode.com/problems/min-cost-climbing-stairs/
+console.log(minCostClimbingStairs([10, 15, 20]), 15)
+console.log(minCostClimbingStairs([1, 100, 1, 1, 1, 100, 1, 1, 100, 1]), 6)
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(n)
+ * @param {number[]} cost
+ * @return {number}
+ */
+var minCostClimbingStairs = function (cost) {
+  for (let index = 2; index < cost.length; index++) {
+    cost[index] = Math.min(cost[index - 1], cost[index - 2]) + cost[index];
+  }
+  return Math.min.apply(null, cost.slice(-2))
+}
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(1)
+ * @param {number[]} cost
+ * @return {number}
+ */
+var minCostClimbingStairs = function (cost) {
+  let a = cost[0];
+  let b = cost[1];
+
+  for (let index = 2; index < cost.length; index++) {
+    let temp = Math.min(a, b) + cost[index];
+    a = b;
+    b = temp;
+  }
+
+  return Math.min(a, b)
+}
+
+
+
+
+
+// Maximum Subarray
+// https://leetcode.com/problems/maximum-subarray/
+console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]), 6)
+console.log(maxSubArray([1]), 1)
+console.log(maxSubArray([5, 4, -1, 7, 8]), 23)
+console.log(maxSubArray([-4, -2, -1, -3]), -1)
+
+
+/**
+ * dp, bottom-up, dp list => 2 variables: cumulative, maxSum
+ * O(n), O(1)
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function (nums) {
+  let cumulative = nums[0];
+  let maxSum = nums[0];
+
+  for (index = 1; index < nums.length; index++) {
+    cumulative = Math.max(cumulative, 0) + nums[index];
+    maxSum = Math.max(maxSum, cumulative);
+  }
+
+  return maxSum
+}
+
+
+/**
+ * dp, bottom-up, use nums as dp
+ * O(n), O(n)
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function (nums) {
+  for (index = 1; index < nums.length; index++) {
+    nums[index] += Math.max(nums[index - 1], 0);
+  }
+
+  return Math.max.apply(null, nums)
+}
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(n)
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function (nums) {
+  const dp = new Array(nums.length)
+  dp[0] = nums[0];
+
+  for (index = 1; index < nums.length; index++) {
+    dp[index] = Math.max(dp[index - 1], 0) + nums[index];
+  }
+
+  return Math.max.apply(null, dp)
+}
+
+
+
+
+
+// House Robber
+// https://leetcode.com/problems/house-robber/
+console.log(rob([2, 100, 9, 3, 100]), 200)
+console.log(rob([100, 9, 3, 100, 2]), 200)
+console.log(rob([1, 2, 3, 1]), 4)
+console.log(rob([2, 7, 9, 3, 1]), 12)
+console.log(rob([0]), 0)
+console.log(rob([2, 1]), 2)
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(1), cache only two last elements
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  if (nums.length === 1) {
+    return nums[0];
+  }
+
+  house1 = nums[0];
+  house2 = Math.max(nums[0], nums[1]);
+
+  for (index = 2; index < nums.length; index++) {
+    let temp = house2;
+    house2 = Math.max(nums[index] + house1, house2);
+    house1 = temp;
+  }
+  return house2
+}
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(n), cache every robbery
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  if (nums.length === 1) {
+    return nums[0];
+  }
+
+  const dp = new Array(nums.length);
+  dp[0] = nums[0];
+  dp[1] = Math.max(nums[0], nums[1]);
+
+  for (index = 2; index < nums.length; index++) {
+    dp[index] = Math.max(nums[index] + dp[index - 2], dp[index - 1])
+  }
+  return dp[nums.length - 1]
+}
+
+
+/**
+ * dp, top-down, with memoization
+ * memo as an argument (map) to the rob function
+ * O(n), O(n)
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+var rob = function (nums, index = 1, memo = new Map()) {
+  if (nums.length === 1) {  // if one element in nums
+    return nums[0];
+  }
+
+  if (nums.length - index == 0) {  // if index is 0
+    return nums[0]
+  }
+
+  if (nums.length - index == 1) {  // if index is 1
+    return Math.max(nums[0], nums[1]);
+  }
+
+  if (!memo.has(index + 1)) {  // if "index + 1" is not in the memo
+    memo.set(index + 1, rob(nums, index + 1, memo))  // calculate it
+  }
+  let prev = memo.get(index + 1);  // take it
+
+  if (!memo.has(index + 2)) {
+    memo.set(index + 2, rob(nums, index + 2, memo))
+  }
+  let prevPrev = memo.get(index + 2);
+
+  return Math.max(nums[nums.length - index] + prevPrev, prev)
+}
+
+
+/**
+ * class
+ * dp, top-down, with memoization
+ * O(n), O(n)
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+class Solution {
+  constructor() {
+    this.memo = new Map();  // memoization cache
+  }
+
+
+  rob = function (nums, index = 1, memo = new Map()) {
+    if (nums.length === 1) {  // if one element in nums
+      return nums[0];
+    }
+
+    if (nums.length - index == 0) {  // if index is 0
+      return nums[0]
+    }
+
+    if (nums.length - index == 1) {  // if index is 1
+      return Math.max(nums[0], nums[1]);
+    }
+
+    if (!this.memo.has(index + 1)) {  // if "index + 1" is not in the this.memo
+      this.memo.set(index + 1, this.rob(nums, index + 1))  // calculate it
+    }
+    let prev = this.memo.get(index + 1);  // take it
+
+    if (!this.memo.has(index + 2)) {
+      this.memo.set(index + 2, this.rob(nums, index + 2))
+    }
+    let prevPrev = this.memo.get(index + 2);
+
+    return Math.max(nums[nums.length - index] + prevPrev, prev)
+  }
+}
+
+console.log(new Solution().rob([2, 100, 9, 3, 100]), 200)
+
+
+/**
+ * dp, top-down, with memoization
+ * memo inside 'rob' function used as a shared variable (map) between rob_inner 
+ * O(n), O(n)
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+var rob = function (nums, index = 1) {
+  const memo = new Map()
+
+  var rob_inner = function (nums, index) {
+    if (nums.length === 1) {  // if one element in nums
+      return nums[0];
+    }
+
+    if (nums.length - index == 0) {  // if index is 0
+      return nums[0]
+    }
+
+    if (nums.length - index == 1) {  // if index is 1
+      return Math.max(nums[0], nums[1]);
+    }
+
+    if (!memo.has(index + 1)) {  // if "index + 1" is not in the memo
+      memo.set(index + 1, rob_inner(nums, index + 1))  // calculate it
+    }
+    let prev = memo.get(index + 1);  // take it
+
+    if (!memo.has(index + 2)) {
+      memo.set(index + 2, rob_inner(nums, index + 2))
+    }
+    let prevPrev = memo.get(index + 2);
+
+    return Math.max(nums[nums.length - index] + prevPrev, prev)
+  }
+  return rob_inner(nums, 1)
+}
+
+
+
+
+
+// House Robber II
+// https://leetcode.com/problems/house-robber-ii/
+console.log(rob([2, 3, 2]), 3)
+console.log(rob([1, 2, 3, 1]), 4)
+console.log(rob([1, 2, 3]), 3)
+console.log(rob([1]), 1)
+console.log(rob([0, 0]), 0)
+console.log(rob([1, 3, 1, 3, 100]), 103)
+
+
+/**
+ * O(n), 0(1)
+ * function in function
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  if (nums.length < 3) {
+    return Math.max.apply(null, nums)
+  }
+
+  function rob_straight(nums) {
+    let house1 = nums[0];
+    let house2 = Math.max(nums[0], nums[1]);
+
+    for (let num of nums.slice(2,)) {
+      let temp = house2;
+      house2 = Math.max(num + house1, house2);
+      house1 = temp;
+    }
+    return house2
+  }
+  return Math.max(
+    rob_straight(nums.slice(0, nums.length - 1)),
+    rob_straight(nums.slice(1,)))
+}
+
+
+/**
+ * O(n), 0(1)
+ * both functions directly under class
+ * @param {number[]} nums
+ * @return {number}
+ */
+class Solution {
+  rob = function (nums) {
+    if (nums.length < 3) {
+      return Math.max.apply(null, nums)
+    }
+    return Math.max(
+      this.rob_straight(nums.slice(0, nums.length - 1)),
+      this.rob_straight(nums.slice(1,)))
+  }
+
+  rob_straight(nums) {
+    let house1 = nums[0];
+    let house2 = Math.max(nums[0], nums[1]);
+
+    for (let num of nums.slice(2,)) {
+      let temp = house2;
+      house2 = Math.max(num + house1, house2);
+      house1 = temp;
+    }
+
+    return house2
+  }
+}
+console.log(new Solution().rob([2, 3, 2]), 3)
+console.log(new Solution().rob([1, 2, 3, 1]), 4)
+console.log(new Solution().rob([1, 2, 3]), 3)
+console.log(new Solution().rob([1]), 1)
+console.log(new Solution().rob([0, 0]), 0)
+console.log(new Solution().rob([1, 3, 1, 3, 100]), 103)
+
+
+
+
+
+// Longest Palindromic Substring
+// https://leetcode.com/problems/longest-palindromic-substring/
+console.log(longestPalindrome("babad"), "bab")
+console.log(longestPalindrome("a"), "a")
+console.log(longestPalindrome("cbbd"), "bb")
+console.log(longestPalindrome(""), "")
+console.log(longestPalindrome("bb"), "bb")
+console.log(longestPalindrome("ab"), "a")
+console.log(longestPalindrome("aacabdkacaa"), "aca")
+console.log(longestPalindrome("abdka"), "a")
+console.log(longestPalindrome("aaaa"), "aaaa")
+
+
+/**
+ * @param {string} word
+ * @return {string}
+ */
+var longestPalindrome = function (word) {
+  let longestPaliStr = '';
+
+  for (let index = 0; index < word.length; index++) {
+    // odd length palindrome
+    let edge = 1;
+
+    while (index - edge >= 0 &&  // check if not out of bounds left
+      index + edge < word.length &&  // check if not out of bounds right
+      word.charAt(index - edge) == word.charAt(index + edge)) {  // if letter match
+      edge++;  // 1 -> 3, 2i + 1 increase palindrome length
+    }
+
+    if (2 * edge - 1 > longestPaliStr.length) {  // if longer palindrome found
+      longestPaliStr = word.slice(index - edge + 1, index + edge)
+    }
+
+    // even length palindrome
+    edge = 0;
+
+    while (index - edge >= 0 &&  // check if not out of bounds left
+      index + 1 + edge < word.length &&  // check if not out of bounds right
+      word.charAt(index - edge) == word.charAt(index + 1 + edge)) {  // if letter match
+      edge++;  // 2 -> 4, 2i increase palindrome length
+    }
+
+    if (2 * edge > longestPaliStr.length) {  // if longer palindrome found
+      longestPaliStr = word.slice(index - edge + 1, index + edge + 1)
+    }
+
+  }
+  return longestPaliStr
+}
+
+
+
+
+
+// Palindromic Substrings
+// https://leetcode.com/problems/palindromic-substrings/
+console.log(countSubstrings("abc"), 3)
+console.log(countSubstrings("aaa"), 6)
+
+
+/**
+ * @param {string} word
+ * @return {number}
+ */
+var countSubstrings = function (word) {
+  let counterSum = 0;
+
+  for (index = 0; index < word.length; index++) {
+    // odd length palindrome
+    let counter = 1;
+
+    while (index - counter >= 0 &&  // check if not out of bounds left
+      index + counter < word.length &&  // check if not out of bounds right
+      word[index - counter] == word[index + counter]  // if letter match
+    ) {
+      counter++;  // update counter_sum
+    }
+    counterSum += counter;
+
+    // even length palindrome
+    counter = 0;
+
+    while (index - counter >= 0 &&
+      index + 1 + counter < word.length &&
+      word[index - counter] == word[index + 1 + counter]
+    ) {
+      counter++;
+    }
+    counterSum += counter;
+  }
+
+  return counterSum
+}
+
+
+
+
+
+// Decode Ways
+// https://leetcode.com/problems/decode-ways/description/
+console.log(numDecodings("12"), 2)
+console.log(numDecodings("226"), 3)
+console.log(numDecodings("06"), 0)
+console.log(numDecodings("0"), 0)
+console.log(numDecodings(""), 0)
+console.log(numDecodings("2101"), 1)
+console.log(numDecodings("111111111111111111111111111111111111111111111"), 1836311903)
+
+
+/**
+ * DP, Bottom-up
+ * O(n), O(n)
+ * @param {string} code
+ * @return {number}
+ */
+var numDecodings = function (code) {
+  const dp = new Map([[code.length, 1]]);  // assume "code" is a prefix and everything after would be foleded into "1" possible path
+
+  for (index = code.length - 1; index >= 0; index--) {  // check every number in reversed order
+    if (code[index] !== '0') {  // check if number is not statring with 0
+      // one digit number case
+      dp.set(index, (dp.get(index) ?? 0) + (dp.get(index + 1) ?? 0));  // continue legit one digit number path
+
+      // two digits number case
+      if (index + 1 < code.length &&  // if index in bounds
+        Number(code.slice(index, index + 2)) <= 26) {  // if two digit number between <10, 27)
+        dp.set(index, (dp.get(index) ?? 0) + (dp.get(index + 2) ?? 0));  // continue legit two digit number path
+      }
+    }
+  }
+  return dp.get(0) ?? 0  // get first value from the dictionary or if code is not legit return 0
+}
+
+
+/**
+ * DP, Top-down with memoization
+ * O(n), O(n)
+ * @param {string} code
+ * @return {number}
+ */
+var numDecodings = function (code) {
+  const dp = new Map([[code.length, 1]]);  // assume "code" is a prefix and everything after would be foleded into "1" possible path
+
+  function dfs(index) {
+    if (dp.has(index)) {  // if memoized
+      return dp.get(index)  // Return memoized result if already computed.
+    }
+
+    if (code[index] === '0') {  // check if number is not statring with 0
+      return 0
+    }
+
+    // one digit number case
+    dp.set(index, (dp.get(index) ?? 0) + dfs(index + 1));  // continue legit one digit number path
+
+    // two digits number case
+    if (index + 1 < code.length &&  // if index in bounds
+      Number(code.slice(index, index + 2)) <= 26) {  // if two digit number between <10, 27)
+      dp.set(index, (dp.get(index) ?? 0) + dfs(index + 2));  // continue legit two digit number path
+    }
+
+    return dp.get(index)  // Return the result for this index.
+  }
+
+  return dfs(0)  // Start decoding from the first index.
+}
+
+
+
+
+
+// Coin Change
+// https://leetcode.com/problems/coin-change/
+console.log(coinChange([2, 5, 10, 1], 27), 4)
+console.log(coinChange([1, 2, 5], 11), 3)
+console.log(coinChange([2], 3), -1)
+console.log(coinChange([1], 0), 0)
+console.log(coinChange([186, 419, 83, 408], 6249), 20)
+
+
+/**
+ * dp, bottom-up
+ * @param {number[]} coins
+ * @param {number} amount
+ * @return {number}
+ */
+var coinChange = function (coins, amount) {
+  // min number of coins needed to get target amount (equal to the index)
+  // "anmount + 1" an imposbile value stays when the last element of min_coins was not modified
+  const minCoins = new Array(amount + 1).fill(amount + 1);
+  minCoins[0] = 0;    // no coins needed to get 0
+
+  for (let coin of coins) {  // check every coin
+    for (let index = coin; index <= amount; index++) {  // check each 'minCoins' index
+      // choose current amount of coins or get ammount without current coin and add 1
+      minCoins[index] = Math.min(minCoins[index], minCoins[index - coin] + 1);
+    }
+  }
+
+  if (minCoins[amount] == amount + 1) {  // if the last value was not modified so there is no valid combination
+    return -1
+  } else {
+    return minCoins[amount]  // valid combination
+  }
+}
+
+
+
+
+
+// Maximum Product Subarray
+// https://leetcode.com/problems/maximum-product-subarray/
+console.log(maxProduct([-4, -3]), 12)
+console.log(maxProduct([2, 3, -2, 4]), 6)
+console.log(maxProduct([-2]), -2)
+console.log(maxProduct([-4, -3]), 12)
+console.log(maxProduct([-2, 0, -1]), 0)
+console.log(maxProduct([-2, -3, 7]), 42)
+console.log(maxProduct([2, -5, -2, -4, 3]), 24)
+console.log(maxProduct([-2]), -2)
+console.log(maxProduct([0]), 0)
+console.log(maxProduct([-2, 0]), 0)
+console.log(maxProduct([0, 2]), 2)
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(1)
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxProduct = function (nums) {
+  dp_0 = [nums[0], nums[0]];  // O(1) cache
+  let maxProductVal = nums[0];  // track max product with default value
+
+  for (index = 1; index < nums.length; index++) {  // check all nums indexes
+    // multiply prefix values with current value to get min, max or
+    // current value only when prefix is [0, 0]
+    const triplet = [
+      dp_0[0] * nums[index],
+      dp_0[1] * nums[index],
+      nums[index]];
+
+    dp_0 = [Math.max.apply(null, triplet), Math.min.apply(null, triplet)];  // append min, max pair
+    maxProductVal = Math.max(maxProductVal, Math.max.apply(null, triplet));  // update max product
+
+  }
+  return maxProductVal
+}
+
+
+/**
+ * dp, bottom-up
+ * O(n), O(n)
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxProduct = function (nums) {
+  const dp = new Array(nums.length);  // min, max pair list for tabulation
+  dp[0] = [nums[0], nums[0]];  // insert the first element
+  let maxProductVal = nums[0];  // track max product with default value
+
+  for (index = 1; index < nums.length; index++) {  // check all nums indexes
+    // multiply prefix values with current value to get min, max or
+    // current value only when prefix is [0, 0]
+    const triplet = [
+      dp[index - 1][0] * nums[index],
+      dp[index - 1][1] * nums[index],
+      nums[index]];
+
+    dp[index] = [Math.max.apply(null, triplet), Math.min.apply(null, triplet)];  // append min, max pair
+    maxProductVal = Math.max(maxProductVal, Math.max.apply(null, triplet));  // update max product
+
+  }
+  return maxProductVal
+}
+
+
+
+
+
+// Word Break
+// https://leetcode.com/problems/word-break/
+console.log(wordBreak("leetcode", ["leet", "code"]), true)
+console.log(wordBreak("applepenapple", ["apple", "pen"]), true)
+console.log(wordBreak("catsandog", ["cats", "dog", "sand", "and", "cat"]), false)
+console.log(wordBreak("cars", ["car", "ca", "rs"]), true)
+
+
+/**
+ * dp, bottom-up
+ * O(n2), O(n)
+ * @param {string} sencence
+ * @param {string[]} wordList
+ * @return {boolean}
+ */
+var wordBreak = function (sentence, wordList) {
+  // cache where each elemet tells if sentece can be fold from this index to the right
+  const canFold = new Array(sentence.length + 1).fill(false);
+  canFold[canFold.length - 1] = true;// dummy element tells that everything after "sentence can be folded"
+
+  for (index = sentence.length; index >= 0; index--) {  // go through every index reversed
+    for (word of wordList) {  // go through every word
+      if (sentence.slice(index, index + word.length) === word) {  // if found the word
+        canFold[index] = canFold[index] || canFold[index + word.length];  // update can fold
+      }
+    }
+  }
+  return canFold[0]
+}
+
+
+
+
+
+// Longest Increasing Subsequence
+// https://leetcode.com/problems/longest-increasing-subsequence/
+console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]), 4)
+console.log(lengthOfLIS([0, 1, 0, 3, 2, 3]), 4)
+console.log(lengthOfLIS([7, 7, 7, 7, 7, 7, 7]), 1)
+
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function (nums) {
+  const dp = new Array(nums.length).fill(1);  // LIS lengths
+
+  for (right = 0; right < nums.length; right++) {  // check every right (index)
+    for (left = 0; left < right; left++) {  // check every left (index) lower than right
+      if (nums[left] < nums[right]) {  // if right num is greater
+        dp[right] = Math.max(dp[right], dp[left] + 1);  // update LIS lengths 
+      }
+    }
+  }
+  return Math.max.apply(null, dp)
+}
+
+
+
+
+
+// Partition Equal Subset Sum
+// https://leetcode.com/problems/partition-equal-subset-sum
+console.log(canPartition([14, 9, 8, 4, 3, 2]), true)
+console.log(canPartition([1, 2, 5]), false)
+console.log(canPartition([1, 5, 11, 5]), true)
+console.log(canPartition([3, 3, 3, 4, 5]), true)
+console.log(canPartition([1, 2, 3, 5]), false)
+console.log(canPartition([1]), false)
+console.log(canPartition([2, 2, 1, 1]), true)
+
+
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canPartition = function (nums) {
+  if (nums.reduce((a, b) => a + b) % 2) return false  // if odd sum (cannot be split in half)
+
+  let half = nums.reduce((a, b) => a + b) >> 1;  // half of the sum
+  const seen_numbers = new Set();  // numbers seen in previous loop
+
+  for (let num of nums) {  // for every number
+    let new_numbers = new Set(seen_numbers);  // copy of seen numbers
+
+    for (let new_number of new_numbers) {
+      seen_numbers.add(new_number + num);  // add new numbers in current loop
+    }
+
+    seen_numbers.add(num);  // add current num
+
+    if (seen_numbers.has(half)) {  // check if half is in seen numbers
+      return true
+    }
+  }
+
+  return false
+}
+
+
+
+
+
+// Invert Binary Tree
+// https://leetcode.com/problems/invert-binary-tree/description/
+
+// function TreeNode(val, left, right) {
+//   this.val = val ?? 0
+//   this.left = left ?? null
+//   this.right = right ?? null
+// }
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+tree_from_list = buildTreeFromList([4, 2, 7, 1, 3, 6, 9])
+`
+TreeNode {
+  val: 4,
+  left: TreeNode {
+    val: 2,
+    left: TreeNode { val: 1, left: null, right: null },
+    right: TreeNode { val: 3, left: null, right: null }
+  },
+  right: TreeNode {
+    val: 7,
+    left: TreeNode { val: 6, left: null, right: null },
+    right: TreeNode { val: 9, left: null, right: null }
+  }
+}
+`
+
+// Function create a list from a binary tree in level-order (breadth-first traversal)
+function levelOrderTraversal(root) {
+  if (!root && root.length === 0) {
+    return null
+  }
+
+  const nodeList = [];
+  const queue = [];
+  queue.push(root);
+
+  while (queue.length !== 0) {
+    let node = queue.shift();
+    nodeList.push(node.val);
+
+    if (node.left) {
+      queue.push(node.left);
+    }
+
+    if (node.right) {
+      queue.push(node.right);
+    }
+  }
+
+  return nodeList
+}
+
+// console.log(levelOrderTraversal(tree_from_list))
+// [4, 2, 7, 1, 3, 6, 9]
+
+
+
+console.log(
+  levelOrderTraversal(
+    invertTree(
+      buildTreeFromList(
+        [4, 2, 7, 1, 3, 6, 9]))), [4, 7, 2, 9, 6, 3, 1])
+
+console.log(invertTree([4, 2, 7, 1, 3, 6, 9]), [4, 7, 2, 9, 6, 3, 1])
+console.log(invertTree([2, 1, 3]), [2, 3, 1])
+console.log(invertTree([]), [])
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function (root) {
+  if (root) {
+    [root.left, root.right] = [root.right, root.left];
+
+    invertTree(root.left);
+    invertTree(root.right);
+  }
+  return root
+}
+
+
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function (root) {
+  if (!root || root.length === 0) {
+    return root
+  }
+
+  [root.left, root.right] = [root.right, root.left]
+  invertTree(root.left)
+  invertTree(root.right)
+
+  return root
+}
+
+
+
+
+
+// Maximum Depth of Binary Tree
+// https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+console.log(maxDepth(buildTreeFromList([3, 9, 20, null, null, 15, 7])), 3)
+console.log(maxDepth(buildTreeFromList(([1, null, 2]))), 2)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+tree_from_list = buildTreeFromList([4, 2, 7, 1, 3, 6, 9])
+
+
+/**
+ * dp, dfs, recursion
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function (root) {
+  if (!root) {
+    return 0
+  }
+
+  return (Math.max(
+    maxDepth(root.left),
+    maxDepth(root.right))
+    + 1)
+}
+
+
+/**
+ * dp, bfs, iteration, dequeue, level order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function (root) {
+  if (!root) {
+    return 0
+  }
+
+  const queue = [];
+  queue[0] = root;
+  let depth = 0;
+
+  while (queue.length !== 0) {
+    depth++;
+    const currenQueueLength = queue.length;
+
+    for (let index = 0; index < currenQueueLength; index++) {
+      let node = queue.shift();
+      
+      if (node.left) {
+        queue.push(node.left)
+      }
+
+      if (node.right) {
+        queue.push(node.right)
+      }
+    }
+  }
+
+  return depth
+}
+
+
+/**
+ * dp, dfs, iteration, stack, pre-order dfs
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function (root) {
+  if (!root) {
+    return 0
+  }
+
+  const stack = [];
+  stack.push([root, 1])
+  maxDepthValue = 1
+
+  while (stack.length !== 0) {
+    let [node, depth] = stack.pop();
+
+    if (node.left) {
+      stack.push([node.left, depth + 1]);
+      maxDepthValue = Math.max(maxDepthValue, depth + 1);
+    }
+
+    if (node.right) {
+      stack.push([node.right, depth + 1]);
+      maxDepthValue = Math.max(maxDepthValue, depth + 1);
+    }
+  }
+
+  return maxDepthValue
+}
+
+
+
+
+
+// Diameter of Binary Tree
+// https://leetcode.com/problems/diameter-of-binary-tree/description/
+console.log(diameterOfBinaryTree(buildTreeFromList([1, 2, 3, 4, 5])), 3)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, dfs, recursion
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var diameterOfBinaryTree = function (root) {
+  let longestDiameter = 0;
+
+  function dfs(node) {
+    if (!node) {
+      return 0
+    }
+
+    let left = dfs(node.left);  // left branch depth
+    let right = dfs(node.right);  // right branch depth
+
+    longestDiameter = Math.max(longestDiameter, left + right);  // left + rigth = path between two nodes
+
+    return Math.max(left, right) + 1  // current node max depth
+  }
+
+  dfs(root)
+
+  return longestDiameter
+}
+
+
+
+
+
+// Balanced Binary Tree
+// https://leetcode.com/problems/balanced-binary-tree/description/
+console.log(isBalanced(buildTreeFromList([3, 9, 20, null, null, 15, 7])), true)
+console.log(isBalanced(buildTreeFromList([1, 2, 2, 3, 3, null, null, 4, 4])), false)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isBalanced = function (root) {
+  let isBalancedBool = true  // default valuef for balanced tree
+
+  function dfs(node) {
+    if (!node) {
+      return 0
+    }
+
+    let left = dfs(node.left);  // left branch depth
+    let right = dfs(node.right);  // right branch depth
+
+    if (Math.abs(left - right) > 1) {  // if deep of the two subtrees differs more than by 1
+      isBalancedBool = false;  // then tree in not balanced
+      return -1  // early return
+    }
+
+    return Math.max(left, right) + 1  // the depth of the current node
+  }
+
+  dfs(root)  // run dfs
+
+  return isBalancedBool
+}
+
+
+
+
+
+// Same Tree
+// https://leetcode.com/problems/same-tree/description/
+console.log(isSameTree(buildTreeFromList([1, 2, 3]), buildTreeFromList([1, 2, 3])), true)
+console.log(isSameTree(buildTreeFromList([1, 2]), buildTreeFromList([1, null, 2])), false)
+console.log(isSameTree(buildTreeFromList([1, 2, 1]), buildTreeFromList([1, 1, 2])), false)
+console.log(isSameTree(buildTreeFromList([10, 5, 15]), buildTreeFromList([10, 5, null, null, 15])), false)
+console.log(isSameTree(buildTreeFromList([1, null, 2, 3]), buildTreeFromList([1, null, 2, null, 3])), false)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, dfs, recursive
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
+ */
+var isSameTree = function (p, q) {
+  if (!p && !q) {  // if both nodes are null
+    return true
+  }
+
+  if (
+    p && q &&  // if both nodes exist
+    p.val == q.val  // and have equal values
+  ) {
+    return (
+      isSameTree(p.left, q.left) &&  // left subtree is the same
+      isSameTree(p.right, q.right)  // right subtree is the same
+    )
+  } else {
+    return false
+  }
+}
+
+
+/**
+ * dp, bfs, iteration, queue
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
+ */
+var isSameTree = function (p, q) {
+  if (!p && !q) {  // p and q are empty
+    return true
+  }
+
+  if (!p || !q) {  // p or q is empyt
+    return false
+  }
+
+  const pQueue = [];  // initiate dequeues
+  const qQueue = [];
+  pQueue.push(p);
+  qQueue.push(q);
+
+  while (pQueue.length || qQueue.length) {  // if both queues not empty
+    let queueLength = Math.max(pQueue.length, qQueue.length);
+    
+    for (let index = 0; index < queueLength; index++) {  // for every node in queue
+      pNode = pQueue.shift();  // take a node
+      qNode = qQueue.shift();
+
+      if (pNode.val != qNode.val) {  // compare p and q values
+        return false
+      }
+
+      if (!pNode.left && !qNode.left) {  // if p and q are None
+        // pass
+      } else if (
+        pNode.left && qNode.left &&  // if p and q exist
+        pNode.left.val === qNode.left.val) {  // if p and q left value is the same
+          pQueue.push(pNode.left);  // append p left value to queue
+          qQueue.push(qNode.left);  // append q left value to queue
+      } else {
+        return false
+      }
+
+      if (!pNode.right && !qNode.right) {
+        // pass
+      } else if (
+        pNode.right && qNode.right &&
+        pNode.right.val === qNode.right.val) {
+          pQueue.push(pNode.right);
+          qQueue.push(qNode.right);
+      } else {
+        return false
+      }
+    }
+  }
+  return true
+}
+
+
+
+
+
+// Subtree of Another Tree
+// https://leetcode.com/problems/subtree-of-another-tree/description/
+console.log(isSameTree(buildTreeFromList([4, 1, 2]),
+  (buildTreeFromList([4, 1, 2]))), true)
+console.log(isSameTree(buildTreeFromList([3, 4, 5, 1, 2]),
+  buildTreeFromList([4, 1, 2])), false)
+console.log(isSubtree(buildTreeFromList([3, 4, 5, 1, 2]),
+  buildTreeFromList([4, 1, 2])), true)
+console.log(isSubtree(buildTreeFromList([3, 4, 5, 1, 2, null, null, null, null, 0]),
+  buildTreeFromList([4, 1, 2])), false)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * dp, dfs, recursive
+ * O(n2), O(n)
+ * @param {TreeNode} root
+ * @param {TreeNode} subRoot
+ * @return {boolean}
+ */
+var isSubtree = function (root, subRoot) {
+  if (!subRoot) {  // if no subRoot then always True
+    return true
+  }
+  if (!root) {  // if no root then no match found
+    return false
+  }
+  if (isSameTree(root, subRoot)) {  // if tres are equal
+    return true
+  }
+  return (
+    isSubtree(root.left, subRoot) ||  // check if subtree if in left tree branch
+    isSubtree(root.right, subRoot)  // check if subtree if in right tree branch
+  )
+}
+
+
+var isSameTree = function (p, q) {
+  if (!p && !q) {  // if both nodes are null
+    return true
+  }
+
+  if (
+    pd && q &&  // if both nodes exist
+    p.val == q.val  // and have equal values
+  ) {
+    return (
+      isSameTree(p.left, q.left) &&  // left subtree is the same
+      isSameTree(p.right, q.right)  // right subtree is the same
+    )
+  } else {
+    return false
+  }
+}
+
+console.log(isSameTree(buildTreeFromList([4, 1, 2]),
+  (buildTreeFromList([4, 1, 2]))), true)
+console.log(isSameTree(buildTreeFromList([3, 4, 5, 1, 2]),
+  buildTreeFromList([4, 1, 2])), false)
+console.log(isSubtree(buildTreeFromList([3, 4, 5, 1, 2]), buildTreeFromList([4, 1, 2])), true)
+console.log(isSubtree(buildTreeFromList([3, 4, 5, 1, 2, null, null, null, null, 0]), buildTreeFromList([4, 1, 2])), false)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * dp, dfs, recursive
+ * O(n2), O(n)
+ * @param {TreeNode} root
+ * @param {TreeNode} subRoot
+ * @return {boolean}
+ */
+var isSubtree = function (root, subRoot) {
+  if (!subRoot) {  // if no subRoot then always True
+    return true
+  }
+  if (!root) {  // if no root then no match found
+    return false
+  }
+  if (isSameTree(root, subRoot)) {  // if tres are equal
+    return true
+  }
+  return (
+    isSubtree(root.left, subRoot) ||  // check if subtree if in left tree branch
+    isSubtree(root.right, subRoot)  // check if subtree if in right tree branch
+  )
+}
+
+
+var isSameTree = function (p, q) {
+  if (!p && !q) {  // if both nodes are null
+    return true
+  }
+
+  if (
+    pd && q &&  // if both nodes exist
+    p.val == q.val  // and have equal values
+  ) {
+    return (
+      isSameTree(p.left, q.left) &&  // left subtree is the same
+      isSameTree(p.right, q.right)  // right subtree is the same
+    )
+  } else {
+    return false
+  }
+}
+
+
+
+
+
+// Lowest Common Ancestor of a Binary Search Tree
+// https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+console.log((
+  lowestCommonAncestor(
+    buildTreeFromList([6, 2, 8, 0, 4, 7, 9, null, null, 3, 5]),
+    buildTreeFromList(2),
+    buildTreeFromList(8))).val,
+  6)
+console.log((
+  lowestCommonAncestor(
+    buildTreeFromList([6, 2, 8, 0, 4, 7, 9, null, null, 3, 5]),
+    buildTreeFromList(2),
+    buildTreeFromList(4))).val,
+  2)
+console.log((
+  lowestCommonAncestor(
+    buildTreeFromList([2, 1]),
+    buildTreeFromList(2),
+    buildTreeFromList(1))).val,
+  2)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, dfs, iteration
+ * O(logn), O(1)
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  while (true) {
+    if (  // if p and q are lower than the current value
+      p.val < root.val &&
+      q.val < root.val
+    ) {
+      root = root.left;  // lower common ancestor node is in the left branch
+    } else if (  // if p and q are highter than the current value
+      p.val > root.val &&
+      q.val > root.val
+    ) {
+      root = root.right;  // lower common ancestor node is in the right branch
+    } else {  // if one is lower and the other one is higher, THIS is the LCA
+      return root
+    }
+  }
+}
+
+
+/**
+ * dp, dfs, recursive
+ * O(logn), O(h) # O(h) for recursion stack height
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  if (  // if p and q are lower than the current value
+    p.val < root.val &&
+    q.val < root.val
+  ) {
+    return lowestCommonAncestor(root.left, p, q)  // lower common ancestor node is in the left branch
+  } else if (  // if p and q are highter than the current value
+    p.val > root.val &&
+    q.val > root.val
+  ) {
+    return lowestCommonAncestor(root.right, p, q)  // lower common ancestor node is in the right branch
+  } else {
+    return root
+  }
+}
+
+
+
+
+
+// Binary Tree Level Order Traversal
+// https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+console.log(levelOrder(buildTreeFromList([3, 9, 20, null, null, 15, 7])), [[3], [9, 20], [15, 7]])
+console.log(levelOrder(buildTreeFromList([1])), [[1]])
+console.log(levelOrder(buildTreeFromList([])), [])
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, bfs, iteration, dequeue, level order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+  if (!root) {
+    return []
+  }
+
+  const queue = [];  // Create the root node
+  queue.push(root);
+  const levelOrderList = [];  // solution
+  levelOrderList.push([root.val]);
+
+  while (queue.length !== 0) {  // while queue is not empty
+    const currentLevelList = [];  // constant queue length for current level
+    let queueLength = queue.length  // current level soultion
+
+    for (index = 0; index < queueLength; index++) {  // for every node
+      let node = queue.shift();  // take that node
+
+      if (node.left) {  // if left Subnode is not empty
+        queue.push(node.left);  // append it to queue
+        currentLevelList.push(node.left.val)  // append its value to current level solution
+      }
+
+      if (node.right) {  // if right Subnode is not empty
+        queue.push(node.right);  // append it to queue
+        currentLevelList.push(node.right.val)  // append its value to current level solution
+      }
+    }
+
+    if (currentLevelList.length != 0) {  // if current level list has any elements
+      levelOrderList.push(currentLevelList);  // add them to the solution
+    }
+  }
+
+  return levelOrderList
+}
+
+
+
+
+
+// Binary Tree Right Side View
+// https://leetcode.com/problems/binary-tree-right-side-view/description/
+console.log(rightSideView(buildTreeFromList([1, 2, 3, null, 5, null, 4])), [1, 3, 4])
+console.log(rightSideView(buildTreeFromList([1, null, 3])), [1, 3])
+console.log(rightSideView(buildTreeFromList([])), [])
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, bfs, iteration, dequeue, level order traversal
+ * O(n2), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function (root) {
+  if (!root) {
+    return []
+  }
+
+  const queue = [];  // Create the root node
+  queue.push(root);
+  const rightSideList = [];  // solution
+  rightSideList.push(root.val);
+
+  while (queue.length !== 0) {  // while queue is not empty
+    const queueLength = queue.length;  // constant queue length for current level
+
+    for(let index = 0; index < queueLength; index++)  // for every node
+    {
+      let node = queue.shift();  // take that node
+
+      if (node.left) {  // if left subnode is not empty
+        queue.push(node.left);  // append it to queue
+      }
+
+      if (node.right) {// if right subnode is not empty
+        queue.push(node.right);  // append it to queue
+      }
+    }
+    if (queue.length !== 0) {// if queue is not empty
+      rightSideList.push(queue[queue.length - 1].val)  // append the most right value
+    }
+  }
+  return rightSideList
+}
+
+
+
+
+
+//  Count Good Nodes in Binary Tree
+//  https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/
+console.log(goodNodes(buildTreeFromList([3, 1, 4, 3, null, 1, 5])), 4)
+console.log(goodNodes(buildTreeFromList([3, 3, null, 4, 2])), 3)
+console.log(goodNodes(buildTreeFromList([1])), 1)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, bfs, iteration, queue
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var goodNodes = function (root) {
+  if (!root) {
+    return null
+  }
+  
+  const queue = [];  // Create the root node
+  queue.push([root, root.val]);
+  let goodNodesCounter = 1;  // solution
+
+  while (queue.length !== 0) {  // while queue is not empty
+    let queueLength = queue.length;
+
+    for (let index = 0; index < queueLength;  index++) {  // for every node
+      const [node, maxValue] = queue.shift();  // take that node
+
+      if (node.left) {  // if left subnode is not empty
+        queue.push([node.left, Math.max(node.left.val, maxValue)]);  // append it to queue
+        if (maxValue <= node.left.val) {  // if max value from root to current node is less or equal to current node left value
+          goodNodesCounter++;  // increase counter
+        }
+      }
+
+      if (node.right) {  // if right subnode is not empty
+        queue.push([node.right, Math.max(node.right.val, maxValue)]);  // append it to queue
+        if (maxValue <= node.right.val) {  // if max value from root to current node is less or equal to current node right value
+          goodNodesCounter++;  // increase counter
+        }
+      }
+    }
+  }
+  return goodNodesCounter
+}
+
+
+/**
+ * dp, dfs, iteration, stack, pre-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var goodNodes = function (root) {
+  if (!root) {
+    return null
+  }
+
+  const stack = [];  // create the stack with root node
+  stack.push([root, root.val]);
+  let goodNodesCounter = 1;  // solution
+
+  while (stack.length !== 0) {  // while stack is not empty
+    const [node, maxValue] = stack.pop();  // take that node
+
+    if (node.left) {  // if left subnode is not empty
+      stack.push([node.left, Math.max(node.left.val, maxValue)]);  // append it to stack
+      if (maxValue <= node.left.val) {  // if max value from root to current node is less or equal to current node left value
+        goodNodesCounter++;  // increase counter
+      }
+    }
+
+    if (node.right) {  // if right subnode is not empty
+      stack.push([node.right, Math.max(node.right.val, maxValue)]);  // append it to stack
+      if (maxValue <= node.right.val) {  // if max value from root to current node is less or equal to current node right value
+        goodNodesCounter++;  // increase counter
+      }
+    }
+  }
+  return goodNodesCounter
+}
+
+
+/**
+ * dp, dfs, recursion, in-order traversal, functional recursion
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var goodNodes = function (root) {
+  function dfs(node, maxTillRoot) {
+    if (!node) {  // if None node (nothing to add)
+      return 0
+    }
+
+    let nodeValue = maxTillRoot <= node.val ? 1 : 0;  // if there are no nodes with a value greater than max till root value.
+    nodeValue += dfs(node.left, Math.max(maxTillRoot, node.val));  // calculate left subnode
+    nodeValue += dfs(node.right, Math.max(maxTillRoot, node.val));  // calculate right subnode
+    
+    return nodeValue  // return current level sum
+  }
+
+  return dfs(root, root.val)
+}
+
+
+/**
+ * dp, dfs, recursion, in-order traversal, stateful recursion
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var goodNodes = function (root) {
+  let goodNodesCounter = 0;
+
+  function dfs(node, maxTillRoot) {
+    if (!node) {  // if None node (nothing to add)
+      return 0
+    }
+
+    goodNodesCounter += maxTillRoot <= node.val ? 1 : 0;  // if there are no nodes with a value greater than max till root value.
+    dfs(node.left, Math.max(maxTillRoot, node.val));  // calculate left subnode
+    dfs(node.right, Math.max(maxTillRoot, node.val));  // calculate right subnode
+  }
+
+  dfs(root, root.val)
+
+  return goodNodesCounter
+}
+
+
+/**
+ * class, arrow function
+ * dp, dfs, recursion, in-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+class Solution {
+  constructor() {
+    this.goodNodesCounter = 0;
+  }
+
+  goodNodes(root) {
+    // The context of this changes inside inner dfs function. To maintain the correct reference to this, arrow funciton is used.
+    // Arrow function, which automatically binds this from the outer scope (i.e., the Solution class) and ensures this.goodNodesCounter correctly refers to the class property.
+    const dfs = (node, maxTillRoot) => {
+      // function dfs(node, maxTillRoot) {  // wrong reference
+      // const dfs = function (node, maxTillRoot) {  // wrong reference
+      if (!node) {  // if None node (nothing to add)
+        return 0
+      }
+
+      this.goodNodesCounter += maxTillRoot <= node.val ? 1 : 0;  // if there are no nodes with a value greater than max till root value.
+      dfs(node.left, Math.max(maxTillRoot, node.val));  // calculate left subnode
+      dfs(node.right, Math.max(maxTillRoot, node.val));  // calculate right subnode
+    }
+
+    dfs(root, root.val)
+
+    return this.goodNodesCounter
+  }
+}
+console.log(new Solution().goodNodes(buildTreeFromList([3, 1, 4, 3, null, 1, 5])), 4)
+console.log(new Solution().goodNodes(buildTreeFromList([3, 3, null, 4, 2])), 3)
+console.log(new Solution().goodNodes(buildTreeFromList([1])), 1)
+
+
+/**
+ * class, self as this
+ * dp, dfs, recursion, in-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+class Solution {
+  constructor() {
+    this.goodNodesCounter = 0;
+  }
+
+  goodNodes(root) {
+    // Save a reference to this and use it in the inner function. Assigned 'this' to a 'self' variable
+    const self = this;
+    // function dfs(node, maxTillRoot) {
+    const dfs = function (node, maxTillRoot) {
+
+      if (!node) {  // if None node (nothing to add)
+        return 0
+      }
+      // used self.goodNodesCounter instad of this.goodNodesCounter
+      self.goodNodesCounter += maxTillRoot <= node.val ? 1 : 0;  // if there are no nodes with a value greater than max till root value.
+      dfs(node.left, Math.max(maxTillRoot, node.val));  // calculate left subnode
+      dfs(node.right, Math.max(maxTillRoot, node.val));  // calculate right subnode
+    }
+
+    dfs(root, root.val)
+
+    return this.goodNodesCounter
+  }
+}
+console.log(new Solution().goodNodes(buildTreeFromList([3, 1, 4, 3, null, 1, 5])), 4)
+console.log(new Solution().goodNodes(buildTreeFromList([3, 3, null, 4, 2])), 3)
+console.log(new Solution().goodNodes(buildTreeFromList([1])), 1)
+
+
+
+
+
+// Validate Binary Search Tree
+// https://leetcode.com/problems/validate-binary-search-tree/description/
+console.log(isValidBST(buildTreeFromList([2, 1, 3])), true)
+console.log(isValidBST(buildTreeFromList([5, 1, 4, null, null, 3, 6])), false)
+console.log(isValidBST(buildTreeFromList([2, 2, 2])), false)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, dfs, recursion, in-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function (root) {
+  function dfs(node, leftMin, rightMax) {
+    if (!node) {  // if node is None then the current branch i legit
+      return true
+    }
+
+    if (  // if value not in bounds
+      (leftMin >= node.val) ||
+      (node.val >= rightMax)
+    ) {
+      return false
+    }
+
+    return (
+      dfs(node.left, leftMin, node.val) &&  // branch left
+      dfs(node.right, node.val, rightMax)  // branch right
+    )
+  }
+
+  return dfs(root, -Infinity, Infinity)
+}
+
+
+/**
+ * dp, bfs, iteration, level order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function (root) {
+  if (!root) {
+    return false
+  }
+
+  const queue = [];
+  queue.push([root, -Infinity, Infinity]);
+
+  while (queue.length !== 0) {
+    const queueLength = queue.length;
+
+    for (index = 0; index < queueLength; index++) {
+      const [node, minLeft, maxRight] = queue.shift();
+
+      if (
+        node.val <= minLeft ||
+        node.val >= maxRight
+      ) {
+        return false
+      }
+
+      if (node.left) {
+        queue.push([node.left, minLeft, Math.min(maxRight, node.val)])
+      }
+
+      if (node.right) {
+        queue.push([node.right, Math.max(minLeft, node.val), maxRight])
+      }
+    }
+  }
+  return true
+}
+
+
+
+
+
+// Kth Smallest Element in a BST
+// https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+console.log(kthSmallest(buildTreeFromList([5, 3, 7, 2, 4, null, 8]), 3), 4)
+console.log(kthSmallest(buildTreeFromList([3, 1, 4, null, 2]), 1), 1)
+console.log(kthSmallest(buildTreeFromList([5, 3, 6, 2, 4, null, null, 1]), 3), 3)
+console.log(kthSmallest(buildTreeFromList([41, 37, 44, 24, 39, 42, 48, 1, 35, 38, 40, null, 43, 46, 49, 0, 2, 30, 36, null, null, null, null, null, null, 45, 47, null, null, null, null, null, 4, 29, 32, null, null, null, null, null, null, 3, 9, 26, null, 31, 34, null, null, 7, 11, 25, 27, null, null, 33, null, 6, 8, 10, 16, null, null, null, 28, null, null, 5, null, null, null, null, null, 15, 19, null, null, null, null, 12, null, 18, 20, null, 13, 17, null, null, 22, null, 14, null, null, 21, 23]), 25), 24)
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function to create a binary tree from a list (level-order traversal)
+function buildTreeFromList(nodeList) {
+  if (!nodeList || nodeList.length === 0) return null
+
+  if (Number.isInteger(nodeList)) {  // case when the node list is a single value
+    nodeList = [nodeList];
+  }
+
+  const root = new TreeNode(nodeList[0]);  // Create the root node
+  const queue = [];
+  queue.push(root);
+  let index = 1;
+
+  // Process the list and construct the tree
+  while (index < nodeList.length) {
+    let node = queue.shift();
+
+    // Assign the left child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.left = new TreeNode(nodeList[index]);
+      queue.push(node.left)
+    }
+    index++;
+
+    // Assign the right child if available
+    if (index < nodeList.length && nodeList[index] != null) {
+      node.right = new TreeNode(nodeList[index]);
+      queue.push(node.right)
+    }
+    index++;
+  }
+  return root
+}
+
+
+/**
+ * dp, dfs, recursion, in-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function (root, k) {
+  const valueList = [];
+
+  function dfs(node) {
+    if (!node) {  // if no Node
+      return
+    }
+
+    dfs(node.left)  // traverse left
+
+    if (valueList.length === k) {  // early exit
+      return
+    }
+
+    valueList.push(node.val);  // push current node value
+    dfs(node.right)  // traverse right
+  }
+
+  dfs(root)
+
+  return valueList[valueList.length - 1]  // recurn kth element
+}
+
+
+/**
+ * dp, dfs, iteration, in-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function (root, k) {
+  const queue = [];
+  let node = root;
+
+  while (queue || node) {  // while stack and node are not empty
+    while (node) {  // while node is not empty
+      queue.push(node);  // push node to stack
+      node = node.left;  // branch left
+    }
+
+    node = queue.pop();  // take a node
+    k--;  //  decrement counter
+
+    if (!k) {  // if counter = 0
+      return node.val  // current node value is kth element
+    }
+
+    node = node.right;  // branch right
+  }
+  return false
+}
+
+
+
+
+
+// Construct Binary Tree from Preorder and Inorder Traversal
+// https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+console.log(levelOrderTraversal(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])), [3, 9, 20, null, null, 15, 7])
+console.log(levelOrderTraversal(buildTree([-1], [-1])), [-1])
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val
+    this.left = left
+    this.right = right
+  }
+}
+
+
+// Function create a list from a binary tree in level-order (breadth-first traversal)
+function levelOrderTraversal(root) {
+  if (root.length === 0) {
+    return []
+  }
+
+  const nodeList = [];
+  const queue = [];
+  queue.push(root);
+
+  while (queue.length !== 0) {
+    let node = queue.shift();
+    
+    if (node) {
+      nodeList.push(node.val);
+      queue.push(node.left);
+      queue.push(node.right);
+    } else {
+      nodeList.push(null);
+    }
+  }
+  while (nodeList.length > 0 && nodeList[nodeList.length - 1] === null) {
+    nodeList.pop();
+  }
+
+  return nodeList
+}
+
+//console.log(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]))
+
+/**
+ * dp, dfs, recursion, in-order traversal, pre-order traversal
+ * O(n), O(n)
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function (preorder, inorder) {
+  if (preorder.length === 0 || inorder.length === 0) {
+    return null  // if return empty leetcode complains
+  }
+
+  let node = new TreeNode(preorder[0]);
+  const split_index = inorder.indexOf(preorder[0]);  
+  node.left = buildTree(preorder.slice(1, split_index + 1), inorder.slice(0, split_index));
+  node.right = buildTree(preorder.slice(split_index + 1,), inorder.slice(split_index + 1,));
+
+  return node
+}
+
+
+
+
+
+// Combination Sum IV
+// https://leetcode.com/problems/combination-sum-iv/description/
+console.log(combinationSum4([1, 2, 3], 4), 7)
+console.log(combinationSum4([9], 3), 0)
+console.log(combinationSum4([4, 2, 1], 32), 39882198)
+console.log(combinationSum4([2, 3], 7), 3)
+
+
+/**
+ * dp, bottom-up, iteration, tabulation (with List)
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var combinationSum4 = function (nums, target) {
+  // Initialize a list of zeros for tabulation, where tab[i] is the number of ways to make sum i
+  const tab = new Array(target + 1).fill(0);
+  // Base case: 1 way to make target 0 (empty combination)
+  tab[0] = 1;
+
+  // Iterate through all indices from 1 to target
+  for (let index = 1; index <= target; index++) {
+    // For each number in nums, check if it can contribute to the current target (index)
+    for (const num of nums) {
+      // If num can be subtracted from index, add the number of ways to make (index - num)
+      if (index - num >= 0) {
+        tab[index] += tab[index - num]
+      }
+    }
+  }
+  // Return the result for the target, which is stored in the last element of the list
+  return tab[tab.length - 1]
+}
+
+
+/**
+ * dp, bottom-up, iteration, tabulation (with Dictionary)
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var combinationSum4 = function (nums, target) {
+  // Tabulation dictionary, storing base case: 1 way to make target 0 (empty combination)
+  const tab = new Map();
+  // Base case: 1 way to make target 0 (empty combination)
+  tab.set(0, 1);
+
+  // Iterate through all indices from 1 to target
+  for (let index = 1; index <= target; index++) {
+    // For each number in nums, check if it can contribute to the current target (index)
+    for (const num of nums) {
+      // If num can be subtracted from index, add the number of ways to make (index - num)
+      if (index - num >= 0) {
+        tab.set(index, (tab.get(index) ?? 0) + (tab.get(index - num) ?? 0))
+      }
+    }
+  }
+  // Return the result for the target value, default to 0 if no combinations
+  return tab.get(target) ?? 0
+}
+
+
+/**
+ * dp,  dfs, top-down, recursion, memoization (with List)
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var combinationSum4 = function (nums, target) {
+  // Memoization dictionary, storing base case: 1 way to make target 0 (empty combination)
+  const memo = new Array(target + 1).fill(-1);
+  memo[0] = 1;
+
+  // Helper function that performs depth-first search (DFS)
+  var dfs = (index) => {
+    // If the index is negative, no valid combination can be made, return 0
+    if (index < 0) {
+      return 0
+      // If the value has already been computed, return it (memoization check)
+    } else if (memo[index] !== -1) {
+      return memo[index]
+    }
+    
+    // Initialize the number of ways to make the current index
+    memo[index] = 0;
+
+    // Iterate over each number in the list
+    for (const num of nums) {
+      // Recursively compute number of combinations by reducing the target (index - num)
+      memo[index] += dfs(index - num)
+    }
+    // Return the computed value for the current target (index)
+    return memo[index]
+  }
+
+  // Start the recursion with the target value
+  return dfs(target)
+}
+
+
+
+
+
+//Number of Islands
+//https://leetcode.com/problems/number-of-islands/description/
+console.log(numIslands([["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]), 1)
+console.log(numIslands([["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]]), 3)
+
+
+/**
+ * dfs, recursion
+ * @param {character[][]} grid
+ * @return {number}
+ */
+var numIslands = function (grid) {
+  const rows = grid.length;  // Number of rows in the grid.
+  const cols = grid[0].length;  // Number of columns in the grid.
+  const visitedLand = new Set();  // Set to keep track of visited land cells.
+  let islandCounter = 0;  // Counter for the number of islands found.
+
+  const dfs = (row, col) => {
+    visitedLand.add(`${row},${col}`);  // Mark the current cell as visited.
+
+    // Iterate over the possible directions (right, left, down, up).
+    for ([di, dj] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+      const i = row + di;
+      const j = col + dj;
+      
+      // If the neighbor is within bounds, not visited, and is land, explore it.
+      if (
+        i < rows &&
+        j < cols &&
+        i >= 0 &&
+        j >= 0 &&
+        !visitedLand.has(`${i},${j}`) &&
+        grid[i][j] === '1'
+      ) {
+        dfs(i, j)
+      }
+    }
+  }
+
+  // Check each cell in the grid.
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // Start a new DFS for every unvisited land cell, indicating a new island.
+      if (
+        grid[row][col] === '1' &&
+        !visitedLand.has(`${row},${col}`)
+      ) {
+          islandCounter++;  // Increment the island counter.
+          dfs(row, col)  // Perform DFS to mark the entire island.
+        }
+    }
+  }
+
+  return islandCounter  // Return the total number of islands found.
+}
+
+
+
+
+
+// Max Area of Island
+// https://leetcode.com/problems/max-area-of-island/description/
+console.log(maxAreaOfIsland([[0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]), 6)
+console.log(maxAreaOfIsland([[0, 0, 0, 0, 0, 0, 0, 0]]), 0)
+
+
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxAreaOfIsland = function (grid) {
+  const rows = grid.length;  // Get the number of rows and columns in the grid
+  const cols = grid[0].length;
+  let maxIslandArea = 0;  // Variable to store the maximum island area found so far
+  const visitedLand = new Set();  // Set to keep track of visited land cells (as strings of "row,col")
+  
+  const dfs = (row, col) => {  // Depth-First Search (DFS) function to explore the island
+    visitedLand.add(`${row},${col}`);  // Mark the current cell as visited
+    let adjecentArea = 0;  // Variable to track the adjacent area of the current island
+    const directions = [[0, 1], [1, 0], [-1, 0], [0, -1]];  // Define the four possible directions: right, down, up, and left
+
+    for (const [di, dj] of directions) {  // Explore neighboring cells
+      const i = row + di;  // Row in the new direction
+      const j = col + dj;  // Column in the new direction
+      
+      if (  // Check if the new cell is within bounds, hasn't been visited, and is land (grid[i][j] == 1)
+        i < rows &&
+        j < cols &&
+        i >= 0 &&
+        j >= 0 &&
+        !visitedLand.has(`${i},${j}`) &&
+        grid[i][j] === 1
+      ) {
+        adjecentArea += dfs(i, j);  // Recursively explore neighboring land cells and accumulate their area
+      }
+    }
+    return adjecentArea + 1  // Return the current cell's area (1) plus the adjacent area found
+  }
+
+  for (let row = 0; row < rows; row++) {  // Iterate through each cell in the grid
+    for (let col = 0; col < cols; col++) {
+      if (  // If the current cell is land and hasn't been visited
+        grid[row][col] === 1 &&
+        !visitedLand.has(`${row},${col}`)
+      ) {
+        maxIslandArea = Math.max(maxIslandArea, dfs(row, col));  // Perform DFS from this cell and update the maximum island area
+      }
+    }
+  }
+  
+  return maxIslandArea;  // Return the largest island area found
+}

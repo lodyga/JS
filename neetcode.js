@@ -895,6 +895,11 @@ console.log(isValid(""), true)
 console.log(isValid("["), false)
 
 
+
+
+
+// Min Stack
+// https://leetcode.com/problems/min-stack/
 // In the constructor function-based approach, methods are usually added either
 // by directly attaching them to the object inside the constructor 
 // or by adding them to the prototype.
@@ -5563,3 +5568,262 @@ var maxAreaOfIsland = function (grid) {
   
   return maxIslandArea;  // Return the largest island area found
 }
+
+
+
+
+
+// Clone Graph
+// https://leetcode.com/problems/clone-graph/description/
+
+
+// Definition for a _Node.
+class _Node {
+  constructor(val, neighbors) {
+    this.val = val === undefined ? 0 : val;
+    this.neighbors = neighbors === undefined ? [] : neighbors;
+  }
+};
+
+
+/**
+ * @param {_Node} node
+ * @return {_Node}
+*/
+var cloneGraph = function (node) {
+  if (node === null) {// Return null if input node is null
+    return null
+  }
+  const oldToNew = new Map();  // Dictionary to map original nodes to their clones
+
+  const clone = (node) => {
+    if (oldToNew.has(node)) {  // If the node is already cloned, return the clone
+      return oldToNew.get(node)
+    }
+
+    const new_node = new _Node(node.val);  // Create a new node with the same value
+    oldToNew.set(node, new_node);  // Map the original node to the new clone
+
+    for (const neighbor of node.neighbors) {  // Iterate through all neighbors
+      new_node.neighbors.push(clone(neighbor))  // Recursively clone neighbors and add to the clone's neighbor list
+    }
+    
+    return new_node  // Return the cloned node
+  }
+
+  return clone(node)  // Return cloned graph
+}
+
+// [[2, 4], [1, 3], [2, 4], [1, 3]]
+
+node1 = new _Node(1)
+node2 = new _Node(2)
+node3 = new _Node(3)
+node4 = new _Node(4)
+
+node1.neighbors = [node2, node4]
+node2.neighbors = [node1, node3]
+node3.neighbors = [node2, node4]
+node4.neighbors = [node1, node3]
+// console.log(node4.neighbors)
+console.log(node4.neighbors[0].val)
+
+new_node = cloneGraph(node1)
+console.log(new_node.val)
+
+
+
+
+
+// Islands and Treasure (Walls and Gates)
+// https://neetcode.io/problems/islands-and-treasure
+console.log(new Solution().islandsAndTreasure([[0, -1], [2147483647, 2147483647]]), [[0, -1], [1, 2]])
+console.log(new Solution().islandsAndTreasure([[2147483647, 2147483647, 2147483647], [2147483647, -1, 2147483647], [0, 2147483647, 2147483647]]), [[2, 3, 4], [1, -1, 3], [0, 1, 2]])
+console.log(new Solution().islandsAndTreasure([[2147483647, -1, 0, 2147483647], [2147483647, 2147483647, 2147483647, -1], [2147483647, -1, 2147483647, -1], [0, -1, 2147483647, 2147483647]]), [[3, -1, 0, 1], [2, 2, 1, -1], [1, -1, 2, -1], [0, -1, 3, 4]])
+
+
+class Solution {
+  /**
+   * dfs, recursion
+   * O(n4), O(n2)  - O(n4) = O(n2)2 - may vistit the same land more than once
+   * @param {number[][]} grid
+   */
+  islandsAndTreasure(grid) {
+    const rows = grid.length;  // Get the number of rows
+    const cols = grid[0].length;  // Get the number of columns
+
+    const dfs = (row, col, distance) => {
+      grid[row][col] = distance;  // Set the distance for the current cell
+      const directions = [[0, 1], [1, 0], [-1, 0], [0, -1]];  // Define possible directions
+
+      for (const [di, dj] of directions) {
+        const i = row + di;  // Calculate the new row
+        const j = col + dj;  // Calculate the new column
+
+        if (
+          i < rows &&  // Ensure row is within bounds
+          j < cols &&  // Ensure column is within bounds
+          i >= 0 &&  // Ensure row is not negative
+          j >= 0 &&  // Ensure column is not negative
+          grid[i][j] != 0 &&  // Skip water cells
+          grid[i][j] != -1 &&  // Skip visited cells
+          grid[i][j] > distance + 1  // Ensure current distance is valid
+        ) {
+          dfs(i, j, distance + 1);  // Perform DFS on the next cell
+        }
+      }
+    }
+
+    for (let row = 0; row < rows; row++) {  // Iterate through each row
+      for (let col = 0; col < cols; col++) {  // Iterate through each column
+        if (grid[row][col] === 0) {  // If the cell is water, start DFS
+          dfs(row, col, 0);  // Start DFS with distance 0
+        }
+      }
+    }
+    return grid;  // Return the modified grid
+  }
+}
+
+
+class Solution {
+  /**
+   * bfs, iteration, queue
+   * O(n2), O(n2)
+   * @param {number[][]} grid
+   */
+  islandsAndTreasure(grid) {
+    const rows = grid.length;  // Get the number of rows
+    const cols = grid[0].length;  // Get the number of columns
+    const queue = [];  // Initialize an empty queue for BFS
+    const visitedLand = new Set();  // Set to keep track of visited cells
+
+    const bfs = (row, col) => {
+      const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];  // Define 4 possible directions (right, down, left, up)
+
+      for (const [di, dj] of directions) {  // Iterate over each direction
+        const i = row + di;  // Calculate new row
+        const j = col + dj;  // Calculate new column
+
+        if (
+          i < rows &&  // Ensure row is within bounds
+          j < cols &&  // Ensure column is within bounds
+          i >= 0 &&  // Ensure row is not negative
+          j >= 0 &&  // Ensure column is not negative
+          grid[i][j] != -1 &&  // Skip if the cell is water or already processed (-1)
+          !visitedLand.has(`${i},${j}`)  // Skip if the cell has already been visited
+        ) {
+          queue.push([i, j]);  // Add valid neighboring cells to the queue
+          visitedLand.add(`${i},${j}`);  // Mark as visited immediately when enqueued
+        }
+      }
+    };
+
+    for (let row = 0; row < rows; row++) {  // Iterate through each row
+      for (let col = 0; col < cols; col++) {  // Iterate through each column
+        if (grid[row][col] === 0) {  // If the cell is land (0)
+          queue.push([row, col]);  // Add the land cell to the queue
+          visitedLand.add(`${row},${col}`);  // Mark it as visited when added to the queue
+        }
+      }
+    }
+
+    let distance = 0;  // Initialize distance from the treasure
+
+    while (queue.length !== 0) {  // Continue while there are cells in the queue
+      let queueLength = queue.length;  // Get the number of cells in the current layer
+
+      for (let index = 0; index < queueLength; index++) {  // Iterate over all cells in the current queue
+        const [row, col] = queue.shift();  // Dequeue the next cell
+        grid[row][col] = distance;  // Set the distance in the grid
+        bfs(row, col);  // Explore the neighboring cells
+      }
+      distance++;  // Increment the distance for the next layer of cells
+    }
+
+    return grid;  // Return the modified grid
+  }
+}
+
+
+
+
+
+// Rotting Oranges
+// https://leetcode.com/problems/rotting-oranges/description/
+console.log(orangesRotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]), 4)
+console.log(orangesRotting([[2, 1, 1], [0, 1, 1], [1, 0, 1]]), -1)
+console.log(orangesRotting([[0, 2]]), 0)
+console.log(orangesRotting([[0]]), 0)
+
+
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var orangesRotting = function (grid) {
+  const rows = grid.length;
+  const cols = grid[0].length;
+  const queue = [];
+  const visitedCells = new Set();
+  const freshOranges = new Set();
+
+  // BFS to process adjacent cells
+  const bfs = (row, col) => {
+    const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];  // Right, down, left, up
+
+    for (const [di, dj] of directions) {
+      const i = row + di;
+      const j = col + dj;
+
+      if (
+        i < rows &&   // Check row bounds
+        j < cols &&   // Check column bounds
+        i >= 0 && 
+        j >= 0 &&
+        !visitedCells.has(`${i},${j}`) &&  // Cell should not have been visited
+        grid[i][j] === 1  // Must be a fresh orange
+      ) {
+        queue.push([i, j]);  // Add fresh orange to the queue
+        visitedCells.add(`${i},${j}`);  // Mark as visited
+        freshOranges.delete(`${i},${j}`);  // Remove from fresh oranges set
+      }
+    }
+  };
+
+  // Iterate over the grid to initialize the queue and fresh oranges set
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row][col] === 2) {  // Rotten orange
+        queue.push([row, col]);  // Add to queue for BFS
+        visitedCells.add(`${row},${col}`);  // Mark as visited
+      } else if (grid[row][col] === 1) {  // Fresh orange
+        freshOranges.add(`${row},${col}`);  // Add to the fresh oranges set
+      }
+    }
+  }
+
+  // If there are no fresh oranges, return 0
+  if (freshOranges.size === 0) {
+    return 0;
+  }
+
+  let counter = -1;  // Initialize counter for time
+
+  // Perform BFS
+  while (queue.length !== 0) {
+    counter++;  // increment the time
+    const queueLength = queue.length;
+
+    for (let index = 0; index < queueLength; index++) {
+      const [row, col] = queue.shift();  // Dequeue rotten orange
+      bfs(row, col);  // Rot neighboring fresh oranges
+    }
+
+  }
+  
+  // If there are still fresh oranges, return -1. Otherwise, return the time counter.
+  return freshOranges.size === 0 ? counter : -1;
+}
+
+

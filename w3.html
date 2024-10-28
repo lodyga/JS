@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+    function setCookie(cookieName, cookieValue, expireDays) {
+      const d = new Date();
+      d.setTime(d.getTime() + (expireDays*24*60*60*1000));
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/;SameSite=Lax";
+    }
+    
+    function getCookie(cookieName) {
+      let username = cookieName + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      console.log("Ciasteczka: " + decodedCookie);
+      let cookieList = decodedCookie.split(';');
+      
+      for(let index = 0; index < cookieList.length; index++) {
+        let cookie = cookieList[index];
+
+        if (cookie.charAt(0) == ' ') {
+          cookie = cookie.substring(1);
+        }
+
+        if (cookie.indexOf(username) === 0) {
+          return cookie.substring(username.length, cookie.length);
+        }
+      }
+      return "";
+    }
+    
+    //function checkCookie() {
+      let username = getCookie('username');
+
+      if (username != '') {
+        window.alert('Hello again ' + username);
+      } else {
+        username = window.prompt('Provide your name:');
+        setCookie('username', username, 1)
+      }
+    }
+
+    </script>
+  </head>
+  <body onload="checkCookie()">
+    <h1>JavaScript HTML Events</h1>
+    <h2>The onclick Attribute</h2>
+    <h2 id="test" onclick="displayDate(document.getElementById('test'))">Click on this text!1</h2>
+    <h2 onclick="this.innerHTML='Ooops!'">Click on this text!2</h2>
+    <h2 onclick="changeText(document.getElementById('test'))">Click on this text!3</h2>
+    <h2 id="button">button</h2>
+    Enter your name:
+    <input type="text" id="name_form" onchange="upperCase()">
+    <div id="mouse_div"
+         style="font-size: large;
+                background-color:red"
+         onmouseover="onMouse()"
+         onmouseout="offMouse()">Mouse out</div>
+    <div onmouseover="style.color='green'" onmouseout="style.color='black'">Mouse 2</div>
+    <button type="btn" id="date_button">Button with onclick</button>
+    <div id="date_place">Current date</div>
+    <button type="btn" id="date_button2">Button with addEventListener</button>
+    <div id="date_place2">Current date 2</div>
+    Some random number:
+    <div id="random_div"></div>
+    Node Value:
+    <div id="node_value">nodeValue</div>
+    Node Name:
+    <div id="node_name">nodeName</div>
+    Created new element:
+    <div id="created_element"></div>
+    Collection:
+    <div id="collection"></div>
+    <div>Window height:</div>
+    <div id="window_height"></div>
+    <div>Window width:</div>
+    <div id="window_width"></div>
+    <div>Screen height:</div>
+    <div id="screen_height"></div>
+    <div>Avaible height:</div>
+    <div id="avail_height"></div>
+    <div>Window URL</div>
+    <div id="url"></div>
+    <div>Hostname, domain name</div>
+    <div id="domain"></div>
+    <div>Path and name of the current page</div>
+    <div id="patch"></div>
+    
+    <div>Go forward</div>
+    <input type="button" value="forward" onclick="window.history.forward()">
+    <button type="btn" onclick="window.history.forward()">forward</button>
+    <button onclick="confirmButton()">Confirm Box</button>
+    <div id="confirm_box">Text</div>
+    <button onclick="confirmButton2()">Prompt Box</button>
+    <div id="prompt_box">Text</div>
+    <button onclick="setTimeout(() => { window.alert('Hello') }, 1000)">setTimeout to 1 s</button>
+    
+    <div>Enver a number betten 100 and 200</div>
+    <input id="number_input" type="number" min="100" max="200" required>
+    <button id="ok_button" onclick="checkNumber()">OK</button>
+    <div id="is_number_ok"></div>
+    <div id="if_overflow"></div>
+    <div>Local storage:</div>
+    <div id="local_storage"></div>
+    <div>Sesssion storage:</div>
+    <div id="session_storage"></div>
+    
+    <p id="fetch">Fetch a file to change this text.</p>
+
+    <script>
+      
+
+      document.getElementById('button').onclick = function () {
+        displayDateFirst(document.getElementById('button'))}
+      function changeText(element) {
+        element.innerHTML = 'Ooops!';
+      }
+      function displayDate(element) {
+        element.innerHTML = Date()
+      }
+      function displayDateFirst(element) {
+        element.innerHTML = Date()
+      }
+      function upperCase() {
+        const x = document.getElementById('name_form');
+        x.value = x.value.toUpperCase();
+      }
+      function onMouse() {
+        document.getElementById('mouse_div').innerHTML = 'Mouse in'
+        document.getElementById('mouse_div').style.backgroundColor = 'green'
+      }
+      function offMouse() {
+        document.getElementById('mouse_div').innerHTML = 'Mouse out'
+        document.getElementById('mouse_div').style.backgroundColor = 'red'
+      }
+      document.getElementById('date_button').onclick=displayDate;
+      function displayDate() {
+        document.getElementById('date_place').innerHTML = Date();
+      }
+      document.getElementById('date_button2').addEventListener('click', displayDate2);
+      function displayDate2() {
+        document.getElementById('date_place2').innerHTML = Date();
+      }
+      window.addEventListener('resize', displayRandom)
+      function displayRandom() {
+        document.getElementById('random_div').innerHTML = Math.random();
+      }
+      //document.getElementById("node_value").innerHTML = document.getElementById('button').firstChild.nodeValue;
+      document.getElementById('node_value').innerHTML = document.getElementById('mouse_div').childNodes[0].nodeValue;
+      document.getElementById('node_name').innerHTML = document.getElementById('mouse_div').nodeName;
+      
+      const new_element = document.createElement('p');
+      const new_node = document.createTextNode('Created node');
+      new_element.appendChild(new_node);
+      // const parent_element = document.getElementById("created_element")
+      // parent_element.appendChild(new_element);
+      document.getElementById('created_element').appendChild(new_element);
+      
+      const allDiv = document.getElementsByTagName('div');
+      document.getElementById('collection').innerHTML = allDiv[2].innerHTML;
+
+      // for (let i = 0; i < allDiv.length; i++) {
+      //   allDiv[i].innerHTML += " || loop through divs";
+      // }
+      
+      // const allDiv2 = document.querySelectorAll('div');
+      // for (let i = 0; i < allDiv2.length; i++) {
+      //   allDiv2[i].innerHTML += " || second loop";
+      // }
+
+      document.getElementById('window_height').innerHTML = window.innerHeight
+      document.getElementById('window_width').innerHTML = window.innerWidth
+      document.getElementById('screen_height').innerHTML = screen.height
+      document.getElementById('avail_height').innerHTML = screen.availHeight
+      document.getElementById('url').innerHTML = window.location.href
+      document.getElementById('domain').innerHTML = window.location.hostname
+      document.getElementById('patch').innerHTML = window.location.pathname
+
+      function confirmButton() {
+        let text = '';
+
+        if (window.confirm('OK or Cancel')) {
+          text = 'You pressed OK';
+        } else {
+          text = 'You pressed Cancel';
+        }
+        document.getElementById('confirm_box').innerHTML = text;
+      }
+
+      function confirmButton2() {
+        let text = '';
+        const promptValue = window.prompt('Provide something');
+
+        if (promptValue === '' || !promptValue) {
+          text = 'You provided nothing';
+        } else {
+          text = 'You provided: ' + promptValue;
+        }
+        document.getElementById('prompt_box').innerHTML = text;
+      }
+
+      document.getElementById('ok_button').addEventListener('click', checkNumber)
+      function checkNumber() {
+        const number = document.getElementById('number_input');
+
+        if (number.checkValidity()) {
+          document.getElementById('is_number_ok').innerHTML = 'Number OK.';
+        } else {
+          document.getElementById('is_number_ok').innerHTML = number.validationMessage;
+        }
+      }
+
+      // document.getElementById('ok_button').onclick = function () {
+      //   checkNumber();
+      //   ifOverflow();
+      // }
+      document.getElementById('ok_button').addEventListener('click', ifOverflow)
+      function ifOverflow() {
+        if (document.getElementById('number_input').validity.rangeOverflow) {
+          document.getElementById('if_overflow').innerHTML = 'Too large.'
+        } else {
+          document.getElementById('if_overflow').innerHTML = 'Input OK.'
+        }
+      }
+
+      localStorage.setItem('key_local', 'value_local');
+      document.getElementById('local_storage').innerHTML = localStorage.getItem('key_local');
+      sessionStorage.setItem('key_session', 'value_session');
+      document.getElementById('session_storage').innerHTML = sessionStorage.getItem('key_session');
+
+      const file = 'fetch_info.txt'
+      fetch(file)
+      .then(x => x.text())
+      .then(x => document.getElementById("fetch").innerHTML = x);
+
+      
+    </script>
+  </body>
+</html>

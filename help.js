@@ -40,13 +40,15 @@ if (typeof myObj !== "undefined" && myObj !== null)
     age: 50
   };
 let { firstName, lastName: name } = person;
-name // Doe
+firstName  // 'John'
+name // 'Doe'
 
 const fruits = ["Bananas", "Oranges", "Apples", "Mangos"];
 let [fruit1, , fruit3] = fruits;
 console.log(fruit3)  // Apples
 let [fruit1, ...rest] = fruits;
 console.log(rest)  // [ 'Oranges', 'Apples', 'Mangos' ]
+
 
 
 
@@ -84,12 +86,12 @@ word.length  // 2
 word[0] // A
 word.at(-2) // A // supports negatives
 word.charAt(0) // A // return "" if not found
-word.charCodeAt(0) // 65
+word.charCodeAt(0) // 65  // ord()
 // slice
 word.slice(0, 4)  // ABCD
 word.slice(-2)  // CD  / takes last two elemnts
 word.slice(0, -2)  // AB  / drops two last elemnts
-word.slice(1, -2)  // B  / drops first elemen and two last elemnts
+word.slice(1, -2)  // B  / from first elemen and two last elemnts
 word.substring(0, 4)  // ABCD
 // split by character, 
 word.split('')  // split every char ['A', 'B', 'C']
@@ -118,23 +120,28 @@ word.repeat(2)  // ABCDABCD
 word.replace('a', 'b') // method replaces only the first match:
 word.replace(/a/ig, 'b') // insensitive, global
 s = s.replace(/[\W_]/ig, '').toLowerCase();  // delete all non-alnumeric including underscore
+word.replaceAll('a', 'b') // method replaces all matchs:
 // index, find
 let word = 'ABC';
 word.indexOf('A', 0)  // 0
 word.lastIndexOf('A', 0)  // 0  // strats from the end
-s.split('').join('').reverse();  // string reverse through an array
-word.includes('A')  // true
-word.search('A')  // 0
+'qwer'.split('').reverse().join('');  // rewq // string reverse through an array
+word.includes('A')  // true  // in
+word.search('A')  // 0  // index
 word.search(/\d/) // -1
-word.match('A')  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
-word.match(/\w/)  // isalnum()
+'a9b8'.match(/\d+/)  // for reqex // [ '9', index: 1, input: 'a9b8', groups: undefined ]
+'a90b8'.match(/\d+/g)  // [ '90', '8' ]
+'a9b8'.search(/\d+/)  // 1
 word.match(/a/gi)  // [ 'A' ]
+word.match(/\w/)  // isalnum()
+word.match('A')  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
 word.startsWith('A', 0)  // true
 // string interpolation
 let word1 = 'AB';
 let word2 = 'CD';
 `Joined ${word1} and ${word2}`
 console.log(Array.from("Hello"))  // [ 'H', 'e', 'l', 'l', 'o' ]
+typeof '1' === 'string'  // instanceof
 
 String(false)      // returns "false"
 String(true)       // returns "true"
@@ -154,6 +161,7 @@ console.log(NaN || 5)  // 5
 console.log(isNaN(NaN))  // true
 console.log(isNaN(NaN))  // true
 isNaN(1 / 'a')  // true
+typeof 1 === 'number'  // instanceof
 typeof (NaN)  // number
 typeof (Infinity)  // number
 // hexadecimal to decimal
@@ -169,7 +177,7 @@ let y = BigInt(1234567890123456789012345)
 let y = 1234567890123456789012345n
 Number.isInteger(2)  // true
   // round
-  (1.234).toFixed(2);  // 1.23
+  (1.234).toFixed(2);  // 1.23  // trailing zeros
 (1.234).toPrecision(2);  // 1.2
 // convert to number
 Number(true)  // 1
@@ -211,7 +219,8 @@ letters instanceof Array  // true
 letters.push('D')  // append the new value and returns the new array length
 letters.pop()  // pop the last value and returns it
 letters.shift()  // pop the first value and returns it
-fruits.splice(2, 1, val);  // insert(2, val), 1 is to revmove one substitute value
+nums = [5, 3, 2, 1, 4]  // remove, discard, delete
+nums.splice(3, 2, 'substitute') // [1, 4]; => nums = [5, 3, 2]
 letters.unshift('A')  // append the new value at the beginning and returns the new array length
 delete fruits[0]  // removes value but leaves empy index
 letters[letters.length - 1] = 'D'
@@ -232,7 +241,7 @@ letters[letters.length - 1]  // 'D'
 //index
 fruits.indexOf("Apple")  // 2
 fruits.lastIndexOf("Apple")  // 2 // Finds last occurrence
-fruits.includes("Apple")  // true
+fruits.includes("Apple")  // true  // 'Apple' in fuits
 fruits.sort()  // sort in-place
 fruits.reverse()  // reverse in-place and returns reversed object
 fruits.toSorted()  // creates new sorted obj
@@ -340,7 +349,7 @@ fruits.forEach(fruit => console.log(fruit))
 // Object
 // Create a JavaScript object
 const person = { firstName: "John", lastName: "Doe" };
-const dp = {[code.length]: 1};
+const dp = { [code.length]: 1 };
 
 // Add Properties
 person.age = 50;
@@ -535,6 +544,15 @@ bananas 300
 oranges 200
 
 */
+for (const item of fruits) console.log(item)  // list key, val pairs
+for (const key in fruits) console.log(key)  // ''
+for (const key of fruits.keys()) console.log(key)  // list keys
+for (const key in fruits.keys()) console.log(key)  // ''
+for (const val of fruits.values()) console.log(val)  // list values
+for (const val in fruits.values()) console.log(val)  // ''
+for (const [key, val] of fruits) console.log(key)  // list keys
+for (const [key, val] of fruits) console.log(val)  // list vals
+for (const [key, val] of fruits) console.log(key, val)  // list key, val pairs 
 
 
 /*
@@ -808,6 +826,20 @@ two_Sum.modLanguage('Py3')
 console.log(two_Sum.language)
 
 
+// Adding a method to the String class
+function capitalize(word) {
+  return word[0].toUpperCase() + word.slice(1,)
+}
+
+String.prototype.toJadenCase = function () {
+  return this.split(' ').map(capitalize).join(' ')
+}
+
+console.log("How can mirrors be real if our eyes aren't real".toJadenCase())
+
+
+
+
 
 
 
@@ -846,20 +878,21 @@ const numbersAny = numbers.some(number => number > 10)  // true
 
 
 // JSON
-const oppos_brackets = { ')': '(', ']': '[' }
+// object -> string
 // like json.dumps(), pd.read_json("mtcars.json")
-console.log(JSON.stringify(oppos_brackets))  // {")":"(","]":"["}
+JSON.stringify({ name: 'John', age: 30, city: 'New York' })  // {"name":"John","age":30,"city":"New York"}
 
 // like json.loads(), mtcars.to_json()
-JSON.parse(text)  // string -> object
+// string -> object
+JSON.parse('{"name":"John", "age":30, "city":"New York"}')  // { name: 'John', age: 30, city: 'New York' }
 
 
 
 // function
 // function defining
-encode(words) {}
-encode = (words) => {}
-encode = function(words) {}
+encode(words) { }
+encode = (words) => { }
+encode = function (words) { }
 
 
 // function myFunction(a, b) {
@@ -954,6 +987,7 @@ console.log(person1.fullName.bind(person2)())  // John Doe
 */
 
 // indefinite number of arguments as an array:
+// reduce()
 function sum(...args) {
   let sum = 0;
   for (let arg of args) {
@@ -978,7 +1012,7 @@ class Solution {
     this.words = words;
   }
 
-  encode = function() {
+  encode = function () {
     let encoded = '';
 
     for (let word of this.words) {
@@ -995,21 +1029,30 @@ class Solution {
 console.log(new Solution(["code", "site", "love", "you"]).encode())
 
 
-class Car {
-  constructor(name, year) {
-    this.name = name;
-    this.year = year;
-  };
-
-  title(punct) {
-    return this.name + ' ' + this.year + punct
+class Lego {
+  constructor(theme) {
+    this.theme = theme;
+  }
+  getTheme() {
+    return 'It\'s a ' + this.theme
   }
 }
 
-car1 = new Car('Ford', 2014)
-car2 = new Car('Audi', 2019)
+class Interest extends Lego {
+  constructor(theme, interest) {
+    super(theme);
+    this.interest = interest;
+  }
+  getInterest(exclamation) {
+    return this.getTheme() + ' ' + this.interest + exclamation
+  }
+}
 
-console.log(car1.title('!'))
+const technic1 = new Lego('techinc')
+console.log(technic1.getTheme())
+
+const interest1 = new Interest('techinc', 'truck')
+console.log(interest1.getInterest('!'))
 
 
 
@@ -1038,7 +1081,7 @@ Math.PI  // 3.14
 Math.SQRT1_2  // 1.41
 Math.LN2  // 0.69
 Math.LN10  // 2.3
-Math.round(4.6)  // 5
+Math.round(4.6)  // 5  // 5.toFixed(2) => 5.00
 Math.ceil(4.6)  // 5
 Math.floor(4.6)  // 4
 Math.trunc(4.6)  // 4
@@ -1059,10 +1102,8 @@ Math.log10(100)  // 2
 
 
 // reduce
-// sum (replacement)
-reduce((a, b) => a + b)
-
-let timeToEat = piles.reduce((totalTime, pile) => totalTime + Math.ceil(pile / mid), 0);
+[1, 2, 100, 3].reduce((total, current) => total + current)  // 106  // sum (replacement)
+[1, 2, 100, 3].reduce((maxNumber, current) => maxNumber > current ? maxNumber : current)  // 100  // get max element
 
 
 
@@ -1071,6 +1112,55 @@ let timeToEat = piles.reduce((totalTime, pile) => totalTime + Math.ceil(pile / m
 
 
 
+// setter getter
+class Rectangle {
+  constructor(height, width) {
+    this._height = height;
+    this._width = width;
+  }
 
+  get height() {
+    return `${this._height.toFixed(2)} cm`
+  }
+
+  get width() {
+    return `${this._width.toFixed(2)} cm`
+  }
+
+  set height(newHeight) {
+    if (newHeight > 0) {
+      this._height = newHeight;
+    } else {
+      console.log("Height must be greater than 0")
+    }
+  }
+
+  set width(newWidth) {
+    if (newWidth > 0) {
+      this._height = newWidth;
+    } else {
+      console.log("Height must be greater than 0")
+    }
+  }
+
+  deleteHeight() {
+    delete this._height
+    console.log("Height deleted.");
+  }
+
+  deleteWidth() {
+    delete this._width
+    console.log("Width deleted.");
+  }
+}
+
+const rectangle1 = new Rectangle(2, 5)
+rectangle1.height = 3;
+rectangle1.width = 6;
+
+rectangle1.deleteHeight()
+
+console.log(rectangle1.height)
+console.log(rectangle1.width)
 
 

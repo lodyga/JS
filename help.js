@@ -103,8 +103,10 @@ word.split(',')  // split by ','
 word.join('')  // joins wihout any separator
 word.join(',') // letters.join() by default joins with commas
 //
-word.toUpperCase()
-word.toLowerCase()
+word.toUpperCase()  // letter.upper()
+word.toLowerCase()  // letter.lower()
+letter === letter.toUpperCase() ? letter.toLowerCase() : letter.toUpperCase()  // isUpperCase() isLowerCase()
+'nsnsn'.split('').filter(letter => letter === 'n').length  // 3 count()
 // removes whitespaces
 word.trim()  // strip()
 word.trimStart()  // lstrip()
@@ -119,6 +121,7 @@ number.toString(2)  // decinal to binary
 word.repeat(2)  // ABCDABCD
 word.replace('a', 'b') // method replaces only the first match:
 word.replace(/a/ig, 'b') // insensitive, global
+'29'.replace(/\d/g, digit => digit < '5' ? '0' : '1')  // '01'
 s = s.replace(/[\W_]/ig, '').toLowerCase();  // delete all non-alnumeric including underscore
 word.replaceAll('a', 'b') // method replaces all matchs:
 // index, find
@@ -134,7 +137,8 @@ word.search(/\d/) // -1
 'a9b8'.search(/\d+/)  // 1
 word.match(/a/gi)  // [ 'A' ]
 word.match(/\w/)  // isalnum()
-word.match('A')  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
+word.match(/A/)  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
+word.match(/(A)/)[1]  // 'A'  // First capture group
 word.startsWith('A', 0)  // true
 // string interpolation
 let word1 = 'AB';
@@ -176,15 +180,16 @@ number.toString(2);  // 11111111
 let y = BigInt(1234567890123456789012345)
 let y = 1234567890123456789012345n
 Number.isInteger(2)  // true
-  // round
-  (1.234).toFixed(2);  // 1.23  // trailing zeros
+// round
+(1.234).toFixed(2);  // 1.23  // trailing zeros
 (1.234).toPrecision(2);  // 1.2
 // convert to number
 Number(true)  // 1
 Number(false)  // 0
 Number('10.3')  // 10.3
-Number.parseInt('-10.3')  // -10
+Number.parseInt('-10.3')  // -10  //
 parseInt('-10.3')  // -10
+parseInt(binary, 2);  // binary to decimal
 
 // convert to number
 Number("3.14")  // 3.14
@@ -337,8 +342,29 @@ for (let car of person.cars) {
 fruits.forEach(fruit => console.log(fruit))
 
 
+// array compare
+// O(nlogn) 
+function comp(nums1, nums2) {
+  if (!nums1 || !nums2) return false
+  if (nums1.length != nums2.length) return false
 
+  nums1.sort()
+  nums2.sort()
 
+  return nums1.map(num => num**2).every((num, index) => num === nums2[index])
+}
+
+// range
+// range(start, length)
+const range = (start, length) => 
+  Array.from({ length: length }, (_, index) => (index) * start)
+// range(start, stop)
+const range = (start, stop) => 
+  Array.from({ length: (stop - start) }, (_, index) => start + index)
+// range(start, stop, length)
+const range = (start, stop, step) => 
+  Array.from({ length: Math.ceil((stop - start) / step) }, 
+    (_, index) => start + (index * step))
 
 
 
@@ -350,6 +376,20 @@ fruits.forEach(fruit => console.log(fruit))
 // Create a JavaScript object
 const person = { firstName: "John", lastName: "Doe" };
 const dp = { [code.length]: 1 };
+
+// in
+'firstName' in person  // true
+
+// keys()
+const closing_brackest = Object.keys(oppos_brackets)
+console.log(closing_brackest)  // [ ')', ']' ]
+// values()
+const opening_brackest = Object.values(oppos_brackets)
+console.log(opening_brackest)  // [ '(', '[' ]
+// like items() in Python; Object.entries(oppos_brackets))
+for (let [key, val] of Object.entries(oppos_brackets)) {
+  console.log(key + ': ' + val)
+}
 
 // Add Properties
 person.age = 50;
@@ -469,17 +509,6 @@ console.log(Object.keys(oppos_brackets).length)  // 2
 // merege objects to get all properities
 console.log({ ...{ 'r': 1, 'a': 1, 't': 1 }, ...{ 'c': 1, 'a': 1, 'r': 1 } })  // { r: 1, a: 1, t: 1, c: 1 }
 
-// values()
-const opening_brackest = Object.values(oppos_brackets)
-console.log(opening_brackest)  // [ '(', '[' ]
-// keys()
-const closing_brackest = Object.keys(oppos_brackets)
-console.log(closing_brackest)  // [ ')', ']' ]
-// like items() in Python; Object.entries(oppos_brackets))
-for (let [key, val] of Object.entries(oppos_brackets)) {
-  console.log(key + ': ' + val)
-}
-
 
 const car = { type: "Fiat", model: "500", color: "white" };
 car.color = "red";
@@ -508,6 +537,9 @@ letters.entries()  // [Set Entries] { [ 'a', 'a' ], [ 'b', 'b' ], [ 'c', 'c' ] }
 for (let elem of new Set([2, 3])) {  // 'in' gives no answer
   console.log(elem)
 }
+const equalSets = (x, y) => x.size == y.size && [...x].every(num => y.has(num))  // equal, same
+
+
 
 
 
@@ -816,7 +848,7 @@ two_Sum.modLanguage('Py3')
 
 console.log(two_Sum.language)
 
-// Adding a method to the constructor function prototype:
+// Adding a method to the constructor function epe:
 Solution.prototype.modLanguage = function (name) {
   this.language = name
 }
@@ -837,7 +869,10 @@ String.prototype.toJadenCase = function () {
 
 console.log("How can mirrors be real if our eyes aren't real".toJadenCase())
 
-
+// Adding count method to Array class
+Array.prototype.count = function (letter) {
+  return this.filter(currentLetter => currentLetter === letter).length
+}
 
 
 

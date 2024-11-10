@@ -86,9 +86,9 @@ word.length  // 2
 word[0] // A
 word.at(-2) // A // supports negatives
 word.charAt(0) // A // return "" if not found
-word.charCodeAt(0) // 65  // ord()
-// slice
-word.slice(0, 4)  // ABCD
+'a'.charCodeAt(0) // 97  // ord("a") => 97
+String.fromCharCode(97)  // 'a'  // chr(97) => "a"
+word.slice(0, 4)  // ABCD  // slice
 word.slice(-2)  // CD  / takes last two elemnts
 word.slice(0, -2)  // AB  / drops two last elemnts
 word.slice(1, -2)  // B  / from first elemen and two last elemnts
@@ -106,7 +106,7 @@ word.join(',') // letters.join() by default joins with commas
 word.toUpperCase()  // letter.upper()
 word.toLowerCase()  // letter.lower()
 letter === letter.toUpperCase() ? letter.toLowerCase() : letter.toUpperCase()  // isUpperCase() isLowerCase()
-'nsnsn'.split('').filter(letter => letter === 'n').length  // 3 count()
+'nsnsn'.split('').filter(letter => letter === 'n').length  // 3 .count()
 // removes whitespaces
 word.trim()  // strip()
 word.trimStart()  // lstrip()
@@ -122,6 +122,7 @@ word.repeat(2)  // ABCDABCD
 word.replace('a', 'b') // method replaces only the first match:
 word.replace(/a/ig, 'b') // insensitive, global
 '29'.replace(/\d/g, digit => digit < '5' ? '0' : '1')  // '01'
+'ATTGC'.dna.replace(/\w/g, letter => toComplement[letter])  // 'TAACG'
 s = s.replace(/[\W_]/ig, '').toLowerCase();  // delete all non-alnumeric including underscore
 word.replaceAll('a', 'b') // method replaces all matchs:
 // index, find
@@ -129,7 +130,7 @@ let word = 'ABC';
 word.indexOf('A', 0)  // 0
 word.lastIndexOf('A', 0)  // 0  // strats from the end
 'qwer'.split('').reverse().join('');  // rewq // string reverse through an array
-word.includes('A')  // true  // in
+word.includes('A')  // true  // 'A' in word  // in
 word.search('A')  // 0  // index
 word.search(/\d/) // -1
 'a9b8'.match(/\d+/)  // for reqex // [ '9', index: 1, input: 'a9b8', groups: undefined ]
@@ -137,6 +138,7 @@ word.search(/\d/) // -1
 'a9b8'.search(/\d+/)  // 1
 word.match(/a/gi)  // [ 'A' ]
 word.match(/\w/)  // isalnum()
+word.match(/\d/)  // isdigit()
 word.match(/A/)  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
 word.match(/(A)/)[1]  // 'A'  // First capture group
 word.startsWith('A', 0)  // true
@@ -161,9 +163,10 @@ true.toString()    // returns "true"
 
 // numbers
 // NaN Not a Number
-console.log(NaN || 5)  // 5
-console.log(isNaN(NaN))  // true
-console.log(isNaN(NaN))  // true
+NaN || 5  // 5
+NaN ?? 5  // NaN
+isNaN(NaN)  // true
+isNaN(NaN)  // true
 isNaN(1 / 'a')  // true
 typeof 1 === 'number'  // instanceof
 typeof (NaN)  // number
@@ -186,6 +189,7 @@ Number.isInteger(2)  // true
 // convert to number
 Number(true)  // 1
 Number(false)  // 0
++'10.2'  // 10.2 (number)
 Number('10.3')  // 10.3
 Number.parseInt('-10.3')  // -10  //
 parseInt('-10.3')  // -10
@@ -199,7 +203,8 @@ Number("")  // 0
 Number(false)  // 0
 Number(true)  // 1
 
-
+9 % 4  // 1  // mod
+13 / 4 | 0  // 3  == 13 // 4  // div
 
 
 
@@ -220,7 +225,8 @@ for (let i = 0; i < bucket.length; i++) {
 const letters = ['B', 'C'];
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 Array.isArray(letters)  // true
-letters instanceof Array  // true
+letters instanceof Array  // true // type
+
 letters.push('D')  // append the new value and returns the new array length
 letters.pop()  // pop the last value and returns it
 letters.shift()  // pop the first value and returns it
@@ -243,14 +249,14 @@ letters.join(' and ')  // B and C and D
 letters.length  // 3
 letters.sort() // [ 'B', 'C', 'D' ]
 letters[letters.length - 1]  // 'D'
-//index
-fruits.indexOf("Apple")  // 2
+fruits.indexOf("Apple")  // 2  //index
 fruits.lastIndexOf("Apple")  // 2 // Finds last occurrence
-fruits.includes("Apple")  // true  // 'Apple' in fuits
-fruits.sort()  // sort in-place
+fruits.includes("Apple")  // true  // 'Apple' in fuits  // in
+fruits.sort()  // sorts in-place and returns sorted()
 fruits.reverse()  // reverse in-place and returns reversed object
 fruits.toSorted()  // creates new sorted obj
 fruits.toReversed()  // creates new reversed obj
+[...'123']  // ['1', '2', '3']
 
 Math.max.apply(null, numbers)  // find max in array
 Math.max(...numbers)  // find max in array
@@ -306,7 +312,7 @@ console.log(Object.entries(fruits))
 
 
 
-// joining arrays
+// join arrays
 const Array3 = [...permutation, nums[index]]
 const Array3 = Array1.concat(Array2);
 fruits.copyWithin(2, 0);
@@ -379,6 +385,8 @@ const dp = { [code.length]: 1 };
 
 // in
 'firstName' in person  // true
+!('firstName' in person)  // false
+!person['firstName']  // false
 
 // keys()
 const closing_brackest = Object.keys(oppos_brackets)
@@ -526,8 +534,8 @@ delete object['name']
 
 // Set
 // A Set has no keys, so keys() returns the same as values().
-letters = new Set(['a', 'b'])
-letters instanceof Set  // true
+const letters = new Set(['a', 'b'])
+letters instanceof Set  // true  // type
 letters.add('c')
 letters.has('a')  // true
 letters.size  // 3
@@ -544,6 +552,7 @@ const equalSets = (x, y) => x.size == y.size && [...x].every(num => y.has(num)) 
 
 
 // Map
+fruits instanceof Map  // true  // type
 const fruits = new Map([
   ["apples", 500],
   ["bananas", 300],
@@ -561,7 +570,7 @@ fruits.get('apples')  // 500
 fruits.has('apples');  // true
 fruits.delete("apples");
 fruits.clear();  // removes all elements
-fruits instanceof Map  // true
+
 
 fruits.forEach((value, key) => {
   console.log(key, value)
@@ -628,6 +637,10 @@ counts[num] = (counts[num] ?? 0) + 1;
 let age = null;  // let age = undefined
 let text = 'missing';
 console.log(age ?? text)  // missing
+
+// compare || and ??
+(NaN ?? 0)  // NaN  # Nan is not null
+(NaN || 0)  // 0
 
 // The Optional Chaining Operator (?.)
 const car = { type: "Fiat", model: "500", color: "white" };
@@ -806,6 +819,14 @@ const oppos_brackets = { ')': '(', "]": "[" }
 for (let [key, val] of Object.entries(oppos_brackets)) {
   console.log(key + ': ' + val)
 }
+
+
+
+
+
+
+// regex
+/^(\d{4}|\d{6})$/.test(pin)  // match 4 or 6 digit pin
 
 
 

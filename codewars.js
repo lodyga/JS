@@ -90,8 +90,8 @@ function digitalRoot(n) {
 
 // Detect Pangram
 // https://www.codewars.com/kata/545cedaa9943f7fe7b000048/train/
-console.log(isPangram("The quick, brown fox jumps over the lazy dog!"), true)
-console.log(isPangram("ABCD45EFGH,IJK,LMNOPQR56STUVW3XYZ"), true)
+console.log(isPangram('The quick, brown fox jumps over the lazy dog!'), true)
+console.log(isPangram('ABCD45EFGH,IJK,LMNOPQR56STUVW3XYZ'), true)
 
 
 function isPangram(sentence) {
@@ -141,8 +141,8 @@ function solution(nums) {
 
 // The Hashtag Generator
 // https://www.codewars.com/kata/52449b062fb80683ec000024
-console.log(generateHashtag(" Hello there thanks for trying my Kata"), "#HelloThereThanksForTryingMyKata")
-console.log(generateHashtag("    Hello     World   "), "#HelloWorld")
+console.log(generateHashtag(' Hello there thanks for trying my Kata'), '#HelloThereThanksForTryingMyKata')
+console.log(generateHashtag('    Hello     World   '), '#HelloWorld')
 console.log(generateHashtag(''), false)  // 'Expected an empty string to return false'
 console.log(generateHashtag('Do We have A Hashtag')[0], '#')  // 'Expeted a Hashtag (#) at the beginning.'
 console.log(generateHashtag('Codewars'), '#Codewars')  // 'Should handle a single word.'
@@ -445,6 +445,7 @@ function orderWeight(number) {
       else return 0
     }
   })
+
   return numberList.join(' ')
 }
 
@@ -2674,8 +2675,8 @@ function digPow(number, power) {
     .toString()
     .split('')
     .reduce((total, current, index) => total + current ** (index + power), 0)
-  
-    return (total % number) ? -1 : (total / number)
+
+  return (total % number) ? -1 : (total / number)
 }
 
 
@@ -2690,7 +2691,7 @@ console.log(setAlarm(false, false), false)
 console.log(setAlarm(true, false), true)
 
 
-function setAlarm(employed, vacation){
+function setAlarm(employed, vacation) {
   return employed && !vacation
 }
 
@@ -2789,7 +2790,7 @@ function getMiddle(text) {
   if (textLength % 2) {
     return text.slice((textLength - 1) / 2, (textLength - 1) / 2 + 1)
   } else {
-    return text.slice(textLength/2 - 1, textLength/2 + 1)
+    return text.slice(textLength / 2 - 1, textLength / 2 + 1)
   }
 }
 
@@ -2807,7 +2808,7 @@ console.log(rentalCarCost(8), 270)
 
 function rentalCarCost(days) {
   if (days >= 7) return days * 40 - 50
-  else if (days >=3) return days * 40 - 20
+  else if (days >= 3) return days * 40 - 20
   else return days * 40
 }
 
@@ -2945,7 +2946,7 @@ function fakeBin(number) {
       .split('')
       .map(digit => digit < '5' ? '0' : '1')
       .join('')
-    )
+  )
 }
 
 function fakeBin(number) {
@@ -2958,13 +2959,13 @@ function fakeBin(number) {
 
 // Take a Ten Minutes Walk
 // https://www.codewars.com/kata/54da539698b8a2ad76000228
-console.log(isValidWalk(['n','s','n','s','n','s','n','s','n','s']), true)
-console.log(isValidWalk(['w','e','w','e','w','e','w','e','w','e','w','e']), false)
+console.log(isValidWalk(['n', 's', 'n', 's', 'n', 's', 'n', 's', 'n', 's']), true)
+console.log(isValidWalk(['w', 'e', 'w', 'e', 'w', 'e', 'w', 'e', 'w', 'e', 'w', 'e']), false)
 console.log(isValidWalk(['w']), false)
-console.log(isValidWalk(['n','n','n','s','n','s','n','s','n','s']), false)
+console.log(isValidWalk(['n', 'n', 'n', 's', 'n', 's', 'n', 's', 'n', 's']), false)
 
 
-function count(directions, direction){
+function count(directions, direction) {
   return directions.filter(letter => letter === direction).length
 }
 
@@ -3002,7 +3003,8 @@ function findAverage(numbers) {
   if (numbers.length === 0) return 0
   else {
     const sum = numbers.reduce((total, current) => total + current);
-    return  sum / numbers.length}
+    return sum / numbers.length
+  }
 }
 
 
@@ -3156,12 +3158,12 @@ console.log(areaOrPerimeter(4, 4), 16)
 console.log(areaOrPerimeter(6, 10), 32)
 
 
-const areaOrPerimeter = function(height , width) {
+const areaOrPerimeter = function (height, width) {
   return (height === width) ? height ** 2 : 2 * (height + width)
 }
 
 
-const areaOrPerimeter = function(height , width) {
+const areaOrPerimeter = function (height, width) {
   if (height === width) return height ** 2
   else return 2 * (height + width)
 }
@@ -3172,11 +3174,11 @@ const areaOrPerimeter = function(height , width) {
 
 // Total amount of points
 // https://www.codewars.com/kata/5bb904724c47249b10000131
-console.log(points(['1:0','2:0','3:0','4:0','2:1','3:1','4:1','3:2','4:2','4:3']), 30)
-console.log(points(['1:1','2:2','3:3','4:4','2:2','3:3','4:4','3:3','4:4','4:4']), 10)
-console.log(points(['0:1','0:2','0:3','0:4','1:2','1:3','1:4','2:3','2:4','3:4']), 0)
-console.log(points(['1:0','2:0','3:0','4:0','2:1','1:3','1:4','2:3','2:4','3:4']), 15)
-console.log(points(['1:0','2:0','3:0','4:4','2:2','3:3','1:4','2:3','2:4','3:4']), 12)
+console.log(points(['1:0', '2:0', '3:0', '4:0', '2:1', '3:1', '4:1', '3:2', '4:2', '4:3']), 30)
+console.log(points(['1:1', '2:2', '3:3', '4:4', '2:2', '3:3', '4:4', '3:3', '4:4', '4:4']), 10)
+console.log(points(['0:1', '0:2', '0:3', '0:4', '1:2', '1:3', '1:4', '2:3', '2:4', '3:4']), 0)
+console.log(points(['1:0', '2:0', '3:0', '4:0', '2:1', '1:3', '1:4', '2:3', '2:4', '3:4']), 15)
+console.log(points(['1:0', '2:0', '3:0', '4:4', '2:2', '3:3', '1:4', '2:3', '2:4', '3:4']), 12)
 
 
 function points(games) {
@@ -3360,7 +3362,7 @@ console.log(arithmetic(5, 2, 'multiply'), 10)
 console.log(arithmetic(8, 2, 'divide'), 4)
 
 
-function arithmetic(a, b, operator){
+function arithmetic(a, b, operator) {
   switch (operator) {
     case 'add': return a + b
     case 'subtract': return a - b
@@ -3385,7 +3387,7 @@ console.log(getSum(-1, 2), 2)
 
 function getSum(a, b) {
   if (b < a) [a, b] = [b, a]
-  
+
   let sum = 0;
 
   for (let index = a; index <= b; index++) {
@@ -3498,7 +3500,7 @@ function domainName(url) {
 }
 
 
-function domainName(url){
+function domainName(url) {
   return url.replace(/(https?:\/\/)?(www\.)?([\w-]+)\..*/, `$3`)
 }
 
@@ -3515,7 +3517,7 @@ console.log(gimme([5, 10, 14]), 1)
 function gimme(triplet) {
   const sorted = [...triplet].sort((a, b) => a - b)
 
- return triplet.indexOf(sorted[1]);
+  return triplet.indexOf(sorted[1]);
 }
 
 
@@ -3578,7 +3580,7 @@ function attackOrder(fighter1, fighter2, firstAttacker) {
 function declareWinner(fighter1, fighter2, firstAttacker) {
   const [first, second] = attackOrder(fighter1, fighter2, firstAttacker)
   const rounds = [[first, second], [second, first]];
-  
+
   while (true) {
     for (const [attacker, defender] of rounds) {
       defender.health -= attacker.damagePerAttack;
@@ -3599,7 +3601,7 @@ console.log(primeFactors(7775460), "(2**2)(3**3)(5)(7)(11**2)(17)")
 console.log(primeFactors(7919), "(7919)")
 
 
-function primeFactors(number){
+function primeFactors(number) {
   // get dividers
   const dividers = [];
 
@@ -3619,7 +3621,7 @@ function primeFactors(number){
   for (const divider of dividers) {
     counter[divider] = (counter[divider] ?? 0) + 1
   }
-  
+
   // set answer string
   let answerString = '';
   for (const [key, value] of Object.entries(counter)) {
@@ -3700,7 +3702,7 @@ function powersOfTwo(number) {
 
 
 function powersOfTwo(number) {
-  return Array.from({length: number + 1}, (_, index) => 2 ** index)
+  return Array.from({ length: number + 1 }, (_, index) => 2 ** index)
 }
 
 
@@ -3753,5 +3755,1841 @@ console.log(twiceAsOld(29, 0), 29)
 function twiceAsOld(dadYearsOld, sonYearsOld) {
   return Math.abs(dadYearsOld - 2 * sonYearsOld)
 }
+
+
+
+
+
+// Disemvowel Trolls
+// https://www.codewars.com/kata/52fba66badcd10859f00097e
+console.log(disemvowel("This website is for losers LOL!"), "Ths wbst s fr lsrs LL!")
+console.log(disemvowel("No offense but,\nYour writing is among the worst I've ever read"), "N ffns bt,\nYr wrtng s mng th wrst 'v vr rd")
+console.log(disemvowel("What are you, a communist?"), "Wht r y,  cmmnst?")
+
+function disemvowel(text) {
+  return text.replace(/[aeoiu]/ig, '')
+}
+
+
+function isNotVovel(letter) {
+  return !'aeoiuAEOIOU'.includes(letter)
+}
+
+function disemvowel(text) {
+  return text.split('').filter(isNotVovel).join('')
+}
+
+
+
+
+
+// Isograms
+// https://www.codewars.com/kata/54ba84be607a92aa900000f1
+console.log(isIsogram("Dermatoglyphics"), true)
+console.log(isIsogram("isogram"), true)
+console.log(isIsogram("aba"), false)
+console.log(isIsogram("moOse"), false)
+console.log(isIsogram("isIsogram"), false)
+console.log(isIsogram(""), true)
+
+
+function isIsogram(text) {
+  const lowerCaseText = text.toLowerCase()
+
+  return text.length === new Set(lowerCaseText).size
+}
+
+
+
+
+
+// I love you, a little , a lot, passionately ... not at all
+// https://www.codewars.com/kata/57f24e6a18e9fad8eb000296
+console.log(howMuchILoveYou(7), "I love you")
+console.log(howMuchILoveYou(3), "a lot")
+console.log(howMuchILoveYou(6), "not at all")
+
+
+function howMuchILoveYou(number) {
+  const numberToPhrase = [
+    "I love you", "a little", "a lot",
+    "passionately", "madly", "not at all"
+  ]
+
+  return numberToPhrase[(number - 1) % 6]
+}
+
+
+function howMuchILoveYou(number) {
+  const numberToPhrase = {
+    0: "I love you",
+    1: "a little",
+    2: "a lot",
+    3: "passionately",
+    4: "madly",
+    5: "not at all",
+  }
+
+  return numberToPhrase[(number - 1) % 6]
+}
+
+
+
+
+
+// Who likes it?
+// https://www.codewars.com/kata/5266876b8f4bf2da9b000362
+console.log(likes([]), 'no one likes this')
+console.log(likes(['Peter']), 'Peter likes this')
+console.log(likes(['Jacob', 'Alex']), 'Jacob and Alex like this')
+console.log(likes(['Max', 'John', 'Mark']), 'Max, John and Mark like this')
+console.log(likes(['Alex', 'Jacob', 'Mark', 'Max']), 'Alex, Jacob and 2 others like this')
+
+
+function likes(names) {
+  if (names.length === 0) {
+    return 'no one likes this'
+  } else if (names.length === 1) {
+    return `${names[0]} likes this`
+  } else if (names.length === 2) {
+    return `${names[0]} and ${names[1]} like this`
+  } else if (names.length === 3) {
+    return `${names[0]}, ${names[1]} and ${names[2]} like this`
+  } else if (names.length >= 4) {
+    return `${names[0]}, ${names[1]} and ${names.length - 2} others like this`
+  }
+}
+
+
+
+
+
+// Count the Digit
+// https://www.codewars.com/kata/566fc12495810954b1000030/train/
+console.log(nbDig(5750, 0), 4700)
+console.log(nbDig(11011, 2), 9481)
+console.log(nbDig(12224, 8), 7733)
+console.log(nbDig(11549, 1), 11905)
+console.log(nbDig(14550, 7), 8014)
+console.log(nbDig(8304, 7), 3927)
+console.log(nbDig(10576, 9), 7860)
+console.log(nbDig(12526, 1), 13558)
+console.log(nbDig(7856, 4), 7132)
+console.log(nbDig(14956, 1), 17267)
+
+function nbDig(number, digitToSearch) {
+  let occurences = 0;
+
+  for (let index = 0; index <= number; index++) {
+    occurences += (index ** 2)
+      .toString()
+      .split('')
+      .filter(digit => digit == digitToSearch).length
+  }
+
+  return occurences
+}
+
+
+function nbDig(number, digitToSearch) {
+  const range = Array.from({ length: number + 1 }, (_, index) => index ** 2)
+
+  return (
+    range
+      .join('')
+      .split('')
+      .filter(digit => digit == digitToSearch)
+      .length
+  )
+}
+
+
+
+
+
+// Sum The Strings
+// https://www.codewars.com/kata/5966e33c4e686b508700002d/train/
+console.log(sumStr('4', '5'), '9')
+console.log(sumStr('34', '5'), '39')
+console.log(sumStr('9', ''), '9')
+console.log(sumStr('', '9'), '9')
+console.log(sumStr('', ''), '0')
+
+
+function sumStr(number1, number2) {
+  return (Number(number1) + Number(number2)).toString()
+}
+
+
+function sumStr(number1, number2) {
+  return ((parseInt(number1) || 0) + (parseInt(number2) || 0)).toString()
+}
+
+
+function sumStr(number1, number2) {
+  return (+number1 + +number2).toString()
+}
+
+
+
+
+
+// If you can't sleep, just count sheep!!
+// https://www.codewars.com/kata/5b077ebdaf15be5c7f000077/train/
+console.log(countSheep(0), '')
+console.log(countSheep(1), '1 sheep...')
+console.log(countSheep(2), '1 sheep...2 sheep...')
+console.log(countSheep(3), '1 sheep...2 sheep...3 sheep...')
+
+
+var countSheep = function (number) {
+  return Array.from({ length: number }, (_, index) => `${index + 1} sheep...`).join('')
+}
+
+
+var countSheep = function (number) {
+  let sheepString = '';
+
+  for (let index = 1; index <= number; index++) {
+    sheepString += `${index} sheep...`
+  }
+
+  return sheepString
+}
+
+
+
+
+
+// Anagram Detection
+// https://www.codewars.com/kata/529eef7a9194e0cbc1000255/train/
+console.log(isAnagram("foefet", "toffee"), true,)
+console.log(isAnagram("Buckethead", "DeathCubeK"), true)
+console.log(isAnagram("Twoo", "WooT"), true)
+console.log(isAnagram("dumble", "bumble"), false)
+console.log(isAnagram("ound", "round"), false)
+console.log(isAnagram("apple", "pale"), false)
+
+
+// counter as Object()
+var isAnagram = function (word1, word2) {
+  if (word1.length !== word2.length) return false
+
+  const counter1 = {};
+
+  for (const letter of word1.toLowerCase()) {
+    counter1[letter] = (counter1[letter] || 0) + 1
+  }
+
+  // subtract occurences in word2 from word1
+  for (const letter of word2.toLowerCase()) {
+    //if (!(letter in counter1)) return false
+    if (!counter1[letter]) return false
+
+    counter1[letter] -= 1;
+
+    if (counter1[letter] === -1) return false
+  }
+
+  // if anagram evely value should be 0
+  for (const val of Object.values(counter1)) {
+    if (val != 0) return false
+  }
+
+  return true
+}
+
+
+// counter as Map()
+var isAnagram = function (word1, word2) {
+  if (word1.length !== word2.length) return false
+
+  const counter1 = new Map();
+
+  for (const letter of word1.toLowerCase()) {
+    counter1.set(letter, (counter1.get(letter) || 0) + 1)
+  }
+
+  // subtract occurences in word2 from word1
+  for (const letter of word2.toLowerCase()) {
+    if (!counter1.has(letter)) return false
+
+    counter1.set(letter, counter1.get(letter) - 1)
+
+    if (counter1.get(letter) === -1) return false
+  }
+
+  // if anagram evely value should be 0
+  for (const val of counter1.values()) {
+    if (val !== 0) return false
+  }
+
+  return true
+}
+
+
+
+
+
+// Testing 1-2-3
+// https://www.codewars.com/kata/54bf85e3d5b56c7a05000cf9/train/
+console.log(number(["a", "b", "c"]), ["1: a", "2: b", "3: c"])
+console.log(number([]), [])
+
+
+var number = function (letters) {
+  return letters.map((letter, index) => `${index + 1}: ${letter}`)
+}
+
+
+
+
+
+// Delete occurrences of an element if it occurs more than n times
+// https://www.codewars.com/kata/554ca54ffa7d91b236000023/train/
+console.log(deleteNth([20, 37, 20, 21], 1), [20, 37, 21])
+
+
+function deleteNth(numbers, occurence) {
+  const seenNumbers = {};
+  const numbersLimitedByOccurence = [];
+
+  for (const number of numbers) {
+    if (seenNumbers[number] != occurence) {
+      seenNumbers[number] = (seenNumbers[number] || 0) + 1;
+      numbersLimitedByOccurence.push(number);
+    }
+  }
+
+  return numbersLimitedByOccurence
+}
+
+
+
+
+
+// Sort and Star
+// https://www.codewars.com/kata/57cfdf34902f6ba3d300001e/train/
+console.log(twoSort(["bitcoin", "take", "over", "the", "world", "maybe", "who", "knows", "perhaps"]), 'b***i***t***c***o***i***n')
+console.log(twoSort(["turns", "out", "random", "test", "cases", "are", "easier", "than", "writing", "out", "basic", "ones"]), 'a***r***e')
+console.log(twoSort(["lets", "talk", "about", "javascript", "the", "best", "language"]), 'a***b***o***u***t')
+console.log(twoSort(["i", "want", "to", "travel", "the", "world", "writing", "code", "one", "day"]), 'c***o***d***e')
+console.log(twoSort(["Lets", "all", "go", "on", "holiday", "somewhere", "very", "cold"]), 'L***e***t***s')
+
+
+function twoSort(wordList) {
+  return wordList.sort()[0].split('').join('***')
+}
+
+
+
+
+
+// Find the capitals
+// https://www.codewars.com/kata/539ee3b6757843632d00026b/train/
+console.log(capitals('CodEWaRs'), [0, 3, 4, 6])
+
+
+var capitals = function (word) {
+  const upperIndexes = [];
+
+  for (let index = 0; index < word.length; index++) {
+    if (word[index] === word[index].toUpperCase()) {
+      upperIndexes.push(index);
+    }
+  }
+
+  return upperIndexes
+}
+
+
+
+
+
+// List Filtering
+// https://www.codewars.com/kata/53dbd5315a3c69eed20002dd/train/
+console.log(filter_list([1, 2, 'a', 'b']), [1, 2])
+console.log(filter_list([1, 'a', 'b', 0, 15]), [1, 0, 15])
+console.log(filter_list([1, 2, 'aasf', '1', '123', 123]), [1, 2, 123])
+
+
+function filter_list(elements) {
+  return elements.filter(element => typeof element === 'number')
+}
+
+
+
+
+
+// Give me a Diamond
+// https://www.codewars.com/kata/5503013e34137eeeaa001648/train/
+console.log(diamond(5), '  *\n ***\n*****\n ***\n  *\n')
+console.log(diamond(1), '*\n')
+console.log(diamond(3), ' *\n***\n *\n')
+console.log(diamond(0), null)
+console.log(diamond(2), null)
+console.log(diamond(-3), null)
+
+
+function diamond(number) {
+  if (number % 2 === 0 ||
+    number < 0
+  ) return null
+
+  const half = (number - 1) / 2;
+  const upperDiamond = [];
+  const lowerDiamond = [];
+
+  for (let index = 0; index <= half; index++) {
+    upperDiamond.push(' '.repeat(half - index) + '*'.repeat(index * 2 + 1));
+  }
+
+  for (let index = 0; index < half; index++) {
+    lowerDiamond.push(' '.repeat(index + 1) + '*'.repeat(2 * (half - index) - 1));
+  }
+
+  // return upperDiamond.concat(lowerDiamond).join('\n') + '\n'
+  return [...upperDiamond, ...lowerDiamond].join('\n') + '\n'
+}
+
+
+
+
+
+// Round up to the next multiple of 5
+// https://www.codewars.com/kata/55d1d6d5955ec6365400006d/train/
+console.log(roundToNext5(0), 0)
+console.log(roundToNext5(2), 5)
+console.log(roundToNext5(3), 5)
+console.log(roundToNext5(12), 15)
+console.log(roundToNext5(21), 25)
+console.log(roundToNext5(30), 30)
+console.log(roundToNext5(-2), 0)
+console.log(roundToNext5(-5), -5)
+
+
+function roundToNext5(number) {
+  return Math.ceil(number / 5) * 5
+}
+
+
+function roundToNext5(number) {
+  return Math.floor(number / 5) * 5 + (number % 5 === 0 ? 0 : 5)
+}
+
+
+
+
+
+// Quarter of the year
+// https://www.codewars.com/kata/5ce9c1000bab0b001134f5af/train/
+console.log(quarterOf(3), 1)
+console.log(quarterOf(8), 3)
+console.log(quarterOf(11), 4)
+
+
+const quarterOf = (month) => {
+  return Math.floor((month - 1) / 3) + 1
+}
+
+
+const quarterOf = (month) => {
+  return Math.ceil(month / 3)
+}
+
+
+
+
+
+// Sum of two lowest positive integers
+// https://www.codewars.com/kata/558fc85d8fd1938afb000014/train/
+console.log(sumTwoSmallestNumbers([5, 8, 12, 18, 22]), 13)
+console.log(sumTwoSmallestNumbers([7, 15, 12, 18, 22]), 19)
+console.log(sumTwoSmallestNumbers([25, 42, 12, 18, 22]), 30)
+
+
+function sumTwoSmallestNumbers(numbers) {
+  const minNumber = Math.min(...numbers);
+  numbers.splice(numbers.indexOf(minNumber), 1);
+
+  return minNumber + Math.min(...numbers)
+}
+
+
+
+
+
+// Simple Encryption #1 - Alternating Split
+// https://www.codewars.com/kata/57814d79a56c88e3e0000786/solutions
+console.log(encrypt('012345', 1), '135024')
+console.log(encrypt('01234', 1), '13024')
+console.log(encrypt('This is a test!', 0), 'This is a test!')
+console.log(encrypt('This is a test!', 1), 'hsi  etTi sats!')
+console.log(encrypt('This is a test!', 2), 's eT ashi tist!')
+console.log(encrypt('This is a test!', 3), ' Tah itse sits!')
+console.log(encrypt('This is a test!', 4), 'This is a test!')
+console.log(encrypt('This is a test!', -1), 'This is a test!')
+console.log(encrypt('This kata is very interesting!', 1), 'hskt svr neetn!Ti aai eyitrsig')
+console.log(encrypt('', 0), '')
+console.log(encrypt(null, 0), null)
+
+
+function encrypt(text, number) {
+  if (text === null) return null
+
+  for (let index = 0; index < number; index++) {
+    let odd_text = '';
+    let even_text = '';
+
+    for (let index = 0; index < text.length; index++) {
+      if (index % 2) {
+        odd_text += text[index];
+      } else {
+        even_text += text[index]
+      }
+    }
+
+    text = odd_text + even_text;
+  }
+
+  return text
+}
+
+
+console.log(decrypt('This is a test!', 0), 'This is a test!')
+console.log(decrypt('hsi  etTi sats!', 1), 'This is a test!')
+console.log(decrypt('s eT ashi tist!', 2), 'This is a test!')
+console.log(decrypt(' Tah itse sits!', 3), 'This is a test!')
+console.log(decrypt('This is a test!', 4), 'This is a test!')
+console.log(decrypt('This is a test!', -1), 'This is a test!')
+console.log(decrypt('hskt svr neetn!Ti aai eyitrsig', 1), 'This kata is very interesting!')
+console.log(decrypt('135024', 1), '012345')
+console.log(decrypt('13024', 1), '01234')
+console.log(decrypt('304152', 2), '012345')
+console.log(decrypt('32104', 2), '01234')
+console.log(decrypt('', 0), '')
+console.log(decrypt(null, 0), null)
+
+
+function decrypt(text, number) {
+  if (text === null) return null
+
+  const middle = text.length >> 1
+
+  for (let index = 0; index < number; index++) {
+    let odd_text = text.slice(0, middle);
+    let even_text = text.slice(middle,);
+    text = '';
+
+    for (let index = 0; index < even_text.length; index++) {
+      text += even_text[index]
+      text += odd_text[index] || ''
+    }
+  }
+  return text
+}
+
+
+
+
+
+// Complementary DNA
+// https://www.codewars.com/kata/554e4a2f232cdd87d9000038/train/
+console.log(dnaStrand('AAAA'), 'TTTT')
+console.log(dnaStrand('ATTGC'), 'TAACG')
+console.log(dnaStrand('GTAT'), 'CATA')
+
+
+const toComplement = {
+  'A': 'T',
+  'T': 'A',
+  'C': 'G',
+  'G': 'C'
+}
+
+function dnaStrand(dna) {
+  return (
+    dna
+      .split('')
+      .map(letter => toComplement[letter])
+      .join('')
+  )
+}
+
+
+function dnaStrand(dna) {
+  return dna.replace(/\w/g, letter => toComplement[letter])
+}
+
+
+function dnaStrand(dna) {
+  return (
+    Array
+      .from({ length: dna.length }, (_, index) => toComplement[dna[index]])
+      .join('')
+  )
+}
+
+
+function dnaStrand(dna) {
+  let complement = '';
+
+  for (const letter of dna) {
+    complement += toComplement[letter]
+  }
+
+  return complement
+}
+
+
+
+
+
+// Super Duper Easy
+// https://www.codewars.com/kata/55a5bfaa756cfede78000026/solutions
+console.log(problem(1), 56)
+console.log(problem("hello"), "Error")
+
+
+function problem(element) {
+  if (typeof element === 'number') {
+    return 50 * element + 6
+  } else return 'Error'
+}
+
+
+function problem(element) {
+  return typeof element === 'number' ? 50 * element + 6 : 'Error'
+}
+
+
+
+
+
+// Add Length
+// https://www.codewars.com/kata/559d2284b5bb6799e9000047/train/
+console.log(addLength('apple ban'), ["apple 5", "ban 3"])
+console.log(addLength('you will win'), ["you 3", "will 4", "win 3"])
+console.log(addLength('you'), ["you 3"])
+console.log(addLength('y'), ["y 1"])
+
+
+function addLength(text) {
+  return (
+    text
+      .split(' ')
+      .map(word => `${word} ${word.length}`))
+}
+
+
+
+
+
+// Regex validate PIN code
+// https://www.codewars.com/kata/55f8a9c06c018a0d6e000132/train/
+console.log(validatePIN('1234'), true)
+console.log(validatePIN('1'), false)
+console.log(validatePIN('12'), false)
+console.log(validatePIN('123'), false)
+console.log(validatePIN('12345'), false)
+console.log(validatePIN('1234567'), false)
+console.log(validatePIN('-1234'), false)
+console.log(validatePIN('-12345'), false)
+console.log(validatePIN('1.234'), false)
+console.log(validatePIN('00000000'), false)
+console.log(validatePIN('0000'), true)
+console.log(validatePIN('12.0'), false)
+
+
+function isDigit(number) {
+  numberLength = number
+    .split('')
+    .filter(digit => Number.parseInt(digit).toString().length === 1)
+    .length
+  return numberLength === number.length
+}
+
+function validatePIN(pin) {
+
+  return (
+    [4, 6].includes(pin.length) &&
+    isDigit(pin)
+  )
+}
+
+
+function isDigit(number) {
+  return number.match(/\d/g).length == number.length
+}
+
+function validatePIN(pin) {
+
+  return (
+    [4, 6].includes(pin.length) &&
+    isDigit(pin)
+  )
+}
+
+
+function validatePIN(pin) {
+  return Boolean(pin.match(/^(\d{4}|\d{6})$/))
+}
+
+
+
+
+
+// Rot13
+// https://www.codewars.com/kata/530e15517bc88ac656000716/train/
+console.log(rot13('test'), 'grfg')
+console.log(rot13('Test'), 'Grfg')
+console.log(rot13('aA bB zZ 1234 *!?%'), 'nN oO mM 1234 *!?%')
+
+
+function encode(letter) {
+  if (!(letter.match(/[a-z]/i))) return letter
+
+  if (
+    letter.charCodeAt() >= 'a'.charCodeAt() &&
+    letter.charCodeAt() <= 'z'.charCodeAt()
+  ) {
+    const new_letter = letter.charCodeAt() + 13;
+    return new_letter <= 'z'.charCodeAt() ? String.fromCharCode(new_letter) : String.fromCharCode(new_letter - 26)
+  }
+
+  if (
+    letter.charCodeAt() >= 'A'.charCodeAt() &&
+    letter.charCodeAt() <= 'Z'.charCodeAt()
+  ) {
+    const new_letter = letter.charCodeAt() + 13;
+    return new_letter <= 'Z'.charCodeAt() ? String.fromCharCode(new_letter) : String.fromCharCode(new_letter - 26)
+  }
+}
+
+function rot13(message) {
+  return message.split('').map(letter => encode(letter)).join('')
+}
+
+
+
+
+
+// Difference of Volumes of Cuboids
+// https://www.codewars.com/kata/58cb43f4256836ed95000f97/train/
+console.log(findDifference([3, 2, 5], [1, 4, 4]), 14)
+console.log(findDifference([9, 7, 2], [5, 2, 2]), 106)
+
+
+function findDifference(dimensions1, dimensions2) {
+  const volume1 = dimensions1.reduce((total, current) => total * current);
+  const volume2 = dimensions2.reduce((total, current) => total * current);
+
+  return Math.abs(volume1 - volume2)
+}
+
+
+
+
+
+// Multiplication table for number
+// https://www.codewars.com/kata/5a2fd38b55519ed98f0000ce/train/
+console.log(multiTable(5), '1 * 5 = 5\n2 * 5 = 10\n3 * 5 = 15\n4 * 5 = 20\n5 * 5 = 25\n6 * 5 = 30\n7 * 5 = 35\n8 * 5 = 40\n9 * 5 = 45\n10 * 5 = 50')
+console.log(multiTable(1), '1 * 1 = 1\n2 * 1 = 2\n3 * 1 = 3\n4 * 1 = 4\n5 * 1 = 5\n6 * 1 = 6\n7 * 1 = 7\n8 * 1 = 8\n9 * 1 = 9\n10 * 1 = 10')
+
+
+function multiTable(number) {
+  return (
+    Array
+      .from({ length: 10 }, (_, index) => `${index + 1} * ${number} = ${(index + 1) * number}`)
+      .join('\n')
+  )
+}
+
+
+function multiTable(number) {
+  const table = [];
+
+  for (let index = 1; index <= 10; index++) {
+    table.push(`${index + 1} * ${number} = ${(index + 1) * number}`)
+  }
+
+  return table.join('\n')
+}
+
+
+
+
+
+// Beginner - Reduce but Grow
+// https://www.codewars.com/kata/57f780909f7e8e3183000078/train/
+console.log(grow([596, 321, 384, 132, 649, 224, 157, 729, 531, 115, 555, 540, 838, 243, 168, 538, 667, 53, 613, 10, 486, 437, 143, 167, 722, 422, 866, 534, 261, 3, 505, 881, 228, 203, 102, 237, 152, 32, 320, 731, 943, 723, 557, 730, 525, 353, 606, 274, 613, 582, 96, 585, 120, 426, 513, 232, 52, 584, 591, 806, 417, 70, 96, 902, 538, 681, 341, 927, 301, 97, 812, 30, 32, 405, 923, 730, 118, 64, 795, 226, 840, 653, 388, 784, 651, 332, 418, 682, 241, 781, 592, 150, 23, 134, 144, 626, 536, 482, 195, 811, 208, 707, 344, 735, 535, 945, 277, 725, 627, 135, 304, 585, 580, 409, 556, 839, 659, 1000, 861, 416, 914, 571, 691, 554, 502, 399, 111, 885, 142, 445, 880, 592, 255, 662, 423, 682, 384, 103, 722, 847, 320, 189, 693, 653, 230, 411, 204, 608, 481, 814, 297, 394, 864, 594, 549, 197, 628, 40, 185, 485, 162, 671, 395, 585, 428, 733, 811, 854, 344, 660, 475, 936, 807, 879, 404, 704, 515, 919, 549, 178, 942, 307, 553, 840, 451, 335, 44, 531, 726, 547, 238, 549, 987, 345, 368, 549, 107, 932, 521, 23, 95, 35, 488, 513, 573, 667, 388, 951, 654, 685, 974, 142, 533, 370, 847, 574, 848, 729, 237, 968, 185, 738, 660, 827, 110, 930, 497, 390, 542, 535, 223, 366, 98, 194, 771, 948, 864, 200, 801, 588, 468, 672, 61, 689, 893, 980, 525, 365, 593, 948, 920, 593, 939, 288, 424, 886, 203, 229, 911, 814, 157, 112, 390, 88, 312, 477, 35, 795, 959, 370, 950, 824, 456, 648, 184, 106, 896]), 39029291620533010931129397295638983676725789177704602999079246351960844311593368912916110759003546377363578700370528243472804365949406949497517632959300394381672629864499924571880170912950325917874291622475321852787750467982683462492413674077024767456900833305256057070814787993483437568900168885202988121573996032301947160895766083716920940392997066971600219779272071440586637340222479790337403296194462108557626985880202413695626127589511963083206906054187744691157794555256034617365518450400009739705212922378004697474916382004021566893720617727317115823822122740759685929320959643767556306049064966612902298901059029531313109353576527822848000000000000000000000000000000000000000000000000000000000000000000000000)
+
+
+function grow(numbers) {
+  return numbers.reduce((total, current) => total * current)
+}
+
+
+
+
+
+// Exclamation marks series #11: Replace all vowel to exclamation mark in the sentence
+// https://www.codewars.com/kata/57fb09ef2b5314a8a90001ed/train/
+console.log(replace("Hi!"), "H!!")
+console.log(replace("!Hi! Hi!"), "!H!! H!!")
+console.log(replace("aeiou"), "!!!!!")
+console.log(replace("ABCDE"), "!BCD!")
+
+
+function replace(text) {
+  return text.replace(/[aeoiu]/ig, '!')
+}
+
+
+
+
+
+// Fix string case
+// https://www.codewars.com/kata/5b180e9fedaa564a7000009a/train/
+console.log(solve("code"), "code")
+console.log(solve("CODe"), "CODE")
+console.log(solve("COde"), "code")
+console.log(solve("Code"), "code")
+
+
+function solve(text) {
+  const lowerCaseLength = text.split('').filter(letter => letter === letter.toLowerCase()).length
+
+  if (lowerCaseLength / text.length >= 0.5) {
+    return text.toLowerCase()
+  } else {
+    return text.toUpperCase()
+  }
+}
+
+
+
+
+
+// Welcome to the City
+// https://www.codewars.com/kata/5302d846be2a9189af0001e4/train/
+console.log(sayHello(['John', 'Smith'], 'Phoenix', 'Arizona'), 'Hello, John Smith! Welcome to Phoenix, Arizona!')
+console.log(sayHello(['Franklin', 'Delano', 'Roosevelt'], 'Chicago', 'Illinois'), 'Hello, Franklin Delano Roosevelt! Welcome to Chicago, Illinois!')
+console.log(sayHello(['Wallace', 'Russel', 'Osbourne'], 'Albany', 'New York'), 'Hello, Wallace Russel Osbourne! Welcome to Albany, New York!')
+console.log(sayHello(['Lupin', 'the', 'Third'], 'Los Angeles', 'California'), 'Hello, Lupin the Third! Welcome to Los Angeles, California!')
+console.log(sayHello(['Marlo', 'Stanfield'], 'Baltimore', 'Maryland'), 'Hello, Marlo Stanfield! Welcome to Baltimore, Maryland!')
+
+
+function sayHello(name, city, state) {
+  return `Hello, ${name.join(' ')}! Welcome to ${city}, ${state}!`
+}
+
+
+
+
+
+// Reversing Words in a String
+// https://www.codewars.com/kata/57a55c8b72292d057b000594/train/
+console.log(reverse('Hello World'), 'World Hello')
+console.log(reverse('Hi There.'), 'There. Hi')
+
+function reverse(text) {
+  return text.split(' ').reverse().join(' ')
+}
+
+
+
+
+
+// Alternate capitalization
+// https://www.codewars.com/kata/59cfc000aeb2844d16000075/train/
+console.log(capitalize("abcdef"), ['AbCdEf', 'aBcDeF'])
+console.log(capitalize("codewars"), ['CoDeWaRs', 'cOdEwArS'])
+console.log(capitalize("abracadabra"), ['AbRaCaDaBrA', 'aBrAcAdAbRa'])
+console.log(capitalize("codewarriors"), ['CoDeWaRrIoRs', 'cOdEwArRiOrS'])
+console.log(capitalize("indexinglessons"), ['InDeXiNgLeSsOnS', 'iNdExInGlEsSoNs'])
+console.log(capitalize("codingisafunactivity"), ['CoDiNgIsAfUnAcTiViTy', 'cOdInGiSaFuNaCtIvItY'])
+
+
+function capitalize(word) {
+  let oddWord = '';
+  let evenWord = '';
+
+  for (let index = 0; index < word.length; index++) {
+    const letter = word[index];
+
+    if (index % 2) {
+      oddWord += letter.toUpperCase();
+      evenWord += letter;
+    } else {
+      oddWord += letter;
+      evenWord += letter.toUpperCase();
+    }
+  }
+
+  return [evenWord, oddWord]
+}
+
+
+
+
+
+// Tortoise racing
+// https://www.codewars.com/kata/55e2adece53b4cdcb900006c/train/
+console.log(race(720, 850, 70), [0, 32, 18])
+console.log(race(80, 91, 37), [3, 21, 49])
+console.log(race(820, 81, 550), null)
+
+
+function race(v1, v2, g) {
+  if (v1 >= v2) return null
+
+  const x = (v1 * g) / (v2 - v1)
+  const t = x / v1
+
+  const hours = Math.floor(t)
+  const minutes = Math.floor((t % 1) * 60)
+  const seconds = Math.floor(((t % 1) * 60) % 1 * 60)
+
+  return [hours, minutes, seconds]
+}
+
+
+
+
+
+// How many lightsabers do you own?
+// https://www.codewars.com/kata/51f9d93b4095e0a7200001b8/train/
+console.log(howManyLightsabersDoYouOwn('Zach'), 18)
+console.log(howManyLightsabersDoYouOwn(), 0)
+console.log(howManyLightsabersDoYouOwn('zach'), 0)
+
+
+function howManyLightsabersDoYouOwn(name) {
+  return name == 'Zach' ? 18 : 0
+}
+
+
+
+
+
+// Enumerable Magic - Does My List Include This?
+// https://www.codewars.com/kata/545991b4cbae2a5fda000158/train/
+console.log(include(numebers, 100), false)
+console.log(include(numebers, 2), true)
+console.log(include(numebers, 11), true)
+console.log(include(numebers, "2"), false)
+console.log(include(numebers, 0), true)
+console.log(include([], 0), false)
+
+
+function include(itemList, item) {
+  return itemList.includes(item)
+}
+const numebers = [0, 1, 2, 3, 5, 8, 13, 2, 2, 2, 11]
+
+
+function include(itemList, item) {
+  return itemList.indexOf(item) !== -1
+}
+
+
+
+
+
+// Is the string uppercase?
+// https://www.codewars.com/kata/56cd44e1aa4ac7879200010b/train/
+console.log('c'.isUpperCase(), false)
+console.log('C'.isUpperCase(), true)
+console.log('hello I AM DONALD'.isUpperCase(), false)
+console.log('HELLO I AM DONALD'.isUpperCase(), true)
+console.log('$%&'.isUpperCase(), true)
+
+
+String.prototype.isUpperCase = function () {
+  return this === this.toUpperCase()
+}
+
+
+String.prototype.isUpperCase = function () {
+  const filerLength = (
+    this
+      .split('')
+      .filter(letter => letter === letter.toUpperCase())
+      .length
+  )
+
+  return filerLength === this.length
+}
+
+
+String.prototype.isUpperCase = function () {
+  return !this.match(/[a-z]/g)
+}
+
+
+String.prototype.isUpperCase = function () {
+  return (
+    this
+      .split('')
+      .every(letter => letter === letter.toUpperCase())
+  )
+}
+
+
+
+
+
+// Remove anchor from URL
+// https://www.codewars.com/kata/51f2b4448cadf20ed0000386/train/
+console.log(removeUrlAnchor('www.codewars.com#about'), 'www.codewars.com')
+console.log(removeUrlAnchor('www.codewars.com/katas/?page=1#about'), 'www.codewars.com/katas/?page=1')
+console.log(removeUrlAnchor('www.codewars.com/katas/'), 'www.codewars.com/katas/')
+
+
+function removeUrlAnchor(url) {
+  return url.split('#')[0]
+}
+
+
+function removeUrlAnchor(url) {
+  return url.replace(/#.*/g, '')
+}
+
+
+function removeUrlAnchor(url) {
+  const anchorIndex = url.indexOf('#');
+
+  return anchorIndex === -1 ? url : url.slice(0, anchorIndex)
+}
+
+
+
+
+
+// Find the Remainder
+// https://www.codewars.com/kata/524f5125ad9c12894e00003f/train/
+console.log(remainder(17, 5), 2)
+console.log(remainder(13, 72), 7)  // 'The order the arguments are passed should not matter.'
+console.log(remainder(1, 0), NaN)  // 'Divide by zero should return NaN'
+console.log(remainder(0, 0), NaN)  // 'Divide by zero should return NaN'
+console.log(remainder(0, 1), NaN)  // 'Divide by zero should return NaN'
+console.log(remainder(-1, 0), 0)  // 'Divide by zero should only be checked for the lowest number'
+console.log(remainder(0, -1), 0)  // 'Divide by zero should only be checked for the lowest number'
+console.log(remainder(-13, -13), 0)  // 'Should handle negative numbers'
+console.log(remainder(-60, 340), -20)  // 'Should handle negative numbers'
+console.log(remainder(60, -40), -20)  // 'Should handle negative numbers'
+
+
+function remainder(number1, number2) {
+  return number1 > number2 ? number1 % number2 : number2 % number1
+}
+
+
+function remainder(number1, number2) {
+  if (number2 > number1) {
+    [number1, number2] = [number2, number1]
+  }
+
+  if (number2 === 0) return NaN
+  if (number1 === 0) return 0
+  // if (number1 < 0 && number2 < 0) {
+  //   [number1, number2] = [-number1, -number2]
+  // }
+
+  if (number2 < 0) {
+    return (number1 % -number2) || 0
+    // return number2 + (number1 % -number2) || 0
+  }
+
+  return (number1 % number2) || 0
+}
+
+
+
+
+
+// Regular Ball Super Ball
+// https://www.codewars.com/kata/53f0f358b9cb376eca001079/train/
+const ball1 = new Ball();
+const ball2 = new Ball("super");
+console.log(ball1.ballType, 'regular')
+console.log(ball2.ballType, 'super')
+
+
+class Ball {
+  constructor(ballType = 'regular') {
+    this.ballType = ballType;
+  }
+}
+
+
+var Ball = function (ballType = 'regular') {
+  this.ballType = ballType
+}
+
+
+
+
+
+// Sum of Pairs
+// https://www.codewars.com/kata/54d81488b981293527000c8f
+console.log(sumPairs([10, 5, 2, 3, 7, 5], 10), [3, 7])
+console.log(sumPairs([1, 4, 8, 7, 3, 15], 8), [1, 7])
+console.log(sumPairs([1, -2, 3, 0, -6, 1], -6), [0, -6])
+console.log(sumPairs([1, 4, 8, 7, 3, 15], 8), [1, 7])
+console.log(sumPairs([1, -2, 3, 0, -6, 1], -6), [0, -6])
+console.log(sumPairs([20, -13, 40], -7), undefined)
+console.log(sumPairs([1, 2, 3, 4, 1, 0], 2), [1, 1])
+console.log(sumPairs([10, 5, 2, 3, 7, 5], 10), [3, 7])
+console.log(sumPairs([4, -2, 3, 3, 4], 8), [4, 4])
+console.log(sumPairs([0, 2, 0], 0), [0, 0])
+console.log(sumPairs([5, 9, 13, -3], 10), [13, -3])
+
+
+function sumPairs(numbers, target) {
+  const seen_numbers = new Set();
+
+  for (const number of numbers) {
+    const diff = target - number;
+
+    if (seen_numbers.has(diff)) return [diff, number]
+    else seen_numbers.add(number)
+  }
+
+  return undefined
+}
+
+
+
+
+
+// Find the stray number
+// https://www.codewars.com/kata/57f609022f4d534f05000024/train/
+console.log(stray([1, 1, 1, 1, 1, 1, 2]), 2)
+console.log(stray([2, 3, 2, 2, 2]), 3)
+console.log(stray([3, 2, 2, 2, 2]), 3)
+
+
+function stray(numbers) {
+  const counter = {};
+
+  for (const number of numbers) {
+    counter[number] = (counter[number] || 0) + 1;
+  }
+
+  for (const [key, val] of Object.entries(counter)) {
+    if (val === 1) return Number(key)
+  }
+}
+
+
+
+
+
+// Summing a number's digits
+// https://www.codewars.com/kata/52f3149496de55aded000410/train/
+console.log(sumDigits(10), 1)
+console.log(sumDigits(99), 18)
+console.log(sumDigits(-32), 5)
+
+
+function sumDigits(number) {
+  return (
+    Math.abs(number)
+      .toString()
+      .split('')
+      .reduce((total, current) => total + Number(current), 0))
+}
+
+
+function sumDigits(number) {
+  return (
+    Math.abs(number)
+      .toString()
+      .split('')
+      .reduce((total, current) => +total + +current))
+}
+
+
+
+
+
+// Sum of odd numbers
+// https://www.codewars.com/kata/55fd2d567d94ac3bc9000064/train/
+console.log(rowSumOddNumbers(1), 1)
+console.log(rowSumOddNumbers(2), 8)
+console.log(rowSumOddNumbers(3), 27)
+console.log(rowSumOddNumbers(13), 2197)
+console.log(rowSumOddNumbers(19), 6859)
+console.log(rowSumOddNumbers(41), 68921)
+
+
+function rowSumOddNumbers(number) {
+  return number ** 3
+}
+
+
+
+
+
+// Mumbling
+// https://www.codewars.com/kata/5667e8f4e3f572a8f2000039/train/
+console.log(accum('ZpglnRxqenU'), 'Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu')
+console.log(accum('NyffsGeyylB'), 'N-Yy-Fff-Ffff-Sssss-Gggggg-Eeeeeee-Yyyyyyyy-Yyyyyyyyy-Llllllllll-Bbbbbbbbbbb')
+console.log(accum('MjtkuBovqrU'), 'M-Jj-Ttt-Kkkk-Uuuuu-Bbbbbb-Ooooooo-Vvvvvvvv-Qqqqqqqqq-Rrrrrrrrrr-Uuuuuuuuuuu')
+console.log(accum('EvidjUnokmM'), 'E-Vv-Iii-Dddd-Jjjjj-Uuuuuu-Nnnnnnn-Oooooooo-Kkkkkkkkk-Mmmmmmmmmm-Mmmmmmmmmmm')
+console.log(accum('HbideVbxncC'), 'H-Bb-Iii-Dddd-Eeeee-Vvvvvv-Bbbbbbb-Xxxxxxxx-Nnnnnnnnn-Cccccccccc-Ccccccccccc')
+
+
+function accum(text) {
+  return (
+    text
+      .split('')
+      .map((letter, index) => letter.toUpperCase() + letter.toLowerCase().repeat(index))
+      .join('-')
+  )
+}
+
+
+
+
+
+// Remove First and Last Character Part Two
+// https://www.codewars.com/kata/570597e258b58f6edc00230d/train/
+console.log(array('1,2,3'), '2')
+console.log(array('1,2,3,4'), '2 3')
+console.log(array('1, 2, 3, 4'), '2 3')
+console.log(array('1,2,3,4,5'), '2 3 4')
+console.log(array(''), null)
+console.log(array('1'), null)
+console.log(array('1,2'), null)
+
+
+function array(text) {
+  return (
+    text
+      .split(',')
+      .map(digit => digit.trim())
+      .slice(1, -1)
+      .join(' ') ||
+    null)
+}
+
+
+
+
+
+// Sum of Multiples
+// https://www.codewars.com/kata/57241e0f440cd279b5000829/train/
+console.log(sumMul(2, 9), 20)
+console.log(sumMul(3, 13), 30)
+console.log(sumMul(4, 123), 1860)
+console.log(sumMul(123, 4567), 86469)
+console.log(sumMul(0, 0), 'INVALID')
+console.log(sumMul(4, -7), 'INVALID')
+console.log(sumMul(11, 1111), 55550)
+
+
+
+function sumMul(start, end) {
+  if (
+    start <= 0 ||
+    end <= 0
+  ) return 'INVALID'
+
+  let total = 0;
+
+  for (let index = start; index < end; index += start) {
+    total += index;
+  }
+
+  return total
+}
+
+
+
+
+
+// Sorted? yes? no? how?
+// https://www.codewars.com/kata/580a4734d6df748060000045/train/
+console.log(isSortedAndHow([1, 2]), 'yes, ascending')
+console.log(isSortedAndHow([15, 7, 3, -8]), 'yes, descending')
+console.log(isSortedAndHow([4, 2, 30]), 'no')
+
+
+function compare(numbers, numbersCompare) {
+  if (numbers.length !== numbersCompare.length) return false
+
+  return numbers.every((digit, index) => digit === numbersCompare[index])
+}
+
+function isSortedAndHow(numbers) {
+  const ascendingNumbers = numbers.slice().sort((a, b) => a - b)
+
+  if (compare(numbers, ascendingNumbers)) {
+    return 'yes, ascending'
+  } else if (compare(numbers, ascendingNumbers.reverse())) {
+    return 'yes, descending'
+  } else return 'no'
+
+}
+
+
+
+
+
+// Find Multiples of a Number
+// https://www.codewars.com/kata/58ca658cc0d6401f2700045f/train/
+console.log(findMultiples(5, 25), [5, 10, 15, 20, 25])
+console.log(findMultiples(1, 2), [1, 2])
+
+
+function findMultiples(start, end) {
+  const arrayLength = Math.floor(end / start)
+
+  return Array.from({ length: arrayLength }, (_, index) => start * (index + 1))
+}
+
+
+
+
+
+// Regex Password Validation
+// https://www.codewars.com/kata/52e1476c8147a7547a000811/train/
+const data_table = [
+  ['fjd3IR9', true],
+  ['ghdfj32', false],
+  ['DSJKHD23', false],
+  ['dsF43', false],
+  ['4fdg5Fj3', true],
+  ['DHSJdhjsU', false],
+  ['fjd3IR9.;', false],
+  ['fjd3  IR9', false],
+  ['djI38D55', true],
+  ['a2.d412', false],
+  ['JHD5FJ53', false],
+  ['!fdjn345', false],
+  ['jfkdfj3j', false],
+  ['123', false],
+  ['abc', false],
+  ['123abcABC', true],
+  ['ABC123abc', true],
+  ['Password123', true],
+]
+
+for (const [word, bool] of data_table) {
+  console.log(REGEXP.test(word), bool)
+}
+
+
+const REGEXP = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d+)[A-Za-z\d]{6,}$/;
+
+
+
+
+
+// Help the bookseller !
+// https://www.codewars.com/kata/54dc6f5a224c26032800005c/train/
+console.log(stockList(['BBAR 150', 'CDXE 515', 'BKWR 250', 'BTSQ 890', 'DRTY 600'], ['A', 'B', 'C', 'D']), '(A : 0) - (B : 1290) - (C : 515) - (D : 600)')
+console.log(stockList(['ABAR 200', 'CDXE 500', 'BKWR 250', 'BTSQ 890', 'DRTY 600'], ['A', 'B']), '(A : 200) - (B : 1140)')
+console.log(stockList([''], ['B', 'R', 'D', 'X']), '')
+
+
+function stockList(bookQuantities, categories) {
+  if (
+    bookQuantities.length === 0 ||
+    categories.length === 0 ||
+    bookQuantities[0] === ''
+  ) return ''
+
+  const categoryQuantities = {};
+
+  for (const bookQuantity of bookQuantities) {
+    const [book, quantity] = bookQuantity.split(' ')
+    const category = book[0];
+
+    categoryQuantities[category] = (categoryQuantities[category] || 0) + Number(quantity)
+  }
+
+  const bookQuantitiesTruncked = [];
+
+  for (const category of categories) {
+    bookQuantitiesTruncked.push(`(${category} : ${categoryQuantities[category] || 0})`)
+  }
+  return bookQuantitiesTruncked.join(' - ')
+}
+
+
+
+
+
+// Factorial
+// https://www.codewars.com/kata/57a049e253ba33ac5e000212/train/
+const tests = [
+  [0, 1],
+  [1, 1],
+  [2, 2],
+  [3, 6],
+  [4, 24],
+  [5, 120],
+  [6, 720],
+  [7, 5040],
+]
+
+for (const test of tests) {
+  const [inp, exp] = test
+  console.log(factorial(inp), exp)
+}
+
+
+// recursion
+function factorial(number) {
+  if (number === 0) return 1
+
+  return number * factorial(number - 1)
+}
+
+
+// iteration
+function factorial(number) {
+  let total = 1;
+
+  for (let index = 1; index <= number; index++) {
+    total *= index;
+  }
+
+  return total
+}
+
+
+function factorial(number) {
+  return number ? number * factorial(number - 1) : 1
+}
+
+const factorial = number => number ? number * factorial(number - 1) : 1
+
+
+
+
+
+// Remove duplicates from list
+// https://www.codewars.com/kata/57a5b0dfcf1fa526bb000118/train/
+console.log(distinct([1]), [1])
+console.log(distinct([1, 2]), [1, 2])
+console.log(distinct([1, 1, 2]), [1, 2])
+console.log(distinct([1, 1, 1, 2, 3, 4, 5]), [1, 2, 3, 4, 5])
+console.log(distinct([1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 7, 7]), [1, 2, 3, 4, 5, 6, 7])
+
+
+function distinct(numbers) {
+  const seenSet = new Set();
+  const seenList = [];
+
+  for (const number of numbers) {
+    if (!seenSet.has(number)) {
+      seenSet.add(number);
+      seenList.push(number);
+    }
+  }
+
+  return seenList
+}
+
+
+function distinct(numbers) {
+  return [...new Set(numbers)]
+}
+
+
+
+
+
+// Convert to Binary
+// https://www.codewars.com/kata/59fca81a5712f9fa4700159a/train/
+console.log(toBinary(1), 1)
+console.log(toBinary(2), 10)
+console.log(toBinary(3), 11)
+console.log(toBinary(5), 101)
+
+
+function toBinary(number) {
+  return +number.toString(2)
+}
+
+
+
+
+
+// Factorial
+// https://www.codewars.com/kata/54ff0d1f355cfd20e60001fc/train/
+console.log(factorial(0), 1)
+console.log(factorial(1), 1)
+console.log(factorial(2), 2)
+console.log(factorial(3), 6)
+console.log(factorial(13), '[Function: RangeError]')
+
+
+function factorial(number) {
+  if (
+    number < 0 ||
+    number > 12
+  ) throw new RangeError("Invalid range")
+  
+  let total = 1;
+
+  for (let index = 1; index <= number; index++) {
+    total *= index;
+  }
+
+  return total
+}
+
+
+
+
+
+// Simple Fun #176: Reverse Letter
+// https://www.codewars.com/kata/58b8c94b7df3f116eb00005b/train/
+console.log(reverseLetter("krishan"), "nahsirk")
+console.log(reverseLetter("ultr53o?n"), "nortlu")
+console.log(reverseLetter("ab23c"), "cba")
+console.log(reverseLetter("krish21an"), "nahsirk")
+
+
+function reverseLetter(word) {
+  return (
+    word
+      .match(/[a-z]/g)
+      .reverse()
+      .join('')
+  )
+}
+
+
+function reverseLetter(word) {
+  return (
+    word
+      .replace(/[^a-z]/g, '')
+      .split('')
+      .reverse()
+      .join('')
+  )
+}
+
+
+function isAlpha(letter) {
+  return /[a-z]/.test(letter)
+}
+
+function reverseLetter(word) {
+  return (
+    word
+      .split('')
+      .reverse()
+      .filter(letter => isAlpha(letter))
+      .join('')
+  )
+}
+
+
+
+
+
+// Alphabet war
+// https://www.codewars.com/kata/59377c53e66267c8f6000027/train/
+console.log(alphabetWar('z'), 'Right side wins!')
+console.log(alphabetWar('zdqmwpbs'), 'Let\'s fight again!')
+console.log(alphabetWar('wq'), 'Left side wins!')
+console.log(alphabetWar('zzzzs'), 'Right side wins!')
+console.log(alphabetWar('wwwwww'), 'Left side wins!')
+
+
+function alphabetWar(word) {
+  const leftLetters = 'sbpw';
+  const rightLetters = 'zdqm';
+  let score = 0;
+
+  for (const letter of word) {
+    if (leftLetters.includes(letter)) {
+      score -= leftLetters.indexOf(letter) + 1;
+    }
+    else if (rightLetters.includes(letter)) {
+      score += rightLetters.indexOf(letter) + 1;
+    }
+  }
+
+  if (score < 0) return 'Left side wins!'
+  else if (score > 0) return 'Right side wins!'
+  else return 'Let\'s fight again!'
+}
+
+
+
+
+
+// Predict your age!
+// https://www.codewars.com/kata/5aff237c578a14752d0035ae/train/
+console.log(predictAge(65, 60, 75, 55, 60, 63, 64, 45), 86)
+
+
+function predictAge(...args) {
+  return (
+    args
+      .map(number => number ** 2)
+      .reduce((total, current) => total + current) ** 0.5 / 2 | 0
+  )
+}
+
+
+function predictAge(...args) {
+  return (
+    Math.hypot(...args) / 2 | 0
+  )
+}
+
+
+
+
+
+// Multiplication table
+// https://www.codewars.com/kata/534d2f5b5371ecf8d2000a08/train/
+console.log(multiplicationTable(1), [[1]])
+console.log(multiplicationTable(2), [[1, 2], [2, 4]])
+console.log(multiplicationTable(3), [[1, 2, 3], [2, 4, 6], [3, 6, 9]])
+console.log(multiplicationTable(4), [[1, 2, 3, 4], [2, 4, 6, 8], [3, 6, 9, 12], [4, 8, 12, 16]])
+console.log(multiplicationTable(5), [[1, 2, 3, 4, 5], [2, 4, 6, 8, 10], [3, 6, 9, 12, 15], [4, 8, 12, 16, 20], [5, 10, 15, 20, 25]])
+
+
+function multiplicationTable (size) {
+  const matrix = [];
+
+  for (let row = 1; row <= size; row++)
+    matrix.push(Array.from({ length: size }, (_, index) => (index + 1) * row))
+
+  return matrix
+}
+
+
+function multiplicationTable (size) {
+  const matrix = [];
+
+  for (let row = 0; row < size; row++) {
+    matrix[row] = [];
+
+    for (let col = 0; col < size; col++) {
+      matrix[row][col] = (row + 1) * (col + 1)
+    }
+  }
+
+  return matrix
+}
+
+
+function multiplicationTable (size) {
+  const matrix = [];
+
+  for (let row = 0; row < size; row++) {
+    const current_row = [];
+
+    for (let col = 0; col < size; col++) {
+      current_row.push((row + 1) * (col + 1))
+    }
+
+    matrix.push(current_row);
+  }
+
+  return matrix
+}
+
+
+
+
+
+// Integers: Recreation One
+// https://www.codewars.com/kata/55aa075506463dac6600010d/train/
+console.log(listSquared(1, 1), [1, 1])
+console.log(listSquared(246, 246), [246, 84100])
+console.log(listSquared(1, 250), [[1, 1], [42, 2500], [246, 84100]])
+console.log(listSquared(42, 250), [[42, 2500], [246, 84100]])
+console.log(listSquared(250, 500), [[287, 84100]])
+
+
+function getDividers(number) {
+  const dividers = new Set();
+
+  for (let index = 1; index <= (Math.sqrt(number) | 0 + 1); index++) {
+    if (number % index === 0) {
+      dividers.add(index);
+      dividers.add(number / index);
+    }
+  }
+  return Array.from(dividers)
+}
+
+console.log(getDividers(12))
+
+function getDivisorsSquaredSum(number) {
+  return (
+    getDividers(number)
+      .map(number => number ** 2)
+      .reduce((total, current) => total + current)
+  )
+}
+
+console.log(getDivisorsSquaredSum(246))
+
+function isDivisorsSquaredSumRoot(number) {
+  return !(getDivisorsSquaredSum(number) ** 0.5 % 1)
+}
+
+console.log(isDivisorsSquaredSumRoot(246))
+
+function listSquared(start, end) {
+  const solution = [];
+  
+  for (let index = start; index <= end; index++) {
+    if (isDivisorsSquaredSumRoot(index)) {
+      solution.push([index, getDivisorsSquaredSum(index)])
+    }
+  }
+
+  return solution
+}
+
+
+
+
+
+// Money, Money, Money
+// https://www.codewars.com/kata/563f037412e5ada593000114/train/
+console.log(calculateYears(1000, 0.05, 0.18, 1100), 3)
+console.log(calculateYears(1000, 0.01625, 0.18, 1200), 14)
+console.log(calculateYears(1000, 0.05, 0.18, 1000), 0)
+
+
+function calculateYears(principal, interest, tax, desired) {
+  let years = 0;
+
+  while (principal < desired) {
+    principal += principal * interest - principal * interest * tax;
+    years++;
+  }
+
+  return years
+}
+
+
+
+
+
+// Printing Array elements with Comma delimiters
+// https://www.codewars.com/kata/56e2f59fb2ed128081001328/train/
+console.log(printArray([2, 4, 5, 2]), "2,4,5,2")
+
+
+function printArray(numbers) {
+  return numbers.join()
+}
+
+
+
+
+
+// Find the vowels
+// https://www.codewars.com/kata/5680781b6b7c2be860000036/train/python
+console.log(vowelIndices("mmm"), [])
+console.log(vowelIndices("apple"), [1, 5])
+console.log(vowelIndices("123456"), [])
+console.log(vowelIndices("UNDISARMED"), [1, 4, 6, 9])
+
+
+function vowelIndices(word){
+  const vovelIndex = [];
+
+  for (let index = 0; index < word.length; index++) {
+    if ('aeoiuyAEOIUY'.includes(word[index])) {
+      vovelIndex.push(index + 1);
+    }
+  }
+  return vovelIndex
+}
+
+
+
+
+
+// Sort Numbers
+// https://www.codewars.com/kata/5174a4c0f2769dd8b1000003/train/
+console.log(solution([1, 2, 3, 10, 5]), [1, 2, 3, 5, 10])
+console.log(solution(null), [])
+console.log(solution([]), [])
+console.log(solution([20, 2, 10]), [2, 10, 20])
+console.log(solution([2, 20, 10]), [2, 10, 20])
+
+
+function solution(numbers) {
+  return (numbers || []).sort((a, b) => a - b)
+}
+
+
+function solution(numbers) {
+  return numbers ? numbers.sort((a, b) => a - b) : []
+}
+
+
+function solution(numbers) {
+  if (!numbers) return []
+
+  return numbers.sort((a, b) => a - b)
+}
+
+
+
+
+
+// A Rule of Divisibility by 13
+// https://www.codewars.com/kata/564057bc348c7200bd0000ff/train/
+console.log(thirt(1234567), 87)
+console.log(thirt(8529), 79)
+console.log(thirt(85299258), 31)
+console.log(thirt(5634), 57)
+console.log(thirt(1111111111), 71)
+console.log(thirt(987654321), 30)
+
+
+function thirt(number) {
+  const factors = [1, 10, 9, 12, 3, 4, 1];
+
+  while (number > 99) {
+    number = number
+      .toString()
+      .split('')
+      .reverse()
+      .map((digit, index) => +digit * factors[index % 6])
+      .reduce((total, current) => total + current)
+  }
+
+  return number
+}
+
+
+
+
+
+// Odd or Even?
+// https://www.codewars.com/kata/5949481f86420f59480000e7/train/
+console.log(oddOrEven([0, 1, 2]), "odd")
+console.log(oddOrEven([0, 1, 3]), "even")
+console.log(oddOrEven([1023, 1, 2]), "even")
+console.log(oddOrEven([]), "even")
+
+
+function oddOrEven(numbers) {
+  const sum = numbers.reduce((total, current) => total + current, 0)
+
+  return sum % 2 ? 'odd' : 'even'
+}
+
 
 

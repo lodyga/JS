@@ -5827,3 +5827,431 @@ var orangesRotting = function (grid) {
 }
 
 
+
+
+
+// Reverse Linked List
+// https://leetcode.com/problems/reverse-linked-list/description/
+/**
+ * Definition for singly-linked list.
+*/
+class ListNode {
+  constructor(val, next) {
+    this.val = (val === undefined ? 0 : val);
+    this.next = (next === undefined ? null : next);
+  }
+}
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function (head) {
+  let currenNode = head;
+  let previousNode = null;
+
+  while (currenNode) {
+    const nextNode = currenNode.next;
+    currenNode.next = previousNode;
+    previousNode = currenNode;
+    currenNode = nextNode;
+  }
+
+  return previousNode
+}
+
+const node2 = new ListNode(2, null);
+const node1 = new ListNode(1, node2);
+const node0 = new ListNode(0, node1);
+
+console.log(node2.next)
+console.log(node2)
+console.log(node1.next)
+
+reverseList(node0)
+
+console.log(node2.next)
+console.log(node1)
+console.log(node0.next)
+
+
+
+
+
+// Merge Two Sorted Lists
+// https://leetcode.com/problems/merge-two-sorted-lists/description/
+/**
+ * Definition for singly-linked list.
+*/
+function ListNode(val, next) {
+  this.val = (val === undefined ? 0 : val)
+  this.next = (next === undefined ? null : next)
+}
+/**
+* @param {ListNode} list1
+* @param {ListNode} list2
+* @return {ListNode}
+*/
+var mergeTwoLists = function (list1, list2) {
+  const anchor = new ListNode();
+  let node = anchor;
+
+  while (list1 !== null && list2 !== null) {
+      if (list1.val < list2.val) {
+          node.next = list1;
+          list1 = list1.next;
+      } else {
+          node.next = list2;
+          list2 = list2.next;
+      }
+      node = node.next;
+  }
+  node.next = list1 || list2;
+
+  return anchor.next
+}
+
+const nodeA2 = new ListNode(4, null);
+const nodeA1 = new ListNode(2, nodeA2);
+const nodeA0 = new ListNode(1, nodeA1);
+
+const nodeB2 = new ListNode(4, null);
+const nodeB1 = new ListNode(3, nodeB2);
+const nodeB0 = new ListNode(1, nodeB1);
+
+console.log(mergeTwoLists(nodeA0, nodeB0))
+
+
+
+
+
+// Linked List Cycle
+// https://leetcode.com/problems/linked-list-cycle/description/
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * O(n), O(n)
+ * set for node store
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function (head) {
+  const seen = new Set();
+
+  while (head !== null) {
+    if (seen.has(head)) {
+      return true
+    } else {
+      seen.add(head);
+      head = head.next;
+    }
+  }
+  return false
+}
+
+
+// O(n), O(1)
+// Floyd's tortoise and hare
+var hasCycle = function (head) {
+  let slow = head;
+  let fast = head;
+
+  while (
+    fast != null &&
+    fast.next != null
+  ) {
+    slow = slow.next;
+    fast = fast.next.next;
+
+    if (slow === fast) return true
+  }
+  return false
+}
+
+
+
+
+
+// Reorder List
+// https://leetcode.com/problems/reorder-list/description/
+/**
+ * Definition for singly-linked list.
+*/
+function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+}
+/**
+ * O(n), O(n)
+ * linked list to list of nodes
+ * @param {ListNode} head
+ * @return {void} Do not return anything, modify head in-place instead.
+ */
+var reorderList = function (head) {
+  let node = head;
+  const nodes = [];
+
+  while (node !== null) {
+    nodes.push(node)
+    node = node.next
+  }
+  //return nodes
+
+  let left = 0;
+  let right = nodes.length - 1;
+
+  while (left < right) {
+    nodes[left].next = nodes[right];
+    left++;
+
+    if (left == right) break
+
+    nodes[right].next = nodes[left];
+    right--;
+  }
+  nodes[left].next = null;
+}
+
+const node3 = new ListNode(4, null);
+const node2 = new ListNode(3, node3);
+const node1 = new ListNode(2, node2);
+const node0 = new ListNode(1, node1);
+console.log(node0.next)
+console.log(reorderList(node0))
+console.log(node0.next)
+
+
+
+
+
+// Remove Nth Node From End of List
+// https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * # O(n), O(n)
+ * # List
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function (head, n) {
+  const nodes = [];
+  let node = head;
+
+  while (node) {
+    nodes.push(node);
+    node = node.next;
+  }
+
+  if (n === nodes.length) return head.next
+  else {
+    const index = nodes.length - n;
+    nodes[index - 1].next = nodes[index].next;
+    return head
+  }
+}
+
+
+
+
+
+// Copy List with Random Pointer
+// https://leetcode.com/problems/copy-list-with-random-pointer/description/
+/**
+ * // Definition for a _Node.
+ * function _Node(val, next, random) {
+ *    this.val = val;
+ *    this.next = next;
+ *    this.random = random;
+ * };
+ */
+
+/**
+ * @param {_Node} head
+ * @return {_Node}
+ */
+var copyRandomList = function (head) {
+  const nodeCopy = new Map();
+  nodeCopy.set(null, null)
+  let node = head;
+
+  while (node) {
+    nodeCopy.set(node, new _Node(node.val));
+    node = node.next;
+  }
+
+  node = head;
+
+  while (node) {
+    nodeCopy.get(node).next = nodeCopy.get(node.next);
+    nodeCopy.get(node).random = nodeCopy.get(node.random);
+    node = node.next;
+  }
+
+  return nodeCopy.get(head)
+}
+
+
+
+const node2 = new _Node(2, null);
+const node1 = new _Node(1, node2);
+const node0 = new _Node(0, node1);
+
+console.log(node2.next)
+console.log(node2)
+console.log(node1.next)
+
+console.log(copyRandomList(node0))
+
+
+
+
+
+// Add Two Numbers
+// https://leetcode.com/problems/add-two-numbers/description/
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function (head1, head2) {
+  let node1 = head1;
+  let node2 = head2;
+  const dummy = new ListNode();
+  let node = dummy;
+  carry = 0;
+
+  while (node1 || node2) {r
+    const firstValue = node1 ? node1.val : 0;
+    const secondValue = node2 ? node2.val : 0;
+    let value = firstValue + secondValue + carry;
+    carry = value / 10 | 0;
+    value = value % 10;
+
+    node.next = new ListNode(value);
+    node = node.next;
+    node1 = node1 ? node1.next : null;
+    node2 = node2 ? node2.next : null;
+  }
+
+  if (carry) {
+    node.next = new ListNode(carry);
+  }
+
+  return dummy.next
+}
+
+
+
+
+
+// LRU Cache
+// https://leetcode.com/problems/lru-cache/description/
+class Node {
+  constructor(key = 0, value = 0, prev = null, next = null) {
+    this.key = key;
+    this.value = value;
+    this.prev = prev;
+    this.next = next;
+  }
+}
+
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function (capacity) {
+  this.capacity = capacity;
+  this.cache = new Map();
+  this.first = new Node();
+  this.last = new Node();
+  this.first.next = this.last;
+  this.last.prev = this.first;
+
+  this.remove = (node) => {
+    const prev = node.prev;
+    const next = node.next;
+    prev.next = next;
+    next.prev = prev;
+  }
+
+  this.insert = function (node) {
+    const prev = this.last.prev;
+    const next = this.last;
+    prev.next = node;
+    next.prev = node;
+    node.prev = prev;
+    node.next = next;
+  }
+}
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+LRUCache.prototype.get = function (key) {
+  if (this.cache.has(key)) {
+    this.remove(this.cache.get(key));
+    this.insert(this.cache.get(key));
+    return this.cache.get(key).value
+  } else return -1
+}
+
+/** 
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function (key, value) {
+  if (this.cache.has(key)) {
+    this.remove(this.cache.get(key));
+  } else if (this.capacity) {
+    this.capacity--;
+  } else {
+    const lru = this.first.next;
+    this.remove(lru);
+    this.cache.delete(lru.key);
+  }
+
+  const node = new Node(key, value);
+  this.cache.set(key, node);
+  this.insert(node);
+}
+
+/** 
+ * Your LRUCache object will be instantiated and called as such:
+ * var obj = new LRUCache(capacity)
+ * var param_1 = obj.get(key)
+ * obj.put(key,value)
+ */
+
+const lRUCache = new LRUCache(2)
+lRUCache.put(2, 1)
+lRUCache.put(1, 1)
+lRUCache.put(2, 3)
+lRUCache.put(4, 1)
+console.log(lRUCache.get(1))  // -1
+console.log(lRUCache.get(2))  // 3
+
+
+
+
+

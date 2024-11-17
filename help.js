@@ -87,7 +87,7 @@ word[0] // A
 word.at(-2) // A // supports negatives
 word.charAt(0) // A // return "" if not found
 'a'.charCodeAt(0) // 97  // ord("a") => 97
-String.fromCharCode(97)  // 'a'  // chr(97) => "a"
+String.fromCharCode(97)  // 'a'  // chr(97) => "a"  // chr(65) => "A"
 word.slice(0, 4)  // ABCD  // slice
 word.slice(-2)  // CD  / takes last two elemnts
 word.slice(0, -2)  // AB  / drops two last elemnts
@@ -204,7 +204,7 @@ Number(false)  // 0
 Number(true)  // 1
 
 9 % 4  // 1  // mod
-13 / 4 | 0  // 3  == 13 // 4  // div
+13 / 4 | 0  // 3  == 13 // 4  // div()
 
 
 

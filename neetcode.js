@@ -51,6 +51,12 @@ var twoSum = (nums, target) => {
 
 // Contains Duplicate
 // Set - Early exit
+console.log(containsDuplicate([1, 2, 3, 1]), true)
+console.log(containsDuplicate([1, 2, 3]), false)
+console.log(containsDuplicate([1, 2, 3, 4]), false)
+console.log(containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]), true)
+
+
 /**
  * @param {number[]} nums
  * @return {boolean}
@@ -69,10 +75,6 @@ var containsDuplicate = (nums) => {
 
   return false
 };
-console.log(containsDuplicate([1, 2, 3, 1]), true)
-console.log(containsDuplicate([1, 2, 3]), false)
-console.log(containsDuplicate([1, 2, 3, 4]), false)
-console.log(containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]), true)
 
 
 // Set
@@ -92,6 +94,11 @@ var containsDuplicate = (nums) => {
 
 // Valid Anagram
 // Map
+console.log(isAnagram("anagram", "nagaram"), true)
+console.log(isAnagram("rat", "car"), false)
+console.log(isAnagram("a", "ab"), false)
+
+
 var isAnagram = (word1, word2) => {
   const word1_count = counter(word1);
   const word2_count = counter(word2);
@@ -119,9 +126,6 @@ const counter = (word) => {
 
   return counter
 };
-console.log(isAnagram("anagram", "nagaram"), true)
-console.log(isAnagram("rat", "car"), false)
-console.log(isAnagram("a", "ab"), false)
 
 
 // compare two Objects
@@ -5847,17 +5851,17 @@ class ListNode {
  * @return {ListNode}
  */
 var reverseList = function (head) {
-  let currenNode = head;
-  let previousNode = null;
+  let node = head;
+  let previous = null;
 
-  while (currenNode) {
-    const nextNode = currenNode.next;
-    currenNode.next = previousNode;
-    previousNode = currenNode;
-    currenNode = nextNode;
+  while (node) {
+    const nextNode = node.next;
+    node.next = previous;
+    previous = node;
+    node = nextNode;
   }
 
-  return previousNode
+  return previous
 }
 
 const node2 = new ListNode(2, null);
@@ -5935,6 +5939,26 @@ console.log(mergeTwoLists(nodeA0, nodeB0))
  * }
  */
 
+
+// O(n), O(1)
+// Floyd's tortoise and hare
+var hasCycle = function (head) {
+  let slow = head;
+  let fast = head;
+
+  while (
+    fast != null &&
+    fast.next != null
+  ) {
+    slow = slow.next;
+    fast = fast.next.next;
+
+    if (slow === fast) return true
+  }
+  return false
+}
+
+
 /**
  * O(n), O(n)
  * set for node store
@@ -5951,25 +5975,6 @@ var hasCycle = function (head) {
       seen.add(head);
       head = head.next;
     }
-  }
-  return false
-}
-
-
-// O(n), O(1)
-// Floyd's tortoise and hare
-var hasCycle = function (head) {
-  let slow = head;
-  let fast = head;
-
-  while (
-    fast != null &&
-    fast.next != null
-  ) {
-    slow = slow.next;
-    fast = fast.next.next;
-
-    if (slow === fast) return true
   }
   return false
 }
@@ -6254,4 +6259,1360 @@ console.log(lRUCache.get(2))  // 3
 
 
 
+
+// Largest Rectangle in Histogram
+// https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+console.log(largestRectangleArea([2, 1, 5, 6, 2, 3]), 10)
+console.log(largestRectangleArea([2, 4]), 4)
+console.log(largestRectangleArea([2, 1, 2]), 3)
+
+
+/**
+ * @param {number[]} heights - An array representing the heights of histogram bars.
+ * @return {number} - The largest rectangle area that can be formed.
+ */
+var largestRectangleArea = function (heights) {
+  const stack = [];  // Stack to store [index, height] pairs.
+  let maxArea = 0;   // Variable to track the maximum rectangle area found.
+
+  // Iterate through the histogram bars.
+  for (let index = 0; index < heights.length; index++) {
+    const height = heights[index]; // Current bar height.
+    let startIndex = index;        // Initialize the start index of the rectangle.
+
+    // While the stack is not empty and the current height is less than
+    // the height of the bar at the top of the stack.
+    while (stack.length !== 0 && height < stack[stack.length - 1][1]) {
+      // Pop the top bar from the stack.
+      const [prevIndex, prevHeight] = stack.pop();
+      
+      // Calculate the area with the popped bar as the smallest height.
+      maxArea = Math.max(maxArea, prevHeight * (index - prevIndex));
+      
+      // Update the start index to the index of the popped bar
+      // as it defines the left boundary of the rectangle.
+      startIndex = prevIndex;
+    }
+
+    // Push the current bar onto the stack with the updated start index.
+    stack.push([startIndex, height]);
+  }
+
+  // Process the remaining bars in the stack.
+  for (const [index, height] of stack) {
+    // Calculate the area for rectangles extending to the end of the array.
+    maxArea = Math.max(maxArea, height * (heights.length - index));
+  }
+
+  // Return the largest rectangle area found.
+  return maxArea
+}
+
+
+
+
+
+// Concatenation of Array
+// https://leetcode.com/problems/concatenation-of-array/description/
+console.log(getConcatenation([1, 2, 1]), [1, 2, 1, 1, 2, 1])
+console.log(getConcatenation([1, 3, 2, 1]), [1, 3, 2, 1, 1, 3, 2, 1])
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var getConcatenation = function (numbers) {
+  return [...numbers, ...numbers]
+}
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var getConcatenation = function (numbers) {
+  return Array.from({ length: numbers.length * 2 }, (_, index) => numbers[index % numbers.length])
+}
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var getConcatenation = function (numbers) {
+  const concatArray = Array(numbers.length * 2);
+  const numbersLength = numbers.length;
+
+  for (let index = 0; index < numbersLength; index++) {
+    concatArray[index] = numbers[index];
+    concatArray[index + numbers.length] = numbers[index];
+  }
+
+  return concatArray
+}
+
+
+
+
+
+// Valid Palindrome II
+// https://leetcode.com/problems/valid-palindrome-ii/description/
+console.log(validPalindrome("aba"), true)
+console.log(validPalindrome("abca"), true)
+console.log(validPalindrome("abc"), false)
+console.log(validPalindrome("eeccccbebaeeabebccceea"), false)
+console.log(validPalindrome("aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga"), true)
+
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var validPalindrome = function (word) {
+  let left = 0;
+  let right = word.length - 1;
+
+  while (left < right) {
+    if (word[left] === word[right]) {
+      left++;
+      right--;
+    } else {
+      const wordSkipLeft = word.slice(left + 1, right + 1);
+      const wordSkipRight = word.slice(left, right);
+
+      return (
+        // wordSkipLeft === wordSkipLeft.split('').reverse().join('') ||
+        // wordSkipRight === wordSkipRight.split('').reverse().join('')
+        isPalindrome(wordSkipLeft) ||
+        isPalindrome(wordSkipRight)
+      )
+    }
+  }
+  return true
+}
+
+function isPalindrome(word) {
+  let left = 0;
+  let right = word.length - 1
+
+  while (left < right) {
+    if (word[left] != word[right]) return false
+    left++;
+    right--;
+  }
+
+  return true
+}
+
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var validPalindrome = function (word) {
+  let left = 0;
+  let right = word.length - 1;
+
+  while (left < right) {
+    if (word[left] === word[right]) {
+      left++;
+      right--;
+    } else {
+      const wordSkipLeft = word.slice(left + 1, right + 1);
+      const wordSkipRight = word.slice(left, right);
+
+      return (
+        wordSkipLeft === wordSkipLeft.split('').reverse().join('') ||
+        wordSkipRight === wordSkipRight.split('').reverse().join('')
+      )
+    }
+  }
+  return true
+}
+
+
+
+
+
+// Baseball Game
+// https://leetcode.com/problems/baseball-game/description/
+console.log(calPoints(["5", "2", "C", "D", "+"]), 30)
+console.log(calPoints(["5", "-2", "4", "C", "D", "9", "+", "+"]), 27)
+console.log(calPoints(["1", "C"]), 0)
+
+
+/**
+ * @param {string[]} operations
+ * @return {number}
+ */
+var calPoints = function (operations) {
+  const stack = [];
+
+  for (const operation of operations) {
+    if (operation === 'C') {
+      stack.pop()
+    } else if (operation === 'D') {
+      stack.push(stack[stack.length - 1] * 2)
+    } else if (operation === '+') {
+      const x = stack.pop();
+      const y = stack.pop();
+      stack.push(y);
+      stack.push(x);
+      stack.push(x + y);
+    } else {
+      stack.push(Number(operation));
+    }
+  }
+
+  return stack.reduce((total, current) => total + current, 0)
+}
+
+
+
+
+
+// Replace Elements with Greatest Element on Right Side
+// https://leetcode.com/problems/replace-elements-with-greatest-element-on-right-side/description/
+console.log(replaceElements([17, 18, 5, 4, 6, 1]), [18, 6, 6, 6, 1, -1])
+console.log(replaceElements([400]), [-1])
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var replaceElements = function (numbers) {
+  const greatestRight = Array(numbers.length).fill(-1);
+  const numbersReversed = numbers.reverse()
+
+  for (let index = 0; index < numbers.length - 1; index++) {
+    greatestRight[index + 1] = Math.max(greatestRight[index], numbersReversed[index]);
+  }
+
+  return greatestRight.reverse()
+}
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var replaceElements = function (numbers) {
+  const greatestRight = Array(numbers.length).fill(-1);
+
+  for (let index = numbers.length - 2; index >= 0; index--) {
+    greatestRight[index] = Math.max(greatestRight[index + 1], numbers[index + 1]);
+  }
+
+  return greatestRight
+}
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var replaceElements = function (numbers) {
+  numbers.shift();
+  numbers.push(-1)
+
+  for (let index = numbers.length - 2; index >= 0; index--) {
+    numbers[index] = Math.max(numbers[index], numbers[index + 1]);
+  }
+
+  return numbers
+}
+
+
+
+
+
+// Minimum Difference Between Highest and Lowest of K Scores
+// https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/description/
+console.log(minimumDifference([90], 1), 0)
+console.log(minimumDifference([9, 4, 1, 7], 2), 2)
+console.log(minimumDifference([87063, 61094, 44530, 21297, 95857, 93551, 9918], 6), 74560)
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var minimumDifference = function (numbers, k) {
+  numbers.sort((a, b) => a - b);
+  let min_value = Infinity
+
+  for (let index = 0; index < numbers.length - k + 1; index++) {
+    const current_min = numbers[index + k - 1] - numbers[index]
+    
+    if (current_min < min_value) {
+      min_value = current_min;
+    }
+  }
+  
+  return min_value
+}
+
+
+
+
+
+// Merge Strings Alternately
+// https://leetcode.com/problems/merge-strings-alternately/description/
+console.log(mergeAlternately("abc", "pqr"), "apbqcr")
+console.log(mergeAlternately("ab", "pqrs"), "apbqrs")
+console.log(mergeAlternately("abcd", "pq"), "apbqcd")
+
+
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {string}
+ */
+var mergeAlternately = function (word1, word2) {
+  let merged = '';
+  
+  for (let index = 0; index < Math.max(word1.length, word2.length); index++) {
+    merged += word1[index] || '';
+    merged += word2[index] ?? '';
+  }
+
+  return merged
+}
+
+
+
+
+
+// Implement Stack using Queues
+// https://leetcode.com/problems/implement-stack-using-queues/description/
+
+
+var MyStack = function() {
+  this.queue = [];
+}
+
+/** 
+* @param {number} x
+* @return {void}
+*/
+MyStack.prototype.push = function(x) {
+  this.queue.push(x);
+}
+
+/**
+* @return {number}
+*/
+MyStack.prototype.pop = function() {
+  for (let index = 0; index < this.queue.length - 1; index++) {
+      this.queue.push(this.queue.shift());
+  }
+  return this.queue.shift()
+}
+
+/**
+* @return {number}
+*/
+MyStack.prototype.top = function() {
+  for (let index = 0; index < this.queue.length - 1; index++) {
+      this.queue.push(this.queue.shift());
+  }
+  const popped = this.queue.shift();
+  this.queue.push(popped);
+  return popped
+}
+
+/**
+* @return {boolean}
+*/
+MyStack.prototype.empty = function() {
+  return this.queue.length === 0 ? true : false
+};
+
+/** 
+* Your MyStack object will be instantiated and called as such:
+* var obj = new MyStack()
+* obj.push(x)
+* var param_2 = obj.pop()
+* var param_3 = obj.top()
+* var param_4 = obj.empty()
+*/
+
+
+
+
+
+// Is Subsequence
+// https://leetcode.com/problems/is-subsequence/description/
+console.log(isSubsequence("abc", "ahbgdc"), true)
+console.log(isSubsequence("axc", "ahbgdc"), false)
+console.log(isSubsequence("", "ahbgdc"), true)
+console.log(isSubsequence("", ""), true)
+
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isSubsequence = function (word1, word2) {
+  if (word1.length === 0) return true
+
+  let left = 0;
+
+  for (let right = 0; right < word2.length; right++) {
+    if (word2[right] === word1[left]) {
+      left++;
+    }
+
+    if (left === word1.length) return true
+  }
+
+  return false
+}
+
+
+
+
+
+// Length of Last Word
+// https://leetcode.com/problems/length-of-last-word/description/
+console.log(lengthOfLastWord("Hello World"), 5)
+console.log(lengthOfLastWord("   fly me   to   the moon  "), 4)
+console.log(lengthOfLastWord("luffy is still joyboy"), 6)
+
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLastWord = function (text) {
+  return text.trim().split(' ').reverse()[0].length
+}
+
+
+
+
+
+// Reverse String
+// https://leetcode.com/problems/reverse-string/description/
+console.log(reverseString(["h", "e", "l", "l", "o"]), ["o", "l", "l", "e", "h"])
+console.log(reverseString(["H", "a", "n", "n", "a", "h"]), ["h", "a", "n", "n", "a", "H"])
+
+
+/**
+ * O(n), O(1)
+ * build-in function
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function (s) {
+  s = s.reverse();
+}
+
+
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function (s) {
+  let left = 0;
+  let right = s.length - 1;
+
+  while (left < right) {
+    [s[left], s[right]] = [s[right], s[left]];
+    left++;
+    right--;
+  }
+}
+
+
+
+/**
+ * O(n), O(n)
+ * stack
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function (s) {
+  const stack = [];
+
+  for (const letter of s) {
+    stack.push(letter);
+  }
+
+  let index = 0;
+
+  while (stack.length !== 0) {
+    s[index] = stack.pop();
+    index++;
+  }
+}
+
+
+/**
+ * O(n), O(n)
+ * recursion
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function (s) {
+  function localReverse(left, right) {
+    if (left < right) {
+        [s[left], s[right]] = [s[right], s[left]]
+        localReverse(left + 1, right - 1)
+    }
+  }
+  localReverse(0, s.length - 1)
+}
+
+
+
+
+
+// Contains Duplicate II
+// https://leetcode.com/problems/contains-duplicate-ii/description/
+console.log(containsNearbyDuplicate([1, 2, 3, 1], 3), true)
+console.log(containsNearbyDuplicate([1, 0, 1, 1], 1), true)
+console.log(containsNearbyDuplicate([1, 2, 3, 1, 2, 3], 2), false)
+
+
+/**
+ * O(n), O(n)
+ * sliding window
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var containsNearbyDuplicate = function (numbers, window_length) {
+  const window = new Set();
+  let left = 0;
+
+  for (let right = 0; right < numbers.length; right++) {
+    const number = numbers[right];
+
+    if (window.has(number)) return true
+    else window.add(number)
+
+    if (right - left + 1 !== window_length + 1) continue
+
+    window.delete(numbers[left]);
+    left++;
+  }
+
+  return false
+}
+
+
+
+
+
+// Implement Queue using Stacks
+// https://leetcode.com/problems/implement-queue-using-stacks/description/
+console.log(containsNearbyDuplicate([1, 2, 3, 1], 3), true)
+console.log(containsNearbyDuplicate([1, 0, 1, 1], 1), true)
+console.log(containsNearbyDuplicate([1, 2, 3, 1, 2, 3], 2), false)
+
+
+var MyQueue = function () {
+  this.stack = [];
+  this.stackReversed = [];
+}
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function (x) {
+  this.stack.push(x);
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.pop = function () {
+  if (this.stackReversed.length !== 0) {
+    return this.stackReversed.pop();
+  }
+
+  while (this.stack.length !== 0) {
+    this.stackReversed.push(this.stack.pop());
+  }
+
+  return this.stackReversed.pop()
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.peek = function () {
+  if (this.stackReversed.length !== 0) {
+    return this.stackReversed[this.stackReversed.length - 1]
+  }
+
+  while (this.stack.length !== 0) {
+    this.stackReversed.push(this.stack.pop());
+  }
+
+  return this.stackReversed[this.stackReversed.length - 1]
+};
+
+/**
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function () {
+  if (this.stack.length === 0 &&
+    this.stackReversed.length === 0
+  ) return true
+  else return false
+};
+
+/** 
+ * Your MyQueue object will be instantiated and called as such:
+ * var obj = new MyQueue()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.peek()
+ * var param_4 = obj.empty()
+ */
+
+
+
+
+
+// Longest Common Prefix
+// https://leetcode.com/problems/longest-common-prefix/description/
+console.log(longestCommonPrefix(["flower", "flow", "flight"]), "fl")
+console.log(longestCommonPrefix(["dog", "racecar", "car"]), "")
+
+
+/**
+ * @param {string[]} words
+ * @return {string}
+ */
+var longestCommonPrefix = function (words) {
+  let prefix = words[0];
+
+  for (const word of words.slice(1,)) {
+    for (let index = 0; index < prefix.length; index++) {
+      if (prefix[index] !== word[index]) {
+        prefix = prefix.slice(0, index)
+        break
+      }
+    }
+  }
+  return prefix
+}
+
+
+
+
+
+// Merge Sorted Array
+// https://leetcode.com/problems/merge-sorted-array/description/
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3), [1, 2, 2, 3, 5, 6])
+console.log(merge([1], 1, [], 0), [1])
+console.log(merge([0], 0, [1], 1), [1])
+console.log(merge([2, 0], 1, [1], 1), [1, 2])
+console.log(merge([-1, 0, 0, 3, 3, 3, 0, 0, 0], 6, [1, 2, 2], 3), [-1, 0, 0, 1, 2, 2, 3, 3, 3])
+console.log(merge([4, 5, 6, 0, 0, 0], 3, [1, 2, 3], 3), [1, 2, 3, 4, 5, 6])
+
+
+/**
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ */
+var merge = function (nums1, m, nums2, n) {
+  m--;
+  n--;
+
+  for (let index = m + n + 1; index >= 0; index--) {
+    if (n === -1) return nums1
+
+    if (m === - 1) break
+
+    if (nums1[m] > nums2[n]) {
+      nums1[index] = nums1[m];
+      m--;
+    } else {
+      nums1[index] = nums2[n];
+      n--;
+    }
+  }
+
+  for (let index = 0; index <= n; index++) {
+    nums1[index] = nums2[index];
+  }
+
+  return nums1
+}
+
+
+
+
+
+// Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+// https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/description/
+console.log(numOfSubarrays([2, 2, 2, 2, 5, 5, 5, 8], 3, 4), 3)
+console.log(numOfSubarrays([11, 13, 17, 23, 29, 31, 7, 5, 2, 3], 3, 5), 6)
+console.log(numOfSubarrays([8246,1867,193,4539,2650,4721,2944,5777,8055,7502,4334,2137,3658,4156,4628,1139,7963,8035,6008,8427,1841,9169,1059,6158,9116,8052,7074,7866,584,666,192,8081,8273,2809,3017,7852,1869,3395,4649,5366,8834,9100,1643,9511,4136,3897,7193,2500,2721,8477,2887,8300,3922,579,4228,7983,4247,5362,5581,9270,8602,1944,240,6044,6036,1219,6901,2007,2123,9699,3388,390,9144,7697,5160,6442,7078,9758,8841,2064,4096,146,7362,3952,2346,4171,7598,1201,1860,9101,8979,8437,1989,5349,5148,9422,7217,1406,8414,3586,5935,7395,2257,7802,9449,3824,6874,3684,4252,3947,8985,1052,7295,2976,2045,2315,4887,307,8784,988,942,7960,747,1593,1112,7874], 1, 307), 122)
+
+
+/**
+ * @param {number[]} numbers
+ * @param {number} size
+ * @param {number} threshold
+ * @return {number}
+ */
+var numOfSubarrays = function (numbers, size, threshold) {
+  let counter = 0;
+  let subarraySum = 0;
+
+  for (let index = 0; index < numbers.length - size + 1; index++) {
+    if (index === 0) {
+      subarraySum = numbers.slice(0, size).reduce((total, current) => total + current)
+    } else {
+      subarraySum += - numbers[index - 1] + numbers[index + size - 1]
+    }
+
+    if (subarraySum / size >= threshold) {
+      counter++;
+    }
+  }
+  
+  return counter
+}
+
+
+
+
+
+// Make The String Great
+// https://leetcode.com/problems/make-the-string-great/description/
+console.log(makeGood("leEeetcode"), "leetcode")
+console.log(makeGood("abBAcC"), "")
+console.log(makeGood("s"), "s")
+console.log(makeGood("Mc"), "MC")
+
+
+/**
+ * @param {string} word astats
+ * @return {string}
+ */
+var makeGood = function (word) {
+  const stack = []; // Initialize an empty stack to store characters.
+
+  // Iterate through each character in the input string.
+  for (let letter of word) {
+    if (
+      stack.length !== 0 &&  // stack not empty
+      letter !== stack[stack.length - 1] &&  // and if the top of the stack differs the current letter
+      letter.toLowerCase() === stack[stack.length - 1].toLowerCase()  // and both lowercase are the same
+     ) {
+      stack.pop(); // Remove the top character from the stack.
+    } else {
+      stack.push(letter); // Otherwise, add the current character to the stack.
+    }
+  }
+
+  // Return the resulting string by joining the stack.
+  return stack.join('');
+}
+
+
+/**
+ * Adds a method to the `String` prototype to check if a string is entirely in lowercase.
+ * @return {boolean} Returns true if the string is in lowercase, otherwise false.
+ */
+String.prototype.isLowerCase = function () {
+  // Compare the string to its lowercase version.
+  return this === this.toLowerCase() ? true : false;
+}
+
+/**
+ * Removes adjacent pairs of letters that are the same character but with differing cases
+ * (e.g., 'aA' or 'Bb') from the input string, until no such pairs remain.
+ * @param {string} word The input string to be processed.
+ * @return {string} A new string with all problematic pairs removed.
+ */
+String.prototype.isUpperCase = function () {
+  // Compare the string to its uppercase version.
+  return this === this.toUpperCase() ? true : false;
+}
+
+/**
+ * @param {string} word astats
+ * @return {string}
+ */
+var makeGood = function (word) {
+  const stack = []; // Initialize an empty stack to store characters.
+
+  // Iterate through each character in the input string.
+  for (let letter of word) {
+    // Check if the stack is not empty and if the top of the stack matches the current letter
+    // in a case-insensitive way, while being opposite in case sensitivity.
+    if (
+      stack.length !== 0 &&
+      letter.toLowerCase() === stack[stack.length - 1].toLowerCase() && // Same character ignoring case
+      (
+        (letter.isLowerCase() && stack[stack.length - 1].isUpperCase()) || // One is lowercase, the other is uppercase
+        (letter.isUpperCase() && stack[stack.length - 1].isLowerCase())
+      )
+    ) {
+      stack.pop(); // Remove the top character from the stack.
+    } else {
+      stack.push(letter); // Otherwise, add the current character to the stack.
+    }
+  }
+
+  // Return the resulting string by joining the stack.
+  return stack.join('');
+}
+
+
+
+function isLowerCase(letter) {
+  return letter === letter.toLowerCase() ? true : false
+}
+
+function isUpperCase(letter) {
+  return letter === letter.toUpperCase() ? true : false
+}
+
+/**
+ * @param {string} word
+ * @return {string}
+ */
+var makeGood = function (word) {
+  const stack = [];
+
+  for (let letter of word) {
+    // Check if the stack is not empty and if the top of the stack matches the current letter
+    // in a case-insensitive way, while being opposite in case sensitivity.
+    if (
+      stack.length !== 0 &&
+      letter.toLowerCase() === stack[stack.length - 1].toLowerCase() && // Same character ignoring case
+      (isLowerCase(letter) && isUpperCase(stack[stack.length - 1]) || // One is lowercase, the other is uppercase
+        isUpperCase(letter) && isLowerCase(stack[stack.length - 1])
+      )
+    ) {
+      stack.pop(); // Remove the top character from the stack.
+    } else {
+      stack.push(letter) // Otherwise, add the current character to the stack.
+    }
+  }
+  return stack.join('')
+}
+
+
+
+
+
+// Search Insert Position
+// https://leetcode.com/problems/search-insert-position/description/
+console.log(searchInsert([1, 3, 5, 6], 0), 0)
+console.log(searchInsert([1, 3, 5, 6], 1), 0)
+console.log(searchInsert([1, 3, 5, 6], 2), 1)
+console.log(searchInsert([1, 3, 5, 6], 3), 1)
+console.log(searchInsert([1, 3, 5, 6], 4), 2)
+console.log(searchInsert([1, 3, 5, 6], 5), 2)
+console.log(searchInsert([1, 3, 5, 6], 6), 3)
+console.log(searchInsert([1, 3, 5, 6], 7), 4)
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchInsert = function (numbers, target) {
+  let left = 0;
+  let right = numbers.length - 1;
+
+  while (left <= right) {
+    const middle = (left + right) / 2 | 0  // div 2 operation
+    const middleNumber = numbers[middle];
+
+    if (target === middleNumber) {
+      return middle
+    } else if (target < middleNumber) {
+      right = middle - 1;
+    } else {
+      left = middle + 1;
+    }
+  }
+  return left
+}
+
+
+
+
+
+// Pascal's Triangle
+// https://leetcode.com/problems/pascals-triangle/description/
+console.log(generate(5), [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]])
+console.log(generate(1), [[1]])
+
+
+/**
+ * @param {number} numRows
+ * @return {number[][]}
+ */
+var generate = function (numRows) {
+  const triangle = [];
+
+  for (let index = 0; index < numRows; index++) {
+      if (index === 0) {
+          triangle.push([1]);
+      } else {
+          const row = [1];
+
+          for (let number = 0; number < index - 1; number++) {
+              const first = triangle[triangle.length - 1][number];
+              const second = triangle[triangle.length - 1][number + 1];
+              row.push(first + second);
+          }
+
+          row.push(1);
+          triangle.push(row);
+      }
+  }
+  return triangle
+}
+
+
+
+
+
+// Move Zeroes
+// https://leetcode.com/problems/move-zeroes/description/
+console.log(moveZeroes([0, 1, 0, 3, 12]), [1, 3, 12, 0, 0])
+console.log(moveZeroes([0]), [0])
+console.log(moveZeroes([1]), [1])
+
+
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function (nums) {
+  let zeroCounter = 0;
+  let left = 0;
+
+  for (let right = 0; right < nums.length; right++) {
+      const number = nums[right];
+
+      if (number === 0) {
+          zeroCounter++;
+      } else {
+          nums[left] = number;
+          left++;
+      }
+  }
+
+  for (let index = nums.length - zeroCounter; index < nums.length; index++) {
+      nums[index] = 0;
+  }
+
+  return nums
+}
+
+
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function (nums) {
+  let left = 0;
+
+  for (let right = 0; right < nums.length; right++) {
+      const number = nums[right];
+
+      if (number !== 0) {
+        [nums[left], nums[right]] = [number, nums[left]];
+        left++;
+      } 
+  }
+  // return nums
+}
+
+
+
+
+
+// Frequency of the Most Frequent Element
+// https://leetcode.com/problems/frequency-of-the-most-frequent-element/description/
+console.log(maxFrequency([1, 2, 4], 5), 3)
+console.log(maxFrequency([1, 4, 8, 13], 5), 2)
+console.log(maxFrequency([3, 9, 6], 2), 1)
+console.log(maxFrequency([9930, 9923, 9983, 9997, 9934, 9952, 9945, 9914, 9985, 9982, 9970, 9932, 9985, 9902, 9975, 9990, 9922, 9990, 9994, 9937, 9996, 9964, 9943, 9963, 9911, 9925, 9935, 9945, 9933, 9916, 9930, 9938, 10000, 9916, 9911, 9959, 9957, 9907, 9913, 9916, 9993, 9930, 9975, 9924, 9988, 9923, 9910, 9925, 9977, 9981, 9927, 9930, 9927, 9925, 9923, 9904, 9928, 9928, 9986, 9903, 9985, 9954, 9938, 9911, 9952, 9974, 9926, 9920, 9972, 9983, 9973, 9917, 9995, 9973, 9977, 9947, 9936, 9975, 9954, 9932, 9964, 9972, 9935, 9946, 9966], 3056), 73)
+
+
+/**
+ * O(nlogn), O(1)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} k total increments
+ * @return {number}
+ */
+var maxFrequency = function (numbers, k) {
+  numbers.sort((a, b) => a - b);
+  let left = 0;
+  let total = 0;
+  let frequency = 1;
+
+  for (let right = 0; right < numbers.length; right++) {
+    const number = numbers[right];
+    total += number;  // Add the current number to the total sum of the window.
+
+    // Check if the current window is valid:
+    // `(number * (right - left + 1))` represents the total sum needed
+    // to make all elements in the window equal to `number`.
+    // If the required total exceeds the available increment `k`, shrink the window.
+    while (number * (right - left + 1) - total > k) {
+      total -= numbers[left];  // Remove the element at the left pointer from the total sum.
+      left++;  // Move the left pointer to the right, shrinking the window.
+    }
+
+    frequency =  Math.max(right - left + 1, frequency);  // Update the maximum frequency found so far.
+ }
+
+ return frequency
+}
+
+
+
+
+
+// Removing Stars From a String
+// https://leetcode.com/problems/removing-stars-from-a-string/description/
+console.log(removeStars("leet**cod*e"), "lecoe")
+console.log(removeStars("erase*****"), "")
+
+
+/**
+ * @param {string} word
+ * @return {string}
+ */
+var removeStars = function (word) {
+  const stack = [];
+
+  for (const letter of word) {
+    if (stack.length !== 0 && letter === '*') {
+      stack.pop();
+    } else {
+      stack.push(letter);
+    }
+  }
+  return stack.join('')
+}
+
+
+
+
+
+// Guess Number Higher or Lower
+// https://leetcode.com/problems/guess-number-higher-or-lower/description/
+console.log(guessNumber(10), 6)
+
+
+/** 
+ * Forward declaration of guess API.
+ * @param {number} num   your guess
+ * @return 	     -1 if num is higher than the picked number
+ *			      1 if num is lower than the picked number
+ *               otherwise return 0
+ * var guess = function(num) {}
+ */
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var guessNumber = function (n) {
+  let left = 1;
+  let right = n;
+
+  while (left <= right) {
+      const middle = (left + right) / 2 | 0;  // === (left + right) div 2
+      currentGuess = guess(middle);
+
+      if (currentGuess === 0) {
+          return middle
+      } else if (currentGuess === 1) {
+          left = middle + 1;
+      } else {
+          right = middle - 1;
+      }
+  }
+}
+
+
+
+
+
+// Remove Element
+// https://leetcode.com/problems/remove-element/description/
+console.log(removeElement([3, 2, 2, 3], 3), [2, 2])
+console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2), [0, 1, 3, 4, 2])
+
+
+/**
+ * @param {number[]} numbers
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function(numbers, value) {
+  let left = 0;
+
+  for (const number of numbers) {
+      if (number !== value) {
+          numbers[left] = number;
+          left++;
+      }
+  }
+  return left
+}
+
+
+
+
+
+// Palindrome Linked List
+// https://leetcode.com/problems/palindrome-linked-list/description/
+
+
+/**
+ * O(n), O(1)
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function (head) {
+  // Find the middle of the list
+  let slow = head;
+  let fast = head;
+
+  while (fast && fast.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+  }
+
+  // Reverse the second half of the list
+  previous = null
+
+  while (slow) {
+      nextNode = slow.next;
+      slow.next = previous;
+      previous = slow;
+      slow = nextNode;
+  }
+
+  // Compare the two halves
+  left = head;
+  right = previous;
+
+  while (right) {
+      if (left.val != right.val) {
+          return false
+      }
+
+      left = left.next;
+      right = right.next;
+  }
+
+  return true
+}
+
+
+
+
+
+// Remove Linked List Elements
+// https://leetcode.com/problems/remove-linked-list-elements/description/
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function (head, val) {
+  let anchor = new ListNode();
+  let node = anchor;
+  node.next = head;
+
+  while (node.next) {
+      if (node.next.val === val) {
+          node.next = node.next.next
+      } else {
+          node = node.next;
+      }
+  }
+
+  return anchor.next
+}
+
+
+
+
+
+// Unique Email Addresses
+// https://leetcode.com/problems/unique-email-addresses/description/
+console.log(numUniqueEmails(['test.email+alex@leetcode.com', 'test.e.mail+bob.cathy@leetcode.com', 'testemail+david@lee.tcode.com']), 2)
+console.log(numUniqueEmails(['a@leetcode.com', 'b@leetcode.com', 'c@leetcode.com']), 3)
+
+
+/**
+ * O(n2), O(n)
+ * regex
+ * @param {string[]} emails
+ * @return {number}
+ */
+var numUniqueEmails = function (emails) {
+  const clean_emails = new Set();
+
+  for (const email of emails) {
+    let [name, domain] = email.split('@');
+
+    // remove "." from the name
+    name = name.replace(/\./g, '');
+
+    // remove all after "+" in the name
+    name = name.match(/(\w+)(\+?)/)[1]
+
+    clean_emails.add(name + '@' + domain);
+  }
+
+  return clean_emails.size
+}
+
+
+
+
+
+// Remove Duplicates from Sorted Array
+// https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
+console.log(removeDuplicates([1, 1, 2]), 2)
+console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]), 5)
+
+
+/**
+ * # O(n), O(1)
+ * # two pointers
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var removeDuplicates = function (numbers) {
+  let left = 1;
+
+  for (const number of numbers.slice(1,)) {
+    if (number > numbers[left - 1]) {
+      numbers[left] = number;
+      left++;
+    }
+  }
+
+  return left
+}
+
+
+
+
+
+// Fruit Into Baskets
+// https://leetcode.com/problems/fruit-into-baskets/description/
+console.log(totalFruit([1, 2, 1]), 3)
+console.log(totalFruit([0, 1, 2, 2]), 3)
+console.log(totalFruit([1, 2, 3, 2, 2]), 4)
+console.log(totalFruit([3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4]), 5)
+console.log(totalFruit([1, 0, 1, 4, 1, 4, 1, 2, 3]), 5)
+
+
+/**
+ * O(n), O(n)
+ * sliding window, map()
+ * @param {number[]} fruits
+ * @return {number}
+ */
+var totalFruit = function (fruits) {
+  let left = 0;
+  const basket = new Map();
+  let maxFruit = 0;
+
+  for (let right = 0; right < fruits.length; right++) {
+    const fruit = fruits[right];
+
+    basket.set(fruit, (basket.get(fruit) || 0) + 1)  // add a fruit to the basket
+
+    while (basket.size > 2) {  // while too many fruit types
+      const leftFruit = fruits[left];  // `left` fruit type
+      basket.set(leftFruit, basket.get(leftFruit) - 1);  // remove one `left` fruit from basket
+      left++;  // increase the left pointer
+
+      if (basket.get(leftFruit) === 0) {  // if no `left` fruit
+        basket.delete(leftFruit);  // pop that fruit type
+      }
+    }
+
+    if ((right - left + 1) > maxFruit) {  // update max fruit counter
+      maxFruit = (right - left + 1)
+    }
+  }
+
+  return maxFruit
+}
+
+
+/**
+ * O(n), O(n)
+ * sliding window, object
+ * @param {number[]} fruits
+ * @return {number}
+ */
+var totalFruit = function (fruits) {
+  let left = 0;
+  const basket = {};
+  let maxFruit = 0;
+
+  for (let right = 0; right < fruits.length; right++) {
+    const fruit = fruits[right];
+
+    basket[fruit] = (basket[fruit] || 0) + 1 // add a fruit to the basket
+
+    while (Object.keys(basket).length > 2) {  // while too many fruit types
+      const leftFruit = fruits[left];  // `left` fruit type
+      basket[leftFruit] -= 1;  // remove one `left` fruit from basket
+      left++;  // increase the left pointer
+
+      if (basket[leftFruit] === 0) {  // if no `left` fruit
+        delete basket[leftFruit];  // pop that fruit type // delete basket.leftFruit;
+      }
+    }
+
+    if ((right - left + 1) > maxFruit) {  // update max fruit counter
+      maxFruit = (right - left + 1)
+    }
+  }
+
+  return maxFruit
+}
 

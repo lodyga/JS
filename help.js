@@ -123,7 +123,7 @@ word.replace('a', 'b') // method replaces only the first match:
 word.replace(/a/ig, 'b') // insensitive, global
 '29'.replace(/\d/g, digit => digit < '5' ? '0' : '1')  // '01'
 'ATTGC'.dna.replace(/\w/g, letter => toComplement[letter])  // 'TAACG'
-s = s.replace(/[\W_]/ig, '').toLowerCase();  // delete all non-alnumeric including underscore
+s = s.replace(/[\W_]/ig, '').toLowerCase();  // delete all non-alnumeric including underscore  // re.sub()
 word.replaceAll('a', 'b') // method replaces all matchs:
 // index, find
 let word = 'ABC';
@@ -570,6 +570,7 @@ fruits.get('apples')  // 500
 fruits.has('apples');  // true
 fruits.delete("apples");
 fruits.clear();  // removes all elements
+fruits.size;  // 3
 
 
 fruits.forEach((value, key) => {

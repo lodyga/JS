@@ -5713,3 +5713,22 @@ function stairsIn20(stairs) {
 }
 
 
+
+
+
+// Vowel remover
+// https://www.codewars.com/kata/5547929140907378f9000039/train/python
+console.log(shortcut('hello'), 'hll')
+console.log(shortcut('hellooooo'), 'hll')
+console.log(shortcut('how are you today?'), 'hw r y tdy?')
+console.log(shortcut('complain'), 'cmpln')
+console.log(shortcut('never'), 'nvr')
+
+
+function shortcut(word) {
+  return word.replace(/[aeoiu]/g, '')
+}
+
+
+
+

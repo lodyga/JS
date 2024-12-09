@@ -94,7 +94,7 @@ word.slice(0, -2)  // AB  / drops two last elemnts
 word.slice(1, -2)  // B  / from first elemen and two last elemnts
 word.substring(0, 4)  // ABCD
 // split by character, 
-word.split('')  // split every char ['A', 'B', 'C']
+word.split('')  // split every char ['A', 'B', 'C']  // Python list(iter(word))
 word.split(',')  // split by ','
 '123'.split()  // [ '123' ]
 '123'.split('') // [ '1', '2', '3' ]

@@ -5985,13 +5985,62 @@ var hasCycle = function (head) {
 
 // Reorder List
 // https://leetcode.com/problems/reorder-list/description/
+
+
 /**
  * Definition for singly-linked list.
-*/
-function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * O(n), O(1)
+ * linked list (Reverse And Merge)
+ * @param {ListNode} head
+ * @return {void} Do not return anything, modify head in-place instead.
+ */
+var reorderList = function (head) {
+  let slow = head;
+  let fast = head.next;
+
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  node = slow.next;
+  previous = null;
+  slow.next = null;
+
+  while (node) {
+    nextNode = node.next;
+    node.next = previous;
+    previous = node;
+    node = nextNode;
+  }
+
+  let left = head;
+  let right = previous;
+
+  while (right) {
+    nextLeft = left.next;
+    nextRight = right.next;
+    left.next = right;
+    right.next = nextLeft;
+    left = nextLeft;
+    right = nextRight;
+  }
 }
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
 /**
  * O(n), O(n)
  * linked list to list of nodes
@@ -6006,7 +6055,6 @@ var reorderList = function (head) {
     nodes.push(node)
     node = node.next
   }
-  //return nodes
 
   let left = 0;
   let right = nodes.length - 1;
@@ -6023,14 +6071,6 @@ var reorderList = function (head) {
   nodes[left].next = null;
 }
 
-const node3 = new ListNode(4, null);
-const node2 = new ListNode(3, node3);
-const node1 = new ListNode(2, node2);
-const node0 = new ListNode(1, node1);
-console.log(node0.next)
-console.log(reorderList(node0))
-console.log(node0.next)
-
 
 
 
@@ -6044,6 +6084,43 @@ console.log(node0.next)
  *     this.next = (next===undefined ? null : next)
  * }
  */
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function (head, n) {
+  let anchor = new ListNode(0, head);
+  let left = anchor;
+  let right = anchor;
+
+  while (n) {
+    right = right.next;
+    n--;
+  }
+
+  while (right.next) {
+    left = left.next;
+    right = right.next;
+  }
+
+  left.next = left.next.next;
+
+  return anchor.next
+}
+
+
 /**
  * # O(n), O(n)
  * # List
@@ -6084,6 +6161,8 @@ var removeNthFromEnd = function (head, n) {
  */
 
 /**
+ * O(n), O(n):
+ * dictionary (two pass)
  * @param {_Node} head
  * @return {_Node}
  */
@@ -6134,6 +6213,8 @@ console.log(copyRandomList(node0))
  * }
  */
 /**
+ * O(n), O(1)
+ * Iteration
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
@@ -7548,7 +7629,7 @@ console.log(totalFruit([1, 0, 1, 4, 1, 4, 1, 2, 3]), 5)
 
 
 /**
- * O(n), O(n)
+ * O(n), O(1)
  * sliding window, map()
  * @param {number[]} fruits
  * @return {number}
@@ -7583,7 +7664,7 @@ var totalFruit = function (fruits) {
 
 
 /**
- * O(n), O(n)
+ * O(n), O(1)
  * sliding window, object
  * @param {number[]} fruits
  * @return {number}
@@ -7615,4 +7696,605 @@ var totalFruit = function (fruits) {
 
   return maxFruit
 }
+
+
+
+
+
+// Validate Stack Sequences
+// https://leetcode.com/problems/validate-stack-sequences/description/
+console.log(validateStackSequences([1, 2, 3, 4, 5], [4, 5, 3, 2, 1]), true)
+console.log(validateStackSequences([1, 2, 3, 4, 5], [4, 3, 5, 1, 2]), false)
+console.log(validateStackSequences([2, 1, 0], [1, 2, 0]), true)
+
+
+/**
+ * O(n), O(n)
+ * stack
+ * @param {number[]} pushed
+ * @param {number[]} popped
+ * @return {boolean}
+ */
+var validateStackSequences = function (pushed, popped) {
+  let stack = [];
+
+  for (const number of pushed) {
+    stack.push(number);
+
+    while (
+      stack.length !== 0 &&
+      stack[stack.length - 1] === popped[0]
+    ) {
+      stack.pop();
+      popped.shift();
+    }
+  }
+
+  if (
+    stack.length !== 0 ||
+    popped.length !== 0) {
+    return false
+  } else return true
+}
+
+
+
+
+
+// Arranging Coins
+// https://leetcode.com/problems/arranging-coins/description/
+console.log(arrangeCoins(5), 2)
+console.log(arrangeCoins(8), 3)
+console.log(arrangeCoins(2), 1)
+
+
+/**
+ * @param {number} coins
+ * @return {number}
+ */
+var arrangeCoins = function (coins) {
+  let left = 1;
+  let right = coins;
+
+  while (left <= right) {
+      const middle = (left + right) / 2 | 0;
+      const coinStack = (1 + middle) / 2 * middle;
+
+      if (coins === coinStack) {
+          return middle
+      } else if (coins < coinStack) {
+          right = middle - 1;
+      } else {
+          left = middle + 1;
+      }
+  }
+
+  return right
+}
+
+
+
+
+
+// Remove Duplicates from Sorted List
+// https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function (head) {
+  if (head === null || head.next === null) {
+    return head
+  }
+
+  let node = head;
+
+  while (node.next) {
+    if (node.val === node.next.val) {
+      node.next = node.next.next;
+    } else {
+      node = node.next;
+    }
+  }
+
+  return head
+}
+
+
+
+
+
+// Isomorphic Strings
+// https://leetcode.com/problems/isomorphic-strings/description/
+console.log(isIsomorphic("egg", "add"), true)
+console.log(isIsomorphic("foo", "bar"), false)
+console.log(isIsomorphic("paper", "title"), true)
+console.log(isIsomorphic("badc", "baba"), false)
+
+
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {boolean}
+ */
+var isIsomorphic = function (word1, word2) {
+  let isoMap = new Map();
+  let values = new Set();
+
+  for (let index = 0; index <= word1.length; index++) {
+    const letter = word1[index];
+
+    if (isoMap.has(letter)) {
+      if (isoMap.get(letter) != word2[index]) return false
+    } else {
+      if (values.has(word2[index])) return false
+
+      isoMap.set(letter, word2[index]);
+      values.add(word2[index]);
+    }
+  }
+
+  return true
+}
+
+
+
+
+
+// Assign Cookies
+// https://leetcode.com/problems/assign-cookies/description/
+console.log(findContentChildren([1, 2, 3], [1, 1]), 1)
+console.log(findContentChildren([1, 2], [1, 2, 3]), 2)
+console.log(findContentChildren([10, 9, 8, 7], [5, 6, 7, 8]), 2)
+
+
+/**
+ * @param {number[]} children
+ * @param {number[]} cookies
+ * @return {number}
+ */
+var findContentChildren = function (children, cookies) {
+  children.sort((a, b) => a - b);
+  cookies.sort((a, b) => a - b);
+  let left = 0;
+
+  for (let right = 0; right < cookies.length; right++) {
+    const cookie = cookies[right];
+
+    if (children[left] <= cookie) {   // if child is content
+      left++;  // move to the next child
+    }
+  }
+
+  return left
+}
+
+
+
+
+
+// Maximum Number of Vowels in a Substring of Given Length
+// https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/
+console.log(maxVowels("abciiidef", 3), 3)
+console.log(maxVowels("aeiou", 2), 2)
+console.log(maxVowels("leetcode", 3), 2)
+
+
+/**
+ * @param {string} word
+ * @param {number} substringLength
+ * @return {number}
+ */
+var maxVowels = function(word, substringLength) {
+  const vovels = 'aeoiu';
+  let left = 0;
+  let vovelCounter = 0;
+  let maxVovels = 0;
+
+  for (let right = 0; right < word.length; right++) {
+      const letter = word[right];
+
+      if (vovels.includes(letter)) {
+          vovelCounter++;
+      }
+
+      if (right - left + 1 === substringLength + 1) {
+          const leftLetter = word[left];
+          left++;
+
+          if (vovels.includes(leftLetter)) {
+              vovelCounter--;
+          }
+      }
+
+      if (vovelCounter > maxVovels) maxVovels = vovelCounter
+  }
+
+  return maxVovels
+}
+
+
+
+
+
+// Asteroid Collision
+// https://leetcode.com/problems/asteroid-collision/description/
+console.log(asteroidCollision([5, 10, -5]), [5, 10])
+console.log(asteroidCollision([8, -8]), [])
+console.log(asteroidCollision([10, 2, -5]), [10])
+console.log(asteroidCollision([-2, -1, 1, 2]), [-2, -1, 1, 2])
+console.log(asteroidCollision([1, 2, -5]), [-5])
+console.log(asteroidCollision([-2, -2, 1, -2]), [-2, -2, -2])
+console.log(asteroidCollision([-2, -1, 1, -2]), [-2, -1, -2])
+console.log(asteroidCollision([-2, 2, 1, -2]), [-2])
+
+
+/**
+ * @param {number[]} asteroids
+ * @return {number[]}
+ */
+var asteroidCollision = function (asteroids) {
+  const stack = [];
+  let asteroid;
+
+  for (asteroid of asteroids) {
+    while (stack.length !== 0 &&
+      asteroid < 0 &&
+      stack[stack.length - 1] > 0
+    ) {
+      const diff = stack[stack.length - 1] + asteroid;
+
+      if (diff === 0) {
+        stack.pop();
+        asteroid = 0;
+      } else if (diff > 0) {
+        asteroid = 0;
+      } else {
+        stack.pop();
+      }
+    }
+    
+    if (asteroid !== 0) stack.push(asteroid);
+  }
+
+  return stack
+}
+
+
+
+
+
+// Squares of a Sorted Array
+// https://leetcode.com/problems/squares-of-a-sorted-array/description/
+console.log(sortedSquares([-4, -1, 0, 3, 10]), [0, 1, 9, 16, 100])
+console.log(sortedSquares([-7, -3, 2, 3, 11]), [4, 9, 9, 49, 121])
+console.log(sortedSquares([1, 2, 3]), [1, 4, 9])
+console.log(sortedSquares([-3, -2, -1]), [1, 4, 9])
+console.log(sortedSquares([0]), [0])
+console.log(sortedSquares([0, 1]), [0, 1])
+console.log(sortedSquares([-10000, -9999, -7, -5, 0, 0, 10000]), [0, 0, 25, 49, 99980001, 100000000, 100000000])
+console.log(sortedSquares([-1, 1]), [1, 1])
+console.log(sortedSquares([-1, 1, 1]), [1, 1, 1])
+console.log(sortedSquares([-3, -3, -2, 1]), [1, 4, 9, 9])
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var sortedSquares = function (numbers) {
+  let left = 0;
+  let right = numbers.length - 1;
+  const sortedSquaresList = [];
+
+  while (left <= right) {
+    if (numbers[left] ** 2 > numbers[right] ** 2) {
+      sortedSquaresList.push(numbers[left] ** 2);
+      left++;
+    } else {
+      sortedSquaresList.push(numbers[right] ** 2);
+      right--;
+    }
+  }
+
+  return sortedSquaresList.reverse()
+}
+
+
+
+
+
+// Middle of the Linked List
+// https://leetcode.com/problems/middle-of-the-linked-list/description/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var middleNode = function (head) {
+  let slow = head;
+  let fast = head;
+
+  while (fast && fast.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+  }
+
+  return slow
+}
+
+
+
+
+
+// Can Place Flowers
+// https://leetcode.com/problems/can-place-flowers/description/
+console.log(canPlaceFlowers([1, 0, 0, 0, 1], 1), true)
+console.log(canPlaceFlowers([1, 0, 0, 0, 1], 2), false)
+console.log(canPlaceFlowers([1, 0, 0, 0], 1), true)
+console.log(canPlaceFlowers([1, 0, 1, 0, 1, 0, 1], 0), true)
+console.log(canPlaceFlowers([0, 0, 1, 0, 1], 1), true)
+console.log(canPlaceFlowers([1, 0, 0, 0, 1, 0, 0], 2), true)
+console.log(canPlaceFlowers([0, 0, 0], 2), true)
+
+
+/**
+ * @param {number[]} flowerbed
+ * @param {number} n
+ * @return {boolean}
+ */
+var canPlaceFlowers = function (flowerbed, n) {
+  let spaces = 1;
+
+  for (const place of flowerbed) {
+    if (place) {
+      if (spaces > 2) {
+        n -= (spaces - 1) / 2 | 0
+      }
+
+      if (n <= 0) return true
+
+      spaces = 0;
+    } else {
+      spaces++
+    }
+  }
+  n -= spaces / 2 | 0
+
+  return n <= 0
+}
+
+
+
+
+
+// Find First Palindromic String in the Array
+// https://leetcode.com/problems/find-first-palindromic-string-in-the-array/description/
+console.log(firstPalindrome(['abc', 'car', 'ada', 'racecar', 'cool']), 'ada')
+console.log(firstPalindrome(['notapalindrome', 'racecar']), 'racecar')
+console.log(firstPalindrome(['def', 'ghi']), '')
+
+
+/**
+ * O(n), O(1)
+ * build-in function
+ * @param {string[]} words
+ * @return {string}
+ */
+var firstPalindrome = function (words) {
+  for (const word of words) {
+    if (word === word.split('').reverse().join('')) return word
+  }
+
+  return ''
+}
+
+
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {string[]} words
+ * @return {string}
+ */
+var firstPalindrome = function (words) {
+  for (const word of words) {
+    let left = 0;
+    let right = word.length - 1;
+
+    while (left < right) {
+      if (word[left] !== word[right]) break
+
+      left++;
+      right--;
+    }
+
+    if (left >= right) return word
+  }
+
+  return ''
+}
+
+
+
+
+
+// Sort Array By Parity
+// https://leetcode.com/problems/sort-array-by-parity/description/
+console.log(sortArrayByParity([3, 1, 2, 4]), [2, 4, 3, 1])
+console.log(sortArrayByParity([1, 2, 3, 4]), [2, 4, 3, 1])
+console.log(sortArrayByParity([0]), [0])
+
+
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var sortArrayByParity = function (numbers) {
+  let left = 0;
+
+  for (let right = 0; right < numbers.length; right++) {
+    const number = numbers[right];
+
+    if (number % 2 === 0) {
+      [numbers[left], numbers[right]] = [numbers[right], numbers[left]]
+      left++;
+    }
+  }
+
+  return numbers
+}
+
+
+
+
+
+// Intersection of Two Linked Lists
+// https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function (headA, headB) {
+  let nodeA = headA;
+  let nodeB = headB;
+
+  while (nodeA != nodeB) {
+    nodeA = nodeA === null ? headB : nodeA.next;
+    nodeB = nodeB === null ? headA : nodeB.next;
+  }
+
+  return nodeA
+}
+
+
+
+
+
+// Majority Element
+// https://leetcode.com/problems/majority-element/description/
+console.log(majorityElement([3, 2, 3]), 3)
+console.log(majorityElement([2, 2, 1, 1, 1, 2, 2]), 2)
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var majorityElement = function (numbers) {
+  let [key, value] = [0, 0];
+
+  for (const number of numbers) {
+    if (value === 0) key = number;
+
+    value += key === number ? 1 : -1;
+  }
+
+  return key
+}
+
+
+
+
+
+// Reverse Words in a String III
+// https://leetcode.com/problems/reverse-words-in-a-string-iii/
+console.log(reverseWords("Let's take LeetCode contest"), "s'teL ekat edoCteeL tsetnoc")
+console.log(reverseWords("Mr Ding"), "rM gniD")
+console.log(reverseWords("hehhhhhhe"), "ehhhhhheh")
+
+
+/**
+ * O(n), O(n)
+ * build-in function
+ * @param {string} text
+ * @return {string}
+ */
+var reverseWords = function (text) {
+  return text.
+    split('').
+    reverse().
+    join(' ').
+    split(' ').
+    reverse().
+    join('')
+}
+
+
+
+
+
+// Minimum Number of Flips to Make the Binary String Alternating
+// https://leetcode.com/problems/minimum-number-of-flips-to-make-the-binary-string-alternating/description/
+console.log(minFlips("111000"), 2)
+console.log(minFlips("010"), 0)
+console.log(minFlips("1110"), 1)
+
+
+/**
+ * O(n), O(n)
+ * sliding window
+ * @param {string} numbers
+ * @return {number}
+ */
+var minFlips = function (numbers) {
+  let left = 0
+  const targetA = '01'.repeat(numbers.length);
+  const targetB = '10'.repeat(numbers.length);
+  const doubleNumbers = numbers.repeat(2);
+  let flipA = 0;
+  let flipB = 0;
+  let minFlipA = numbers.length;
+  let minFlipB = numbers.length;
+  
+  for (let right = 0; right < doubleNumbers.length; right++) {
+      const number = doubleNumbers[right];
+
+      if (number !== targetA[right]) flipA++;
+      if (number !== targetB[right]) flipB++;
+
+      if (right - left + 1 === numbers.length) {
+          minFlipA = Math.min(minFlipA, flipA);
+          minFlipB = Math.min(minFlipB, flipB);
+
+          if (minFlipA === 0 || minFlipB === 0) return 0
+
+          if (doubleNumbers[left] !== targetA[left]) flipA--;
+          if (doubleNumbers[left] !== targetB[left]) flipB--;
+
+          left++;
+      }
+  }
+
+  return Math.min(minFlipA, minFlipB)
+}
+
+
 

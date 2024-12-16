@@ -8298,3 +8298,436 @@ var minFlips = function (numbers) {
 
 
 
+
+
+// Online Stock Span
+// https://leetcode.com/problems/online-stock-span/description/
+
+
+/**
+ * O(n2), O(n)
+ * stack
+ */
+class StockSpanner {
+  constructor() {
+    this.prices = [];  // [price, counter]
+  }
+
+  /**
+   * @param {number} price
+   * @return {number}
+   */
+  next(price) {
+    let right = this.prices.length - 1;
+    let counter = 1;
+
+    while (
+      right >= 0 &&
+      price >= this.prices[this.prices.length - 1][0]
+    ) {
+      const [_, currentCounter] = this.prices.pop()
+      counter += currentCounter;
+      right--;
+    }
+
+    this.prices.push([price, counter]);
+
+    return counter;
+  }
+}
+
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * var obj = new StockSpanner()
+ * var param_1 = obj.next(price)
+ */
+
+var StockSpannerObj = new StockSpanner()
+console.log(StockSpannerObj.next(100))
+console.log(StockSpannerObj.next(80))
+console.log(StockSpannerObj.next(60))
+console.log(StockSpannerObj.next(70))
+
+
+
+/**
+ * O(n2), O(n)
+ * brute force
+ */
+class StockSpanner {
+  constructor() {
+    this.prices = [];
+  }
+  
+  /**
+   * @param {number} price
+   * @return {number}
+   */
+  next(price) {
+    this.prices.push(price);
+    let counter = 0;
+
+    for (const currentPrice of this.prices.slice().reverse()) {
+      if (price >= currentPrice) {
+        counter++;
+      } else break;
+    }
+
+    return counter;
+  }
+}
+
+
+
+
+
+// Valid Perfect Square
+// https://leetcode.com/problems/valid-perfect-square/description/
+console.log(isPerfectSquare(16), true)
+console.log(isPerfectSquare(14), false)
+
+
+/**
+ * O(logn), O(1)
+ * binary search
+ * @param {number} number
+ * @return {boolean}
+ */
+var isPerfectSquare = function (number) {
+  let left = 0;
+  let right = number;
+
+  while (left <= right) {
+    const middle = (left + right) / 2 | 0;
+
+    if (middle ** 2 === number) return true
+    else if (middle ** 2 > number) {
+      right = middle - 1;
+    } else left = middle + 1;
+  }
+
+  return false
+}
+
+
+
+
+
+// Merge In Between Linked Lists
+// https://leetcode.com/problems/merge-in-between-linked-lists/description/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * O(n), O(1)
+ * linked list
+ * @param {ListNode} head1
+ * @param {number} a
+ * @param {number} b
+ * @param {ListNode} head2
+ * @return {ListNode}
+ */
+var mergeInBetween = function (head1, a, b, head2) {
+  let node = head1;
+  let counter = 0;
+  let start = node;
+
+  while (counter !== b + 1) {
+    if (counter === a - 1) {
+      start = node;
+    }
+
+    counter++;
+    node = node.next;
+  }
+
+  start.next = head2;
+  while (head2.next) head2 = head2.next;
+  head2.next = node;
+
+  return head1
+}
+
+
+
+
+
+// Next Greater Element I
+// https://leetcode.com/problems/next-greater-element-i/description/
+console.log(nextGreaterElement([4, 1, 2], [1, 3, 4, 2]), [-1, 3, -1])
+console.log(nextGreaterElement([2, 4], [1, 2, 3, 4]), [3, -1])
+console.log(nextGreaterElement([1, 3, 5, 2, 4], [6, 5, 4, 3, 2, 1, 7]), [7, 7, 7, 7, 7])
+
+
+/**
+ * O(n), O(1)
+ * stack
+ * @param {number[]} numbers1
+ * @param {number[]} numbers2
+ * @return {number[]}
+ */
+var nextGreaterElement = function (numbers1, numbers2) {
+  const numbers1Index = new Map(numbers1.map((number, index) => [number, index]));
+  const stack = [];
+  const nextGreater = new Array(numbers1.length).fill(-1);
+
+  for (const number of numbers2) {
+    while (number > stack[stack.length - 1]) {
+      const value = stack.pop();
+      const index = numbers1Index.get(value);
+      nextGreater[index] = number;
+    }
+    
+    if (numbers1Index.has(number)) {
+      stack.push(number);
+    }
+  }
+  return nextGreater
+}
+
+
+
+
+
+// Minimum Size Subarray Sum
+// https://leetcode.com/problems/minimum-size-subarray-sum/description/
+console.log(minSubArrayLen(7, [2, 3, 1, 2, 4, 3]), 2)
+console.log(minSubArrayLen(4, [1, 4, 4]), 1)
+console.log(minSubArrayLen(11, [1, 1, 1, 1, 1, 1, 1, 1]), 0)
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {number} target
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var minSubArrayLen = function (target, numbers) {
+  let left = 0;
+  let windowSum = 0;
+  let windowLength = numbers.length + 1;
+
+  for (let right = 0; right <= numbers.length; right++) {
+    const number = numbers[right];
+    windowSum += number;
+
+    while (windowSum >= target) {
+      windowLength = Math.min(windowLength, right - left + 1);
+      windowSum -= numbers[left];
+      left++;
+    }
+  }
+
+  return windowLength === numbers.length + 1 ? 0 : windowLength
+}
+
+
+
+
+
+// Backspace String Compare
+// https://leetcode.com/problems/backspace-string-compare/description/
+console.log(backspaceCompare("ab#c", "ad#c"), true)
+console.log(backspaceCompare("ab##", "c#d#"), true)
+console.log(backspaceCompare("a#c", "b"), false)
+console.log(backspaceCompare("xywrrmp", "xywrrmu#p"), true)
+console.log(backspaceCompare("nzp#o#g", "b#nzp#o#g"), true)
+
+
+function nextValidChar(index, text) {
+  let joker = 0;
+
+  while (index >= 0 && (text[index] == '#' || joker)) {
+    text[index] == '#' ? joker++ : joker--;
+    index--;
+  }
+
+  return index
+}
+
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {string} text1
+ * @param {string} text2
+ * @return {boolean}
+ */
+var backspaceCompare = function (text1, text2) {
+  let index1 = text1.length - 1;
+  let index2 = text2.length - 1;
+
+  while (index1 >= 0 && index2 >= 0) {
+    index1 = nextValidChar(index1, text1);
+    index2 = nextValidChar(index2, text2);
+
+    if (text1[index1] !== text2[index2]) return false
+
+    if (index1 === 0 && index2 === 0) return true
+
+    index1--;
+    index2--;
+  }
+  return nextValidChar(index1, text1) === nextValidChar(index2, text2)
+}
+
+
+
+
+
+// Find Pivot Index
+// https://leetcode.com/problems/find-pivot-index/description/
+console.log(pivotIndex([1, 7, 3, 6, 5, 6]), 3)
+console.log(pivotIndex([1, 2, 3]), -1)
+console.log(pivotIndex([2, 1, -1]), 0)
+
+
+/**
+ * O(n), O(1)
+ * prefix sum
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var pivotIndex = function (numbers) {
+  let rightSum = numbers.reduce((total, current) => total + current);
+  let leftSum = 0;
+
+  for (let index = 0; index <= numbers.length; index++) {
+    const number = numbers[index];
+    rightSum -= number;
+    leftSum += index === 0 ? 0 : numbers[index - 1];
+
+    if (leftSum === rightSum) return index
+
+  }
+  return -1
+}
+
+
+
+
+
+// Find K Closest Elements
+// https://leetcode.com/problems/find-k-closest-elements/description/
+console.log(findClosestElements([1, 2, 3, 4, 5], 4, 3), [1, 2, 3, 4])
+console.log(findClosestElements([1, 1, 2, 3, 4, 5], 4, -1), [1, 1, 2, 3])
+
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} k
+ * @param {number} x
+ * @return {number[]}
+ */
+var findClosestElements = function (numbers, k, x) {
+  let left = 0;
+  let right = numbers.length - 1;
+
+  while (right - left + 1 > k) {
+    const leftAbs = Math.abs(numbers[left] - x);
+    const rightAbs = Math.abs(numbers[right] - x);
+    leftAbs > rightAbs ? left++ : right--;
+    
+  }
+  return numbers.slice(left, right + 1)
+}
+
+
+/**
+ * O(n), O(n)
+ * brute force
+ * @param {number[]} numbers
+ * @param {number} k
+ * @param {number} x
+ * @return {number[]}
+ */
+var findClosestElements = function (numbers, k, x) {
+  while (numbers.length > k) {
+    const left = Math.abs(numbers[0] - x);
+    const right = Math.abs(numbers[numbers.length - 1] - x);
+
+    left > right ? numbers.shift() : numbers.pop();
+  }
+  return numbers
+}
+
+
+
+
+
+// Range Sum Query - Immutable
+// https://leetcode.com/problems/range-sum-query-immutable/description/
+
+
+/**
+   * # O(1), O(n)
+   * prefix sum
+   */
+class NumArray {
+  /**
+   * @param {number[]} numbers
+   */
+  constructor(numbers) {
+    this.prefixes = [];
+    let prefix = 0;
+
+    for (const number of numbers) {
+      prefix += number;
+      this.prefixes.push(prefix);
+    }
+  }
+  /**
+   * @param {number} left
+   * @param {number} right
+   * @return {number}
+   */
+  sumRange(left, right) {
+    if (left) return this.prefixes[right] - this.prefixes[left - 1];
+    else return this.prefixes[right];
+  }
+}
+
+
+/** 
+ * Your NumArray object will be instantiated and called as such:
+ * var obj = new NumArray(nums)
+ * var param_1 = obj.sumRange(left,right)
+ */
+
+
+/**
+ * O(n), O(1)
+ */
+/**
+ * @param {number[]} numbers
+ */
+var NumArray = function (numbers) {
+  this.numbers = numbers;
+}
+
+/** 
+ * @param {number} left 
+ * @param {number} right
+ * @return {number}
+ */
+NumArray.prototype.sumRange = function (left, right) {
+  return (
+    this.numbers.
+      slice(left, right + 1).
+      reduce((total, current) => total + current)
+  )
+}
+
+
+
+
+
+

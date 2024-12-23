@@ -7603,16 +7603,16 @@ console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]), 5)
  * @return {number}
  */
 var removeDuplicates = function (numbers) {
-  let left = 1;
+  let left = 0;
 
   for (const number of numbers.slice(1,)) {
-    if (number > numbers[left - 1]) {
-      numbers[left] = number;
+    if (number > numbers[left]) {
       left++;
+      numbers[left] = number;
     }
   }
 
-  return left
+  return left + 1
 }
 
 
@@ -8730,4 +8730,602 @@ NumArray.prototype.sumRange = function (left, right) {
 
 
 
+// Check If Two String Arrays are Equivalent
+// https://leetcode.com/problems/check-if-two-string-arrays-are-equivalent/description/
+console.log(arrayStringsAreEqual(['ab', 'c'], ['a', 'bc']), true)
+console.log(arrayStringsAreEqual(['a', 'cb'], ['ab', 'c']), false)
+console.log(arrayStringsAreEqual(['abc', 'd', 'defg'], ['abcddefg']), true)
+console.log(arrayStringsAreEqual(['abc', 'd', 'defg'], ['abcddef']), false)
 
+
+/**
+ * O(n), O(n)
+ * buind-in function
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {boolean}
+ */
+var arrayStringsAreEqual = function (words1, words2) {
+  return words1.join('') == words2.join('')
+}
+
+
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {boolean}
+ */
+var arrayStringsAreEqual = function (words1, words2) {
+  let indexWord1 = 0;
+  let indexWord2 = 0;
+  let indexLetter1 = 0;
+  let indexLetter2 = 0;
+
+  while (
+    indexWord1 < words1.length &&
+    indexWord2 < words2.length
+  ) {
+    if (words1[indexWord1][indexLetter1] != words2[indexWord2][indexLetter2]) return false
+
+    indexLetter1++;
+    indexLetter2++;
+
+    if (indexLetter1 == words1[indexWord1].length) {
+      indexLetter1 = 0;
+      indexWord1++;
+    }
+    if (indexLetter2 == words2[indexWord2].length) {
+      indexLetter2 = 0;
+      indexWord2++;
+    }
+  }
+
+  return (
+    indexWord1 == words1.length &&
+    indexWord2 == words2.length
+  )
+}
+
+
+
+
+
+// Minimum Operations to Reduce X to Zero
+// https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/description/
+console.log(minOperations([1, 1, 4, 2, 3], 5), 2)
+console.log(minOperations([5, 6, 7, 8, 9], 4), -1)
+console.log(minOperations([3, 2, 20, 1, 1, 3], 10), 5)
+console.log(minOperations([5, 2, 3, 1, 1], 5), 1)
+console.log(minOperations([8828, 9581, 49, 9818, 9974, 9869, 9991, 10000, 10000, 10000, 9999, 9993, 9904, 8819, 1231, 6309], 134365), 16)
+
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} x
+ * @return {number}
+ */
+var minOperations = function (numbers, x) {
+  let windowLength = numbers.length + 1;
+  let windowSum = 0;
+  let left = 0;
+  const target = numbers.reduce((total, current) => total + current) - x
+
+  for (let right = 0; right < numbers.length; right++) {
+    const number = numbers[right];
+    windowSum += number;
+
+    while (left <= right && windowSum > target) {
+      windowSum -= numbers[left];
+      left += 1;
+    }
+
+    if (windowSum == target) {
+      windowLength = Math.min(windowLength, numbers.length - (right - left + 1));
+    }
+  }
+
+  return windowLength == numbers.length + 1 ? -1 : windowLength
+}
+
+
+
+
+
+// Simplify Path
+// https://leetcode.com/problems/simplify-path/description/
+console.log(simplifyPath("/home/"), "/home")
+console.log(simplifyPath("/home//foo/"), "/home/foo")
+console.log(simplifyPath("/home/user/Documents/../Pictures"), "/home/user/Pictures")
+console.log(simplifyPath("/../"), "/")
+console.log(simplifyPath("/.../a/../b/c/../d/./"), "/.../b/d")
+console.log(simplifyPath("/a/../../b/../c//.//"), "/c")
+console.log(simplifyPath("/."), "/")
+console.log(simplifyPath("/..hidden"), "/..hidden")
+
+
+/**
+ * @param {string} path
+ * @return {string}
+ */
+var simplifyPath = function (path) {
+  const stack = [];
+  path += '/';
+  let cache = '';
+
+  for (const char of path) {
+    if (char === '/') {
+      if (cache == '..') stack.pop()
+      else if (cache && cache != '.') stack.push(cache)
+      cache = '';
+    }
+    else cache += char;
+  }
+
+  return '/' + stack.join('/')
+}
+
+
+
+
+
+// Sqrt(x)
+// https://leetcode.com/problems/sqrtx/description/
+console.log(mySqrt(4), 2)
+console.log(mySqrt(8), 2)
+
+
+/**
+ * @param {number} x
+ * @return {number}
+ */
+var mySqrt = function (x) {
+  let left = 1;
+  let right = x;
+
+  while (left <= right) {
+    const middle = (left + right) / 2 | 0;
+
+    if (middle ** 2 === x) return middle
+    else if (middle ** 2 > x) right = middle - 1;
+    else left = middle + 1;
+  }
+
+  return right
+}
+
+
+
+
+
+// Find All Numbers Disappeared in an Array
+// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/
+console.log(findDisappearedNumbers([4, 3, 2, 7, 8, 2, 3, 1]), [5, 6])
+console.log(findDisappearedNumbers([1, 1]), [2])
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var findDisappearedNumbers = function (numbers) {
+  const disappeared = [];
+
+  for (let index = 0; index < numbers.length; index++) {
+    const number = numbers[index];
+    numbers[Math.abs(number) - 1] = -Math.abs(numbers[Math.abs(number) - 1]);
+  }
+
+  for (let index = 0; index < numbers.length; index++) {
+    const number = numbers[index];
+
+    if (number > 0) disappeared.push(index + 1);
+  }
+
+  return disappeared
+}
+
+
+
+
+
+// Binary Tree Inorder Traversal
+// https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(n)
+ * dfs, recursive
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function (root) {
+  const nodeList = [];
+
+  var dfs = function (node) {
+    if (node === null) return
+
+    dfs(node.left);
+    nodeList.push(node.val);
+    dfs(node.right);
+  }
+
+  dfs(root)
+
+  return nodeList
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(n)
+ * dfs, iterative
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function (root) {
+  const nodeList = [];
+  const stack = [];
+  let node = root;
+
+  while (node || stack.length > 0) {
+    while (node) {
+      stack.push(node);
+      node = node.left;
+    }
+
+    node = stack.pop();
+    nodeList.push(node.val);
+    node = node.right;
+  }
+
+  return nodeList
+}
+
+
+
+
+
+// Maximum Number of Balloons
+// https://leetcode.com/problems/maximum-number-of-balloons/
+console.log(maxNumberOfBalloons("nlaebolko"), 1)
+console.log(maxNumberOfBalloons("loonbalxballpoon"), 2)
+console.log(maxNumberOfBalloons("leetcode"), 0)
+console.log(maxNumberOfBalloons("balon"), 0)
+
+
+/**
+ * @param {string} text
+ * @return {number}
+ */
+var maxNumberOfBalloons = function (text) {
+  const balloon = { 'b': 1, 'a': 1, 'l': 2, 'o': 2, 'n': 1 }
+  const textMap = new Map();
+  let maxBalloons = text.length;
+
+  for (const letter of text) {
+    textMap.set(letter, (textMap.get(letter) || 0) + 1);
+  }
+
+  for (const letter in balloon) {
+    if (textMap.has(letter)) {
+      maxBalloons = Math.min(
+        maxBalloons,
+        textMap.get(letter) / balloon[letter] | 0)
+    }
+    else return 0
+  }
+
+  return maxBalloons
+}
+
+
+
+
+
+// Binary Tree Preorder Traversal
+// https://leetcode.com/problems/binary-tree-preorder-traversal/description/
+console.log(preorderTraversal(buildTreeFromList([1, 2, 3, 4, 5, null, 8, null, null, 6, 7, 9], TreeNode)), [1, 2, 4, 5, 6, 7, 3, 8, 9])
+console.log(preorderTraversal(buildTreeFromList([1, null, 2, 3], TreeNode)), [1, 2, 3])
+console.log(preorderTraversal(buildTreeFromList([], TreeNode)), [])
+console.log(preorderTraversal(buildTreeFromList([1], TreeNode)), [1])
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(n)
+ * dfs, recursion
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var preorderTraversal = function (root) {
+  const nodeList = [];  // initialize the preorder traversal value list
+
+  function dfs(node) {
+    if (node === null) return  // if node is null return
+
+    nodeList.push(node.val);  // add its value to node list
+    dfs(node.left)  // traverse left
+    dfs(node.right)  // traverse right
+  }
+
+  dfs(root)
+
+  return nodeList
+}
+
+
+/**
+ * O(n), O(n)
+ * dfs, iteration, stack
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var preorderTraversal = function (root) {
+  if (root === null) return []  // if node is null return
+  const nodeList = [];  // initialize the preorder traversal value list
+  const stack = [root];  // Initialize the stack with the root node
+
+  while (stack.length !== 0) {
+    const stackLength = stack.length;
+
+    for (let index = 0; index < stackLength; index++) {
+      node = stack.pop();  // Pop the current node
+      nodeList.push(node.val);  // add its value to node list
+
+      if (node.right) stack.push(node.right);  // Add right child to the stack if it exists
+      if (node.left) stack.push(node.left);  // Add left child to the stack if it exists
+    }
+  }
+
+  return nodeList
+}
+
+
+/**
+ * O(n), O(n)
+ * dfs, iteration, stack
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var preorderTraversal = function (root) {
+  const nodeList = [];  // initialize the preorder traversal value list
+  const stack = [];  // Initialize an empty stack
+  let node = root;  // Start traversal from the root node
+
+  while (stack.length !== 0 || node) {
+    if (node) {
+      nodeList.push(node.val);  // Add current node's value to the result
+      stack.push(node.right);  // Add right child to the stack even if it's null
+      node = node.left;  // traverse left the left child
+    }
+    else node = stack.pop();  // Backtrack to the last right child
+  }
+
+  return nodeList
+}
+
+
+
+
+
+// Binary Tree Postorder Traversal
+// https://leetcode.com/problems/binary-tree-postorder-traversal/description/
+console.log(postorderTraversal(buildTreeFromList([1, 2, 3, 4, 5, null, 8, null, null, 6, 7, 9], TreeNode)), [4, 6, 7, 5, 2, 9, 8, 3, 1])
+console.log(postorderTraversal(buildTreeFromList([1, null, 2, 3], TreeNode)), [3, 2, 1])
+console.log(postorderTraversal(buildTreeFromList([], TreeNode)), [])
+console.log(postorderTraversal(buildTreeFromList([1], TreeNode)), [1])
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(n)
+ * dfs, recursion
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var postorderTraversal = function (root) {
+  const nodeList = [];  // initialize the preorder traversal value list
+
+  function dfs(node) {
+    if (node === null) return  // if node is None return
+
+    dfs(node.left)  // traverse left
+    dfs(node.right)  // traverse right
+    nodeList.push(node.val);  // add its value to node list
+  }
+
+  dfs(root)
+
+  return nodeList
+}
+
+
+
+
+
+// Word Pattern
+// https://leetcode.com/problems/word-pattern/description/
+console.log(wordPattern('abba', 'dog cat cat dog'), true)
+console.log(wordPattern('abba', 'dog cat cat fish'), false)
+console.log(wordPattern('aaaa', 'dog cat cat dog'), false)
+
+
+/**
+ * @param {string} pattern
+ * @param {string} text
+ * @return {boolean}
+ */
+var wordPattern = function (pattern, text) {
+  const textList = text.split(' ');  // split text into words
+  const letterToWord = new Map();  // letter to word map
+  const wordToLetter = new Map();  // word to letter map
+
+  if (pattern.length != textList.length) return false  // if text list length and pattern length are not the same
+
+  for (let index = 0; index < pattern.length; index++) {
+    const letter = pattern[index];  // current letter
+    const word = textList[index];  // current word
+
+    if (
+      letterToWord.has(letter) &&  // if letter is already mapped to another word
+      letterToWord.get(letter) != word
+    )
+      return false
+    if (
+      wordToLetter.has(word) &&  // if word is already mapped to another letter
+      wordToLetter.get(word) != letter
+    )
+      return false
+
+    letterToWord.set(letter, word);  // update map
+    wordToLetter.set(word, letter);  // update map
+  }
+
+  return true
+}
+
+
+
+
+
+// Remove Duplicates from Sorted Array II
+// https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/
+console.log(removeDuplicates([1, 1, 1, 2, 2, 3]), 5)
+console.log(removeDuplicates([0, 0, 1, 1, 1, 1, 2, 3, 3]), 7)
+
+
+/**
+ * O(n), O(1)
+ * two pointers
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var removeDuplicates = function (numbers) {
+  let left = 0;
+
+  for (let right = 0; right < numbers.length; right++) {
+    if (right < 2 || numbers[right] > numbers[left - 2]) {
+      numbers[left] = numbers[right]
+      left++;
+    }
+  }
+
+  return left
+}
+
+
+
+
+
+// Get Equal Substrings Within Budget
+// https://leetcode.com/problems/get-equal-substrings-within-budget/description/
+console.log(equalSubstring("abcd", "bcdf", 3), 3)
+console.log(equalSubstring("abcd", "cdef", 3), 1)
+console.log(equalSubstring("abcd", "acde", 0), 1)
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {string} text1
+ * @param {string} text2
+ * @param {number} maxCost
+ * @return {number}
+ */
+var equalSubstring = function (text1, text2, maxCost) {
+  let left = 0;
+  let windowLength = 0;
+
+  for (let right = 0; right < text1.length; right++) {
+    maxCost -= Math.abs(text1[right].charCodeAt(0) - text2[right].charCodeAt(0));
+
+    while (maxCost < 0) {
+      maxCost += Math.abs(text1[left].charCodeAt(0) - text2[left].charCodeAt(0));
+      left++;
+    }
+
+    windowLength = Math.max(windowLength, right - left + 1);
+  }
+
+  return windowLength
+}
+
+
+
+
+
+// Decode String
+// https://leetcode.com/problems/decode-string/description/
+console.log(decodeString("3[a]2[bc]"), "aaabcbc")
+console.log(decodeString("3[a2[c]]"), "accaccacc")
+console.log(decodeString("2[abc]3[cd]ef"), "abcabccdcdcdef")
+
+
+/**
+ * O(n), O(n)
+ * stack
+ * @param {string} text
+ * @return {string}
+ */
+var decodeString = function (text) {
+  const stack = [];
+
+  for (let index = 0; index < text.length; index++) {
+    const char = text[index];
+
+    if (char != ']') stack.push(char)
+    else {
+      let word = '';
+
+      while (stack[stack.length - 1] != '[') {
+        word = stack.pop() + word;
+      }
+
+      stack.pop();
+      let number = '';
+
+      while (
+        stack[stack.length - 1] >= '0' &&
+        stack[stack.length - 1] <= '9'
+      ) {
+        number = stack.pop() + number;
+      }
+
+      stack.push(word.repeat(number));
+    }
+  }
+
+  return stack.join('')
+}

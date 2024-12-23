@@ -118,7 +118,7 @@ console.log('john\'s') // escape '
   (45).toString()  // 45
 console.log(String(45))  // 45
 number.toString(2)  // decinal to binary
-word.repeat(2)  // ABCDABCD
+word.repeat(2)  // ABCDABCD  // *
 word.replace('a', 'b') // method replaces only the first match:
 word.replace(/a/ig, 'b') // insensitive, global
 '29'.replace(/\d/g, digit => digit < '5' ? '0' : '1')  // '01'

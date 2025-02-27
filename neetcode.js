@@ -2199,6 +2199,33 @@ console.log(permute([1]), [[1]])
 
 
 /**
+ * O(n!), O(n)
+ * backtracking
+ * @param {number[]} numbers
+ * @return {number[][]}
+ */
+var permute = function (numbers) {
+  const permutationList = [];
+
+  const dfs = (left) => {
+    if (left === numbers.length) {
+      permutationList.push(numbers.slice());
+      return
+    }
+
+    for (let right = left; right < numbers.length; right++) {
+      [numbers[left], numbers[right]] = [numbers[right], numbers[left]];
+      dfs(left + 1);
+      [numbers[left], numbers[right]] = [numbers[right], numbers[left]];
+    }
+  }
+
+  dfs(0);
+  return permutationList
+}
+
+
+/**
  * @param {number[]} nums
  * @return {number[][]}
  */
@@ -8238,13 +8265,13 @@ console.log(reverseWords("hehhhhhhe"), "ehhhhhheh")
  * @return {string}
  */
 var reverseWords = function (text) {
-  return text.
-    split('').
-    reverse().
-    join(' ').
-    split(' ').
-    reverse().
-    join('')
+  return text
+    .split('')
+    .reverse()
+    .join(' ')
+    .split(' ')
+    .reverse()
+    .join('')
 }
 
 
@@ -9329,3 +9356,4337 @@ var decodeString = function (text) {
 
   return stack.join('')
 }
+
+
+
+
+
+// Single Element in a Sorted Array
+// https://leetcode.com/problems/single-element-in-a-sorted-array/description/
+console.log(singleNonDuplicate([1, 1, 2, 3, 3, 4, 4, 8, 8]), 2)
+console.log(singleNonDuplicate([3, 3, 7, 7, 10, 11, 11]), 10)
+console.log(singleNonDuplicate([1, 2, 2]), 1)
+console.log(singleNonDuplicate([1]), 1)
+
+
+/**
+ * O(logn), O(1)
+ * binary search
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var singleNonDuplicate = function (numbers) {
+  let left = 0;
+  let right = numbers.length - 1;
+
+  while (left <= right) {
+    const middle = left + (right - left) / 2 | 0;
+    const middleNumber = numbers[middle];
+
+    if (middleNumber === numbers[middle - 1]) {  // middle number same as previous one
+      if ((middle - 1) % 2) right = middle - 1  // if the previous index is odd  check the left part
+      else left = middle + 1  // if even check the right part
+    } else if (middleNumber === numbers[middle + 1]) {  // middle number same as next one
+      if ((middle + 1) % 2) left = middle + 1  // if the next index is odd check the right part
+      else right = middle - 1  // if even check the left part
+    } else return middleNumber
+  }
+}
+
+
+
+
+
+// Remove Nodes From Linked List
+// https://leetcode.com/problems/remove-nodes-from-linked-list/description/
+
+
+/**
+ * Definition for singly-linked list.
+*/
+function ListNode(val, next) {
+  this.val = (val === undefined ? 0 : val)
+  this.next = (next === undefined ? null : next)
+}
+/**
+ * O(n), O(1)
+ * linked list
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var removeNodes = function (head) {
+  function reverseLinkedList(node) {
+    let previous = null;
+
+    while (node) {
+      const nextNode = node.next;
+      node.next = previous;
+      previous = node;
+      node = nextNode;
+    }
+
+    return previous
+  }
+
+  const reversedHead = reverseLinkedList(head);
+  let node = reversedHead;
+  let maxValue = node.val;
+
+  while (node.next) {
+    if (node.next.val < maxValue) {
+      node.next = node.next.next;
+    } else {
+      maxValue = Math.max(maxValue, node.next.val);
+      node = node.next;
+    }
+  }
+
+  return reverseLinkedList(reversedHead)
+}
+
+const nodeList = [5, 2, 13, 3, 8]
+
+function listToLinkedlist(nodeList) {
+  const anchor = new ListNode()
+  let node = anchor
+
+  for (let static_node of nodeList) {
+    node.next = new ListNode(static_node)
+    node = node.next
+  }
+
+  node.next = null
+
+  return anchor.next
+}
+
+const linkedlist_1 = listToLinkedlist(nodeList)
+console.log(linkedlist_1.val)
+
+function linkedlistToList(node) {
+  const nodeList = []
+
+  while (node) {
+    nodeList.push(node.val)
+    node = node.next
+  }
+
+  return nodeList
+}
+
+console.log(linkedlistToList(linkedlist_1))
+
+console.log(linkedlistToList(removeNodes((listToLinkedlist([5, 2, 13, 3, 8])))), [13, 8])
+console.log(linkedlistToList(removeNodes((listToLinkedlist([1, 1, 1, 1])))), [1,1,1,1])
+
+console.log(
+    linkedlistToList(
+        removeNodes((
+            listToLinkedlist([5, 2, 13, 3, 8])))), [13, 8])
+
+
+
+
+
+// Convert Sorted Array to Binary Search Tree
+// https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/
+console.log(sortedArrayToBST([-10, -3, 0, 5, 9]))
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(1)
+ * binary treee
+ * @param {number[]} numbers
+ * @return {TreeNode}
+ */
+var sortedArrayToBST = function (numbers) {
+  if (numbers.length === 0) return null
+
+  const left = 0;
+  const right = numbers.length - 1;
+  const middle = left + ((right - left) / 2) | 0;
+  const middleNumber = numbers[middle];
+  const node = new TreeNode(middleNumber);
+  node.left = sortedArrayToBST(numbers.slice(0, middle));
+  node.right = sortedArrayToBST(numbers.slice(middle + 1,))
+
+  return node
+}
+
+
+
+
+
+// Merge Two Binary Trees
+// https://leetcode.com/problems/merge-two-binary-trees/description/
+print(levelOrderTraversal(Solution().mergeTrees(buildTreeFromList([1, 3, 2, 5]), buildTreeFromList([2, 1, 3, None, 4, None, 7]))))
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * # O(n), O(n)
+ * # binary search
+ * @param {TreeNode} root1
+ * @param {TreeNode} root2
+ * @return {TreeNode}
+ */
+var mergeTrees = function (root1, root2) {
+  if (!root1 && !root2) return null
+  if (!root1) root1 = new TreeNode();
+  if (!root2) root2 = new TreeNode();
+
+  const root = new TreeNode(root1.val + root2.val);
+  root.left = mergeTrees(root1.left, root2.left);
+  root.right = mergeTrees(root1.right, root2.right);
+
+  return root
+}
+
+
+
+
+
+// Design HashSet
+// https://leetcode.com/problems/design-hashset/description/
+
+
+class LinkNode {
+  constructor(val = 0) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+var MyHashSet = function () {
+  this.set = Array.from({ length: 10 ** 4 }, () => new LinkNode())
+}
+
+/** 
+ * @param {number} key
+ * @return {void}
+ */
+MyHashSet.prototype.add = function (key) {
+  let node = this.set[key % this.set.length];
+
+  while (node.next) {
+    if (node.next.val === key) return
+    node = node.next;
+  }
+  node.next = new LinkNode(key);
+}
+
+/** 
+ * @param {number} key
+ * @return {void}
+ */
+MyHashSet.prototype.remove = function (key) {
+  let node = this.set[key % this.set.length];
+
+  while (node.next) {
+    if (node.next.val === key) {
+      node.next = node.next.next;
+      return
+    }
+    node = node.next;
+  }
+}
+
+/** 
+ * @param {number} key
+ * @return {boolean}
+ */
+MyHashSet.prototype.contains = function (key) {
+  let node = this.set[key % this.set.length];
+
+  while (node.next) {
+    if (node.next.val === key) return true
+    node = node.next;
+  }
+  return false
+}
+
+/** 
+ * Your MyHashSet object will be instantiated and called as such:
+ * var obj = new MyHashSet()
+ * obj.add(key)
+ * obj.remove(key)
+ * var param_3 = obj.contains(key)
+ */
+
+
+
+
+
+// 4Sum
+// https://leetcode.com/problems/4sum/description/
+console.log(fourSum([1, 0, -1, 0, -2, 2], 0), [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]])
+console.log(fourSum([2, 2, 2, 2, 2], 8), [[2, 2, 2, 2]])
+console.log(fourSum([0, 0, 0, 0], 0), [[0, 0, 0, 0]])
+
+
+/**
+ * O(n3), O(1)
+ * two pointers
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[][]}
+ */
+var fourSum = function (numbers, target) {
+  numbers.sort((a, b) => a - b);
+  const quarduplets = [];
+
+  for (let index1 = 0; index1 < numbers.length - 3; index1++) {
+    const number1 = numbers[index1];
+    if (number1 === numbers[index1 - 1]) continue
+
+    for (let index2 = index1 + 1; index2 < numbers.length - 2; index2++) {
+      const number2 = numbers[index2];
+      if (index2 > index1 + 1 && number2 === numbers[index2 - 1]) continue
+
+      let left = index2 + 1;
+      let right = numbers.length - 1;
+
+      while (left < right) {
+        const quarduplet = number1 + number2 + numbers[left] + numbers[right];
+
+        if (quarduplet < target) left++;
+        else if (quarduplet > target) right--;
+        else {
+          quarduplets.push([number1, number2, numbers[left], numbers[right]])
+          left++;
+          right--;
+          while (numbers[left] === numbers[left - 1]) left++;
+        }
+      }
+    }
+  }
+  return quarduplets
+}
+
+
+
+
+
+// Implement Trie (Prefix Tree)
+// https://leetcode.com/problems/implement-trie-prefix-tree/description/
+
+
+class TrieNode {
+  constructor() {
+    this.children = new Map();
+    this.lastWord = false;
+  }
+}
+
+/**
+ * O(n), O(n)
+ * map
+ */
+var Trie = function () {
+  this.root = new TrieNode();
+}
+
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+Trie.prototype.insert = function (word) {
+  let node = this.root;
+
+  for (const letter of word) {
+    if (!node.children.has(letter)) node.children.set(letter, new TrieNode());
+    node = node.children.get(letter);
+  }
+  node.lastWord = true;
+}
+
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
+Trie.prototype.search = function (word) {
+  let node = this.root;
+
+  for (const letter of word) {
+    if (!node.children.has(letter)) return false
+    node = node.children.get(letter);
+  }
+  return node.lastWord
+}
+
+/** 
+ * @param {string} prefix
+ * @return {boolean}
+ */
+Trie.prototype.startsWith = function (prefix) {
+  let node = this.root;
+
+  for (const letter of prefix) {
+    if (!node.children.has(letter)) return false
+    node = node.children.get(letter);
+  }
+  return true
+}
+
+/** 
+ * Your Trie object will be instantiated and called as such:
+ * var obj = new Trie()
+ * obj.insert(word)
+ * var param_2 = obj.search(word)
+ * var param_3 = obj.startsWith(prefix)
+ */
+
+const trie = new Trie();
+trie.insert("apple");
+trie.search("apple");   // return True
+trie.search("app");     // return False
+trie.startsWith("app"); // return True
+trie.insert("app");
+trie.search("app");     // return True
+
+
+
+
+
+// Design HashMap
+// https://leetcode.com/problems/design-hashmap/description/
+
+
+class ListNode {
+  constructor(key, val) {
+    this.key = key;
+    this.val = val;
+    this.next = null;
+  }
+}
+
+var MyHashMap = function () {
+ this.hashMap = new Array(10**4);
+};
+
+/** 
+ * O(1), O(n)
+ * linked list
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+MyHashMap.prototype.put = function (key, val) {
+  const index = key % this.hashMap.length;
+  if (!this.hashMap[index]) this.hashMap[index] = new ListNode();
+  let node = this.hashMap[index];
+
+  while (node.next) {
+    if (node.next.key === key) {
+      node.next.val = val;
+      return
+    }
+    node = node.next;
+  }
+  node.next = new ListNode(key, val)
+};
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+MyHashMap.prototype.get = function (key) {
+  const index = key % this.hashMap.length;
+  if (!this.hashMap[index]) return -1
+  let node = this.hashMap[index];
+
+  while (node.next) {
+    if (node.next.key === key) {
+      return node.next.val
+    }
+    node = node.next;
+  }
+  return -1
+};
+
+/** 
+ * @param {number} key
+ * @return {void}
+ */
+MyHashMap.prototype.remove = function (key) {
+  const index = key % this.hashMap.length;
+  if (!this.hashMap[index]) return
+  let node = this.hashMap[index];
+
+  while (node.next) {
+    if (node.next.key === key) {
+      node.next = node.next.next;
+      return
+    }
+    node = node.next;
+  }
+};
+
+/** 
+ * Your MyHashMap object will be instantiated and called as such:
+ * var obj = new MyHashMap()
+ * obj.put(key,value)
+ * var param_2 = obj.get(key)
+ * obj.remove(key)
+ */
+
+
+
+
+
+// Rotate Array
+// https://leetcode.com/problems/rotate-array/description/
+console.log(rotate([1, 2, 3, 4, 5, 6, 7], 3), [5, 6, 7, 1, 2, 3, 4])
+console.log(rotate([-1, -100, 3, 99], 2), [3, 99, -1, -100])
+console.log(rotate([-1], 2), [-1])
+console.log(rotate([1, 2], 3), [2, 1])
+
+
+/**
+ * O(n), O(n)
+ * reverse
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var rotate = function (nums, k) {
+  function reverseString(nums, left, right) {
+    while (left < right) {
+      [nums[left], nums[right]] = [nums[right], nums[left]];
+      left++;
+      right--;
+    }
+  }
+
+  k = k % nums.length;
+  reverseString(nums, 0, nums.length - 1);
+  reverseString(nums, 0, k - 1);
+  reverseString(nums, k, nums.length - 1);
+
+  return nums
+}
+
+
+/**
+ * O(n), O(n)
+ * slice
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var rotate = function (nums, k) {
+  const index = nums.length - k;
+
+  return [...nums.slice(index,), ...nums.slice(0, index + 1)]
+}
+
+
+/**
+ * O(n), O(n)
+ * iteration
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var rotate = function (nums, k) {
+  const numsCopy = Array(nums.length);
+  
+  for (let index = 0; index < nums.length; index++) {
+    numsCopy[(index + k) % nums.length] = nums[index]
+  }
+  nums = numsCopy;
+
+  return nums
+}
+
+
+
+
+
+// Binary Subarrays With Sum
+// https://leetcode.com/problems/binary-subarrays-with-sum/description/
+console.log(numSubarraysWithSum([1, 0, 1, 0, 1], 2), 4)
+console.log(numSubarraysWithSum([0, 0, 0, 0, 0], 0), 15)
+
+
+/**
+ * O(n3), O(n)
+ * brute force
+ * @param {number[]} nums
+ * @param {number} goal
+ * @return {number}
+ */
+var numSubarraysWithSum = function (nums, goal) {
+  let counter = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i; j < nums.length; j++) {
+      const subarraySum = nums
+        .slice(i, j + 1)
+        .reduce((total, current) => total + current);
+
+      if (subarraySum === goal) counter++;
+      else if (subarraySum > goal) break
+    }
+  }
+  return counter
+}
+
+
+
+
+
+// Remove K Digits
+// https://leetcode.com/problems/remove-k-digits/description/
+console.log(removeKdigits("1432219", 3), "1219")
+console.log(removeKdigits("10200", 1), "200")
+console.log(removeKdigits("10", 2), "0")
+console.log(removeKdigits("9", 1), "0")
+console.log(removeKdigits("112", 1), "11")
+console.log(removeKdigits("1173", 2), "11")
+
+
+/**
+ * # O(n), O(n)
+ * stack
+ * @param {string} numbers
+ * @param {number} k
+ * @return {string}
+ */
+var removeKdigits = function (numbers, k) {
+  if (numbers.length == k) return "0"
+
+  let stack = [];
+
+  for (const number of numbers.split('')) {
+    while (k &&
+      stack[stack.length - 1] > number
+    ) {
+      stack.pop();
+      k--;
+    }
+
+    stack.push(number);
+  }
+
+  stack = stack.slice(0, stack.length - k)
+
+  stack.reverse();
+  while (stack.length > 1 &&
+    stack[stack.length - 1] === "0"
+  ) stack.pop()
+  stack.reverse();
+
+  return stack.join('')
+}
+
+
+
+
+
+// Find Peak Element
+// https://leetcode.com/problems/find-peak-element/description/
+console.log(findPeakElement([1, 2, 3, 1]), 2)
+console.log(findPeakElement([1, 2, 1, 3, 5, 6, 4]), 5)
+console.log(findPeakElement([1]), 0)
+console.log(findPeakElement([1, 2]), 1)
+
+
+/**
+ * O(logn), O(1)
+ * binary search
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var findPeakElement = function (numbers) {
+  let left = 0;
+  let right = numbers.length - 1;
+
+  while (left <= right) {
+    const middle = left + (right - left) / 2 | 0;
+    const middleNumber = numbers[middle];
+    const previous = middle === 0 ? middleNumber - 1 : numbers[middle - 1];
+    const next = middle === numbers.length - 1 ? middleNumber - 1 : numbers[middle + 1];
+
+    if (
+      previous < middleNumber &&
+      middleNumber > next
+    ) return middle
+    else if (next > previous) left = middle + 1;
+    else right = middle - 1;
+  }
+}
+
+
+
+
+
+// Maximum Twin Sum of a Linked List
+// https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/description/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * O(n), O(1)
+ * linked list, three pass
+ * @param {ListNode} head
+ * @return {number}
+ */
+var pairSum = function (head) {
+  let twinSum = 0;
+  let node = head;
+  let index = 1;
+
+  // find the length of the linked list
+  while (node.next) {
+    node = node.next;
+    index++;
+  }
+
+  middle = index / 2;
+  node = head;
+  // fast forward to the right portion
+  for (let index = 0; index < middle; index++) {
+    node = node.next;
+  }
+
+  // reverse the right portion
+  let previous = null;
+  while (node) {
+    const nextNode = node.next;
+    node.next = previous;
+    previous = node;
+    node = nextNode;
+  }
+
+  // traverse through the list to find the twin sum
+  while (previous) {
+    twinSum = Math.max(twinSum, head.val + previous.val)
+    head = head.next;
+    previous = previous.next;
+  }
+
+  return twinSum
+}
+
+
+
+
+
+// Path Sum
+// https://leetcode.com/problems/path-sum/description/
+console.log(hasPathSum(buildTreeFromList([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, 1]), 22), True)
+console.log(hasPathSum(buildTreeFromList([1, 2, 3]), 5), False)
+console.log(hasPathSum(buildTreeFromList([]), 0), False)
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {boolean}
+ */
+var hasPathSum = function (root, targetSum) {
+  function dfs(node, targetSum) {
+    if (!node) return false
+    else if (
+      !node.left &&
+      !node.right &&
+      targetSum - node.val === 0
+    ) return true
+
+    return (dfs(node.left, targetSum - node.val) ||
+      dfs(node.right, targetSum - node.val))
+  }
+
+  return dfs(root, targetSum)
+}
+
+
+
+
+
+// Sum of All Subset XOR Totals
+// https://leetcode.com/problems/sum-of-all-subset-xor-totals/description/
+console.log(subsetXORSum([1, 3]), 6)
+console.log(subsetXORSum([5, 1, 6]), 28)
+console.log(subsetXORSum([3, 4, 5, 6, 7, 8]), 480)
+
+
+/**
+ * O(n2^n), O(n)
+ * backtracking
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var subsetXORSum = function (numbers) {
+  const subset = [];
+  const subsetSum = [];
+
+  function dfs(index) {
+    if (index === numbers.length) {
+      let current = 0;
+      for (const digit of subset) current ^= digit;
+      subsetSum.push(current);
+      return
+    }
+
+    subset.push(numbers[index]);
+    dfs(index + 1)
+    subset.pop();
+    dfs(index + 1)
+  }
+
+  dfs(0)
+  return subsetSum.reduce((total, current) => total + current)
+}
+
+
+
+
+
+// Combinations
+// https://leetcode.com/problems/combinations/description/
+console.log(combine(4, 2), [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]])
+console.log(combine(1, 1), [[1]])
+
+
+/**
+ * O(n^k), O(n)
+ * backtracking
+ * @param {number} n
+ * @param {number} k
+ * @return {number[][]}
+ */
+var combine = function (n, k) {
+  const combinatioin = [];
+  const combinatioinList = [];
+
+  function dfs(index) {
+    if (index === n) {
+      if (combinatioin.length === k) {
+        combinatioinList.push(combinatioin.slice())
+      }
+      return
+    }
+
+    combinatioin.push(index + 1);
+    dfs(index + 1)
+    combinatioin.pop();
+    dfs(index + 1)
+  }
+
+  dfs(0)
+  return combinatioinList
+}
+
+
+
+
+
+// Monotonic Array
+// https://leetcode.com/problems/monotonic-array/description/
+console.log(isMonotonic(1, 2, 2, 3), true)
+console.log(isMonotonic(6, 5, 4, 4), true)
+console.log(isMonotonic(1, 3, 2), false)
+
+
+/**
+ * O(n), O(1)
+ * @param {number[]} numbers
+ * @return {boolean}
+ */
+var isMonotonic = function (numbers) {
+  let increasing = true;
+  let decreasing = true;
+
+  for (let index = 1; index < numbers.length; index++) {
+    if (numbers[index - 1] < numbers[index]) increasing = false;
+    else if (numbers[index - 1] > numbers[index]) decreasing = false;
+    if (!increasing && !decreasing) return false
+  }
+  return (increasing || decreasing)
+}
+
+
+
+
+
+// Number of Good Pairs
+// https://leetcode.com/problems/number-of-good-pairs/description/
+console.log(numIdenticalPairs([1, 2, 3, 1, 1, 3]), 4)
+console.log(numIdenticalPairs([1, 1, 1, 1]), 6)
+console.log(numIdenticalPairs([1, 2, 3]), 0)
+
+
+/**
+ * # O(n), O(n)
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var numIdenticalPairs = function (numbers) {
+  const counter = new Map();
+  let pairCounter = 0;
+
+  for (const number of numbers) {
+    counter.set(number, (counter.get(number) ?? 0) + 1);
+  }
+
+  for (const frequency of counter.values()) {
+    pairCounter += frequency * (frequency - 1) / 2
+  }
+
+  return pairCounter
+}
+
+
+
+
+
+// Number of Subsequences That Satisfy the Given Sum Condition
+// https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/description/
+console.log(numSubseq([3, 5, 6, 7], 9), 4)
+console.log(numSubseq([3, 3, 6, 8], 10), 6)
+console.log(numSubseq([2, 3, 3, 4, 6, 7], 12), 61)
+console.log(numSubseq([7, 10, 7, 3, 7, 5, 4], 12), 56)
+console.log(numSubseq([14, 4, 6, 6, 20, 8, 5, 6, 8, 12, 6, 10, 14, 9, 17, 16, 9, 7, 14, 11, 14, 15, 13, 11, 10, 18, 13, 17, 17, 14, 17, 7, 9, 5, 10, 13, 8, 5, 18, 20, 7, 5, 5, 15, 19, 14], 22), 272187084)
+console.log(numSubseq([9,25,9,28,24,12,17,8,28,7,21,25,10,2,16,19,12,13,15,28,14,12,24,9,6,7,2,15,19,13,30,30,23,19,11,3,17,2,14,20,22,30,12,1,11,2,2,20,20,27,15,9,10,4,12,30,13,5,2,11,29,5,3,13,22,5,16,19,7,19,11,16,11,25,29,21,29,3,2,9,20,15,9], 32), 91931447)
+
+
+/**
+ * O(nlogn), O(n)
+ * two pointers
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number}
+ */
+var numSubseq = function (numbers, target) {
+  numbers.sort((a, b) => a - b);
+  let counter = 0;
+  let right = numbers.length - 1;
+  const mod = 10 ** 9 + 7;
+  const powerOfTwo = [1];
+  
+  for (let index = 1; index < numbers.length; index++) {
+    powerOfTwo[index] = powerOfTwo[index - 1] * 2 % mod
+  }
+
+  for (let left = 0; left < numbers.length; left++) {
+    while (
+      left <= right &&
+      numbers[left] + numbers[right] > target
+    ) right--;
+
+    if (left <= right) {
+      counter += powerOfTwo[right - left];
+      counter %= mod;
+    }
+  }
+
+  return Number(counter)
+}
+
+
+
+
+
+// Subarray Product Less Than K
+// https://leetcode.com/problems/subarray-product-less-than-k/description/
+console.log(numSubarrayProductLessThanK([10, 5, 2, 6], 100), 8)
+console.log(numSubarrayProductLessThanK([1, 2, 3], 0), 0)
+
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} k
+ * @return {number}
+ */
+var numSubarrayProductLessThanK = function (numbers, k) {
+  let left = 0;
+  let window = 1;
+  let counter = 0;
+
+  for (let right = 0; right < numbers.length; right++) {
+    window *= numbers[right];
+
+    while (
+      left <= right &&
+      window >= k
+    ) {
+      window /= numbers[left];
+      left++;
+    }
+
+    counter += right - left + 1;
+  }
+
+  return counter
+}
+
+
+
+
+
+// Remove All Adjacent Duplicates in String II
+// https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/description/
+console.log(removeDuplicates('abcd', 2), 'abcd')
+console.log(removeDuplicates('deeedbbcccbdaa', 3), 'aa')
+console.log(removeDuplicates('pbbcggttciiippooaais', 2), 'ps')
+
+
+/**
+ * O(n), O(n)
+ * stack
+ * @param {string} letters
+ * @param {number} k
+ * @return {string}
+ */
+var removeDuplicates = function (letters, k) {
+  const stack = [];  // [[letter, frequency]]
+
+  for (const letter of letters) {
+    if (
+      stack.length > 0 &&
+      stack[stack.length - 1][0] === letter
+    ) {
+      stack[stack.length - 1][1] += 1;
+
+      if (stack[stack.length - 1][1] === k)
+        stack.pop();
+    }
+    else { stack.push([letter, 1]); }
+
+  }
+
+  return (stack
+    .map(([letter, frequency]) => letter.repeat(frequency))
+    .join(''))
+}
+
+
+
+
+
+// Successful Pairs of Spells and Potions
+// https://leetcode.com/problems/successful-pairs-of-spells-and-potions/description/
+console.log(successfulPairs([5, 1, 3], [1, 2, 3, 4, 5], 7), [4, 0, 3])
+console.log(successfulPairs([3, 1, 2], [8, 5, 8], 16), [2, 0, 2])
+console.log(successfulPairs([39, 34, 6, 35, 18, 24, 40], [27, 37, 33, 34, 14, 7, 23, 12, 22, 37], 43), [10, 10, 9, 10, 10, 10, 10])
+
+
+/**
+ * O(nlogn), O(n)
+ * binary search
+ * @param {number[]} spells
+ * @param {number[]} potions
+ * @param {number} success
+ * @return {number[]}
+ */
+var successfulPairs = function (spells, potions, success) {
+  potions.sort((a, b) => a - b);
+  const successList = Array(spells.length).fill(0);
+
+  for (let index = 0; index < spells.length; index++) {
+    const spell = spells[index];
+    let left = 0;
+    let right = potions.length - 1;
+
+    while (left < right) {
+      const middle = left + (right - left) / 2 | 0;
+
+      if (potions[middle] * spell < success) 
+        left = middle + 1;
+      else
+        right = middle;
+    }
+
+    if (potions[right] * spell >= success)
+      successList[index] = potions.length - right;
+  }
+  
+  return successList
+}
+
+
+
+
+
+// Swapping Nodes in a Linked List
+// https://leetcode.com/problems/swapping-nodes-in-a-linked-list/description/
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * O(n), O(1)
+ * linked list, one pass
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var swapNodes = function (head, k) {
+  let node = head;
+  let left = head;
+  let right = head;
+
+  for (let index = 0; index < k - 1; index++) {
+    left = left.next;
+    node = node.next;
+  }
+
+  while (node.next) {
+    node = node.next;
+    right = right.next;
+  }
+
+  [left.val, right.val] = [right.val, left.val];
+
+  return head
+}
+
+
+
+
+
+// Range Sum of BST
+// https://leetcode.com/problems/range-sum-of-bst/description/
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(n)
+ * binary tree
+ * @param {TreeNode} root
+ * @param {number} low
+ * @param {number} high
+ * @return {number}
+ */
+var rangeSumBST = function (root, low, high) {
+  let total = 0;
+
+  function dfs(node) {
+    if (!node) return
+
+    total += (node.val >= low && node.val <= high) ? node.val : 0;
+
+    if (node.val > low) dfs(node.left);
+    if (node.val < high) dfs(node.right);
+  }
+
+  dfs(root)
+  return total
+}
+
+
+/**
+ * O(n), O(n)
+ * binary tree
+ * @param {TreeNode} root
+ * @param {number} low
+ * @param {number} high
+ * @return {number}
+ */
+var rangeSumBST = function (root, low, high) {
+  function dfs(node) {
+    if (!node) return 0
+
+    return (
+        ((node.val >= low && node.val <= high) ? node.val : 0) +
+        (node.val > low ? dfs(node.left) : 0) +
+        (node.val < high ? dfs(node.right) : 0)
+    )
+  }
+
+  return dfs(root)
+}
+
+
+
+
+
+// Permutations II
+// https://leetcode.com/problems/permutations-ii/description/
+console.log(permuteUnique([1, 1, 2]), [[1, 2, 1], [2, 1, 1], [1, 1, 2]])
+console.log(permuteUnique([1, 2, 3]), [[1, 3, 2], [1, 2, 3], [2, 1, 3], [3, 2, 1], [3, 1, 2], [2, 3, 1]])
+console.log(permuteUnique([1]), [[1]])
+
+
+/**
+ * O(n!), O(n!)
+ * backtracking, hash set
+ * @param {number[]} numbers
+ * @return {number[][]}
+ */
+var permuteUnique = function (numbers) {
+  const permutationSet = new Set();
+
+  const dfs = (left) => {
+    if (left === numbers.length) {
+      permutationSet.add(JSON.stringify(numbers));
+      return
+    }
+
+    for (let right = left; right < numbers.length; right++) {
+      [numbers[left], numbers[right]] = [numbers[right], numbers[left]];
+      dfs(left + 1);
+      [numbers[left], numbers[right]] = [numbers[right], numbers[left]];
+    }
+  }
+
+  dfs(0);
+  return Array.from(permutationSet).map((permutation) => JSON.parse(permutation))
+}
+
+
+
+
+
+// Pascal's Triangle II
+// https://leetcode.com/problems/pascals-triangle-ii/description/
+console.log(getRow(3), [1, 3, 3, 1])
+console.log(getRow(0), [1])
+console.log(getRow(1), [1, 1])
+console.log(getRow(2), [1, 2, 1])
+
+
+/**
+ * O(n2), O(n)
+ * @param {number} rowIndex
+ * @return {number[]}
+ */
+var getRow = function (rowIndex) {
+  let row = [1];
+
+  for (let index1 = 0; index1 < rowIndex; index1++) {
+    const newRow = Array(index1 + 2).fill(1);
+
+    for (let index2 = 0; index2 < index1;index2++) {
+      newRow[index2 + 1] = row[index2] + row[index2 + 1];
+    }
+
+    row = newRow;
+  }
+
+  return row
+}
+
+
+
+
+
+// N-th Tribonacci Number
+// https://leetcode.com/problems/n-th-tribonacci-number/description/
+console.log(tribonacci(4), 4)
+console.log(tribonacci(25), 1389537)
+console.log(tribonacci(0), 0)
+
+
+/**
+ * O(n), O(n)
+ * dp, bottom-up
+ * @param {number} number
+ * @return {number}
+ */
+var tribonacci = function (number) {
+  const dp = Array(number + 1).fill(1);
+  dp[0] = 0;
+
+  for (let index = 3; index < number + 1; index++) {
+    dp[index] = (
+      dp[index - 1] +
+      dp[index - 2] +
+      dp[index - 3]);
+  }
+
+  return dp[number]
+}
+
+
+/**
+ * O(n), O(1)
+ * dp, bottom-up
+ * @param {number} number
+ * @return {number}
+ */
+var tribonacci = function (number) {
+  const triplet = [0, 1, 1];
+  
+  for (let index = 3; index < number + 1; index++) {
+    triplet[index % 3] = triplet.reduce((total, current) => total + current);
+  }
+
+  return triplet[number % 3]
+}
+
+
+/**
+ * O(n), O(n)
+ * dp, top-down with memoization, with inner function
+ * @param {number} number
+ * @return {number}
+ */
+var tribonacci = function (number) {
+  const memo = new Map();
+  
+  function trib(number) {
+
+    if (number === 0) return 0
+    else if (number === 1 || number === 2) return 1
+    else if (!memo.has(number)) {
+      const value = trib(number - 1) + trib(number - 2) + trib(number - 3);
+      memo.set(number, value)
+    }
+
+    return memo.get(number)
+  }
+
+  return trib(number);
+}
+
+
+
+
+
+// Find Words That Can Be Formed by Characters
+// https://leetcode.com/problems/find-words-that-can-be-formed-by-characters/description/
+console.log(countCharacters(['cat', 'bt', 'hat', 'tree'], 'atach'), 6)
+console.log(countCharacters(['hello', 'world', 'leetcode'], 'welldonehoneyr'), 10)
+
+
+/**
+ * O(n2), O(1)
+ * hash map
+ * @param {string[]} words
+ * @param {string} chars
+ * @return {number}
+ */
+var countCharacters = function (words, chars) {
+  function isWordGood(word) {
+    const counterCopy = new Map(counter);
+
+    for (const letter of word) {
+      if (!counterCopy.has(letter)) 
+        return false
+      else {
+        if (counterCopy.get(letter) === 0) 
+          return false
+        counterCopy.set(letter, counterCopy.get(letter) - 1);
+      }
+    }
+    return true
+  }
+
+
+  const counter = new Map();  // {letter: frequency}
+  let sumOfLengths = 0;
+
+ for (const char of chars) {
+  counter.set(char, (counter.get(char) || 0) + 1);
+ }
+
+ for (const word of words) {
+  if (isWordGood(word))
+    sumOfLengths += word.length;
+ }
+ 
+ return sumOfLengths
+}
+
+
+
+
+
+// Largest 3-Same-Digit Number in String
+// https://leetcode.com/problems/largest-3-same-digit-number-in-string/description/
+console.log(largestGoodInteger("6777133339"), "777")
+console.log(largestGoodInteger("2300019"), "000")
+console.log(largestGoodInteger("42352338"), "")
+console.log(largestGoodInteger("7678222622241118390785777474281834906756431393782326744172075725179542796491876218340"), "777")
+
+
+/**
+ * O(n), O(1)
+ * @param {string} number
+ * @return {string}
+ */
+var largestGoodInteger = function (number) {
+  let triplet = '';
+
+  for (let index = 0; index < number.length - 2; index++) {
+    if (
+      number[index] === number[index + 1] && 
+      number[index + 1] === number[index + 2]
+    ) {
+      triplet = Math.max(triplet, (number[index]).repeat(3));
+    }
+  }
+  return triplet.toString() === '0' ? '000' : triplet.toString()
+}
+
+
+
+
+
+// Array With Elements Not Equal to Average of Neighbors
+// https://leetcode.com/problems/array-with-elements-not-equal-to-average-of-neighbors/description/
+console.log(rearrangeArray([1, 2, 3, 4, 5]), [1, 5, 2, 4, 3])
+console.log(rearrangeArray([1, 2, 3, 4]), [1, 4, 2, 3])
+console.log(rearrangeArray([6, 2, 0, 9, 7]), [0, 9, 2, 7, 6])
+console.log(rearrangeArray([1, 3, 2]), [1, 3, 2])
+
+
+/**
+ * O(nlogn), O(n)
+ * two pointers
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var rearrangeArray = function (numbers) {
+  numbers.sort();
+  const newNumbers = [];
+  let left = 0;
+  let right = numbers.length - 1;
+  let index = 0;
+
+  while (left < right) {
+    newNumbers[index] = numbers[left];
+    index++;
+    newNumbers[index] = numbers[right];
+    index++;
+    left++;
+    right--;
+  }
+
+  if (numbers.length % 2) 
+    newNumbers[index] = numbers[numbers.length / 2 | 0];
+
+  return newNumbers
+}
+
+
+
+
+
+// Length of Longest Subarray With at Most K Frequency
+// https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/description/
+console.log(maxSubarrayLength([1, 2, 3, 1, 2, 3, 1, 2], 2), 6)
+console.log(maxSubarrayLength([1, 2, 1, 2, 1, 2, 1, 2], 1), 2)
+console.log(maxSubarrayLength([5, 5, 5, 5, 5, 5, 5], 4), 4)
+console.log(maxSubarrayLength([1, 1, 2], 2), 3)
+console.log(maxSubarrayLength([1, 4, 4, 3], 1), 2)
+
+
+/**
+ * O(n), O(n)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} k
+ * @return {number}
+ */
+var maxSubarrayLength = function (numbers, k) {
+  const counter = new Map();  // {number: frequency}
+  let left = 0;
+  let subarrayLength = 0;
+
+  for (let right = 0; right < numbers.length; right++) {
+    const number = numbers[right];
+    counter.set(number, (counter.get(number) ?? 0) + 1);
+
+    while (counter.get(number) > k) {
+      counter.set(numbers[left], (counter.get(numbers[left])) - 1);
+      left++;
+    }
+
+    subarrayLength = Math.max(subarrayLength, right - left + 1);
+  }
+
+  return subarrayLength
+}
+
+
+
+
+
+// Capacity To Ship Packages Within D Days
+// https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/submissions/1505021062/
+console.log(shipWithinDays([1, 2, 3, 1, 1], 4), 3)
+console.log(shipWithinDays([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5), 15)
+console.log(shipWithinDays([3, 2, 2, 4, 1, 4], 3), 6)
+
+
+/**
+ * O(nlogn), O(1)
+ * binary search
+ * @param {number[]} weights
+ * @param {number} days
+ * @return {number}
+ */
+var shipWithinDays = function (weights, days) {
+  function daysToShip(capacity) {
+    let days = 1;
+    let currentCapacity = capacity;
+
+    for (const weight of weights) {
+      if (currentCapacity - weight < 0) {
+        days++;
+        currentCapacity = capacity;
+      }
+      currentCapacity -= weight;
+    }
+    return days;
+  }
+
+  let lowCap = Math.max(...weights);
+  let highCap = weights.reduce((total, current) => total + current);
+
+  while (lowCap < highCap) {
+    const capacity = (lowCap + highCap) / 2 | 0
+
+    if (daysToShip(capacity) > days) {
+      lowCap = capacity + 1;
+    } else {
+      highCap = capacity;
+    }
+  }
+
+  return highCap
+}
+
+
+
+
+
+// Design Linked List
+// https://leetcode.com/problems/design-linked-list/description/
+
+
+var ListNode = function (val = 0, next = null, prev = null) {
+  this.val = val;
+  this.next = next;
+  this.prev = prev;
+};
+
+var MyLinkedList = function () {
+  this.left = new ListNode();
+  this.right = new ListNode();
+  this.left.next = this.right;
+  this.right.prev = this.left;
+};
+
+/** 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtHead = function (val) {
+  let next = this.left.next;
+  let prev = this.left
+  let node = new ListNode(val, next, prev);
+  next.prev = node;
+  prev.next = node;
+};
+
+/** 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtTail = function (val) {
+  let next = this.right;
+  let prev = this.right.prev;
+  let node = new ListNode(val, next, prev);
+  next.prev = node;
+  prev.next = node;
+};
+
+/** 
+ * @param {number} index
+ * @return {number}
+ */
+MyLinkedList.prototype.get = function (index) {
+  let node = this.left.next;
+
+  while (index && node != this.right) {
+    node = node.next;
+    index--;
+  }
+
+  if (index === 0 && node != this.right)
+    return node.val
+  else
+    return -1
+};
+
+/** 
+ * @param {number} index 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtIndex = function (index, val) {
+  let next = this.left.next;
+
+  while (index && next != this.right) {
+    next = next.next;
+    index--;
+  }
+
+  if (index === 0 && next) {
+    let prev = next.prev;
+    let node = new ListNode(val, next, prev);
+    prev.next = node;
+    next.prev = node;
+  }
+};
+/** 
+ * @param {number} index
+ * @return {void}
+ */
+MyLinkedList.prototype.deleteAtIndex = function (index) {
+  let node = this.left.next;
+
+  while (index && node.next != this.right) {
+    node = node.next;
+    index--;
+  }
+
+  if (index === 0 && node && node != this.right) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+};
+
+
+// left <–> head <–> ... <–> node <–> ... <–> tail <–> right –> None
+/** 
+ * Your MyLinkedList object will be instantiated and called as such:
+ * var obj = new MyLinkedList()
+ * var param_1 = obj.get(index)
+ * obj.addAtHead(val)
+ * obj.addAtTail(val)
+ * obj.addAtIndex(index,val)
+ * obj.deleteAtIndex(index)
+ */
+
+
+
+
+
+// Leaf-Similar Trees
+// https://leetcode.com/problems/leaf-similar-trees/description/
+console.log(leafSimilar(buildTreeFromList([3, 5, 1, 6, 2, 9, 8, null, null, 7, 4]), buildTreeFromList([3, 5, 1, 6, 7, 4, 2, null, null, null, null, null, null, 9, 8])), true)
+console.log(leafSimilar(buildTreeFromList([1, 2, 3]), buildTreeFromList([1, 3, 2])), false)
+console.log(leafSimilar(buildTreeFromList([1, 2]), buildTreeFromList([2, 2])), true)
+console.log(leafSimilar(buildTreeFromList([3, 5, 1, 6, 7, 4, 2, null, null, null, null, null,null, 9, 11, null, null, 8, 10]), buildTreeFromList([3, 5, 1, 6, 2, 9, 8, null, null, 7, 4])), false)
+console.log(leafSimilar(buildTreeFromList([3, 5, 1, 6, 2, 9, 8, null, null, 7, 4]), buildTreeFromList([3, 5, 1, 6, 7, 4, 2, null, null, null, null, null, null, 9, 11, null, null, 8, 10])), false)
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root1
+ * @param {TreeNode} root2
+ * @return {boolean}
+ */
+var leafSimilar = function (root1, root2) {
+  const leafList = [];
+
+  function dfs(node) {
+    if (!node) return
+    else if (!node.left && !node.right) {
+      leafList.push(node.val);
+      return
+    }
+
+    dfs(node.left);
+    dfs(node.right);
+  }
+
+  dfs(root1)
+  leafList.reverse();
+
+  function dfs2(node) {
+    if (!node) return true
+    else if (!node.left && !node.right) {
+      if (
+        leafList &&
+        node.val === leafList[leafList.length - 1]
+      ) {
+        leafList.pop();
+        return true
+      } else return false
+    }
+
+    return (
+      dfs2(node.left) &&
+      dfs2(node.right))
+  }
+
+  return (
+    dfs2(root2) &&
+    !leafList.length)
+}
+
+
+
+
+
+// Restore IP Addresses
+// https://leetcode.com/problems/restore-ip-addresses/description/
+console.log(restoreIpAddresses("25525511135"), ["255.255.11.135", "255.255.111.35"])
+console.log(restoreIpAddresses("0000"), ["0.0.0.0"])
+console.log(restoreIpAddresses("101023"), ["1.0.10.23", "1.0.102.3", "10.1.0.23", "10.10.2.3", "101.0.2.3"])
+console.log(restoreIpAddresses("000256"), [])
+
+
+/**
+ * O(1), O(1)
+ * backtarcking
+ * the recursion tree is bounded by 3**4 and validation within each call is O(1)
+ * @param {string} text
+ * @return {string[]}
+ */
+var restoreIpAddresses = function (text) {
+  if (
+    text.length < 4 ||
+    text.length > 12) return []
+
+  const ip = [];
+  const ipList = [];
+
+  function dfs(index) {
+    if (index === text.length) {
+      if (ip.length === 4) {
+        ipList.push(ip
+          .map((x) => x[0])
+          .join('.')
+        );
+      }
+      return
+    }
+
+    // check for 0:9
+    ip.push([text[index]]);
+    dfs(index + 1);
+    ip.pop();
+
+    // check for 10:99
+    if (
+      index < text.length - 1 &&
+      text[index] != '0'
+    ) {
+      ip.push([text.slice(index, index + 2)]);
+      dfs(index + 2);
+      ip.pop();
+    }
+
+    // check for 100:255
+    if (
+      index < text.length - 2 &&
+      text[index] != '0' &&
+      text.slice(index, index + 3) <= '255'
+    ) {
+      ip.push([text.slice(index, index + 3)]);
+      dfs(index + 3);
+      ip.pop();
+    }
+  }
+
+  dfs(0);
+  return ipList
+}
+
+
+
+
+
+//Design Add and Search Words Data Structure
+//https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
+const wordDictionary = new WordDictionary();
+wordDictionary.addWord("bad");
+wordDictionary.addWord("dad");
+wordDictionary.addWord("mad");
+console.log(wordDictionary.search("pad")); // return false
+console.log(wordDictionary.search("bad")); // return true
+console.log(wordDictionary.search(".ad")); // return true
+console.log(wordDictionary.search("b..")); // return true
+
+
+class TrieNode {
+  constructor() {
+    this.letters = new Map();
+    this.isWord = false;
+  }
+}
+
+/**
+ * @return {TrieNode}
+ */
+var WordDictionary = function () {
+  this.root = new TrieNode();
+};
+
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+WordDictionary.prototype.addWord = function (word) {
+  let node = this.root;
+
+  for (const letter of word) {
+    if (!node.letters.has(letter))
+      node.letters.set(letter, new TrieNode());
+
+    node = node.letters.get(letter);
+  }
+
+  node.isWord = true;
+};
+
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
+WordDictionary.prototype.search = function (word) {
+  /** 
+   * @param {number} left
+   * @param {TrieNode} node
+   * @return {boolean}
+   */
+  function dfs(left, node) {
+    for (let right = left; right < word.length; right++) {
+      const letter = word[right];
+
+      if (letter === '.') {
+        for (const valueNode of node.letters.values()) {
+          if (dfs(right + 1, valueNode)) return true
+        }
+        return false
+      } else {
+        if (!node.letters.has(letter)) return false
+        else node = node.letters.get(letter);
+      }
+    }
+    return node.isWord
+  }
+
+  return dfs(0, this.root)
+};
+
+
+/** 
+ * Your WordDictionary object will be instantiated and called as such:
+ * var obj = new WordDictionary()
+ * obj.addWord(word)
+ * var param_2 = obj.search(word)
+ */
+
+
+
+
+
+// Triangle
+// https://leetcode.com/problems/triangle/description/
+console.log(minimumTotal([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]), 11)
+console.log(minimumTotal([[-10]]), -10)
+
+
+/**
+ * O(n2), O(1)
+ * dp, in-place
+ * @param {number[][]} triangle
+ * @return {number}
+ */
+var minimumTotal = function (triangle) {
+  for (let row = triangle.length - 2; row >= 0; row--) {
+    for (let col = 0; col < triangle[row].length; col++) {
+      triangle[row][col] += Math.min(triangle[row + 1][col], triangle[row + 1][col + 1])
+    }
+  }
+  return triangle[0][0]
+}
+
+
+
+
+
+// Kth Largest Element in a Stream
+// https://leetcode.com/problems/kth-largest-element-in-a-stream/description/
+const kthLargest = new KthLargest(3, [4, 5, 8, 2]);
+console.log(kthLargest.add(3)); // return 4
+console.log(kthLargest.add(5)) //  return 5
+console.log(kthLargest.add(10)) //  return 5
+console.log(kthLargest.add(9)) //  return 8
+console.log(kthLargest.add(4)) //  return 8
+
+
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+
+/**
+ * @param {number} k
+ * @param {number[]} numbers
+ */
+var KthLargest = function (k, numbers) {
+  this.k = k;
+  this.minHeap = new MinPriorityQueue();
+
+  for (const number of numbers)
+    this.minHeap.enqueue(number);
+
+  while (this.minHeap.size() > k)
+    this.minHeap.dequeue();
+};
+
+/** 
+ * @param {number} val
+ * @return {number}
+ */
+KthLargest.prototype.add = function (val) {
+  this.minHeap.enqueue(val);
+
+  while (this.minHeap.size() > this.k)
+    this.minHeap.dequeue();
+
+  return typeof this.minHeap.front() === 'object'
+    ? this.minHeap.front().element
+    : this.minHeap.front()
+};
+
+/**
+ * Your KthLargest object will be instantiated and called as such:
+ * var obj = new KthLargest(k, nums)
+ * var param_1 = obj.add(val)
+ */
+
+
+
+
+
+// Last Stone Weight
+// https://leetcode.com/problems/last-stone-weight/description/
+console.log(lastStoneWeight([2, 7, 4, 1, 8, 1]), 1)
+console.log(lastStoneWeight([1]), 1)
+console.log(lastStoneWeight([1, 1]), 0)
+
+
+import { MaxPriorityQueue } from '@datastructures-js/priority-queue';
+
+/**
+ * O(nlogn), O(n)
+ * priority queue
+ * @param {number[]} stones
+ * @return {number}
+ */
+var lastStoneWeight = function (stones) {
+  const maxHeap = new MaxPriorityQueue();
+
+  for (const stone of stones) {
+    maxHeap.enqueue(stone);
+  }
+
+  while (maxHeap.size() > 1) {
+    const stone = maxHeap.dequeue() - maxHeap.dequeue();
+    // const stone = maxHeap.dequeue().element - maxHeap.dequeue().element;
+    if (stone)
+      maxHeap.enqueue(stone);
+  }
+
+  return maxHeap.size() === 0 ? 0 : maxHeap.dequeue().element;
+}
+
+
+/**
+ * O(nlogn), O(n)
+ * heap
+ * @param {number[]} stones
+ * @return {number}
+ */
+var lastStoneWeight = function (stones) {
+  const maxHeap = Heap.heapify(stones, (a, b) => b - a);
+
+
+  //for (const stone of stones) {
+  //  maxHeap.enqueue(stone);
+  //}
+
+  while (maxHeap.size() > 1) {
+    const stone = maxHeap.pop() - maxHeap.pop();
+    // const stone = maxHeap.dequeue().element - maxHeap.dequeue().element;
+    if (stone)
+      maxHeap.push(stone);
+  }
+
+  //return maxHeap.dequeue()
+  return maxHeap.size() === 0 ? 0 : maxHeap.pop();
+}
+
+
+
+
+
+// Sort an Array
+// https://leetcode.com/problems/sort-an-array/description/
+console.log(sortArray([5, 2, 3, 1]), [1, 2, 3, 5])
+console.log(sortArray([5, 1, 1, 2, 0, 0]), [0, 0, 1, 1, 2, 5])
+
+
+/**
+ * O(nlogn), O(n)
+ * megret sort
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var sortArray = function (numbers) {
+  mergeSort(numbers, 0, numbers.length - 1)
+  return numbers
+}
+
+function merge(numbers, start, middle, end) {
+  const left_chunk = numbers.slice(start, middle + 1);
+  const right_chunk = numbers.slice(middle + 1, end + 1);
+  let index = start;
+  let left = 0;
+  let right = 0;
+
+  while (
+    left < left_chunk.length &&
+    right < right_chunk.length) {
+    if (left_chunk[left] <= right_chunk[right]) {
+      numbers[index] = left_chunk[left];
+      left++;
+    } else {
+      numbers[index] = right_chunk[right];
+      right++;
+    }
+    index++;
+  }
+
+  while (left < left_chunk.length) {
+    numbers[index] = left_chunk[left];
+    left++;
+    index++;
+  }
+
+  while (right < right_chunk.length) {
+    numbers[index] = right_chunk[right];
+    right++;
+    index++;
+  }
+}
+
+function mergeSort(numbers, left, right) {
+  if (left === right) return
+  const middle = (left + right) / 2 | 0;
+  mergeSort(numbers, left, middle);
+  mergeSort(numbers, middle + 1, right);
+  merge(numbers, left, middle, right);
+}
+
+
+/**
+ * O(nlogn), O(n)
+ * quick sort, tle
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var sortArray = function (numbers) {
+  quickSort(numbers, 0, numbers.length - 1)
+  return numbers
+}
+
+function swap(numbers, left, right) {
+  [numbers[left], numbers[right]] = [numbers[right], numbers[left]]
+}
+
+function partition(numbers, start, end) {
+  const pivot = numbers[end];
+  let left = start - 1;
+
+  for (let right = start; right < end; right++) {
+    if (numbers[right] < pivot) {
+      left++;
+      swap(numbers, left, right);
+    }
+  }
+  swap(numbers, left + 1, end);
+  return left + 1
+}
+
+function quickSort(numbers, left, right) {
+  if (left >= right) return
+  const pivot = partition(numbers, left, right)
+  quickSort(numbers, left, pivot - 1);
+  quickSort(numbers, pivot + 1, right);
+}
+
+
+/**
+ * O(n2), O(1)
+ * quick sort
+ * @param {number[]} numbers
+ * @return {number[]}
+ */
+var sortArray = function (numbers) {
+  insertionSort(numbers);
+  return numbers
+}
+
+function insertionSort(numbers) {
+  for (let right = 1; right < numbers.length; right++) {
+    const key = numbers[right];
+    let left = right - 1;
+
+    while (
+      left >= 0 &&
+      numbers[left] > key
+    ) {
+      numbers[left + 1] = numbers[left];
+      left--;
+    }
+
+    numbers[left + 1] = key;
+  }
+}
+
+
+
+
+
+// Sort Colors
+// https://leetcode.com/problems/sort-colors/description/
+console.log(sortColors([2, 0, 2, 1, 1, 0]), [0, 0, 1, 1, 2, 2])
+console.log(sortColors([2, 0, 1]), [0, 1, 2])
+
+
+/**
+ * O(n), O(1)
+ * three pointers, one pass
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var sortColors = function (nums) {
+  let left = 0;
+  let right = nums.length - 1;
+  let index = 0;
+
+  while (index <= right) {
+    if (nums[index] === 0) {
+      [nums[index], nums[left]] = [nums[left], nums[index]];
+      left++;
+    }
+    else if (nums[index] === 2) {
+      [nums[index], nums[right]] = [nums[right], nums[index]];
+      right--;
+      index--;
+    }
+    index++;
+  }
+  // return nums
+}
+
+
+
+
+
+// Boats to Save People
+// https://leetcode.com/problems/boats-to-save-people/description/
+console.log(numRescueBoats([1, 2], 3), 1)
+console.log(numRescueBoats([3, 2, 2, 1], 3), 3)
+console.log(numRescueBoats([3, 5, 3, 4], 5), 4)
+console.log(numRescueBoats([3, 2, 3, 2, 2], 6), 3)
+
+
+/**
+ * O(nlogn), O(n)
+ * two pointers
+ * @param {number[]} people
+ * @param {number} limit
+ * @return {number}
+ */
+var numRescueBoats = function (people, limit) {
+  people.sort((a, b) => a - b);
+  let left = 0;
+  let right = people.length - 1;
+  let boats = 0;
+
+  while (left <= right) {
+    const delta = limit - people[right];
+    boats++;
+    right--;
+
+    if (
+      left <= right &&
+      people[left] <= delta) {
+      left++;
+    }
+  }
+  return boats
+}
+
+
+
+
+
+// Count Subarrays Where Max Element Appears at Least K Times
+// https://leetcode.com/problems/count-subarrays-where-max-element-appears-at-least-k-times/description/
+console.log(countSubarrays([1, 3, 2, 3, 3], 2), 6)
+console.log(countSubarrays([1, 3, 2, 3, 3, 1], 2), 10)
+console.log(countSubarrays([1, 3, 2, 3, 1], 2), 4)
+console.log(countSubarrays([1, 3, 2, 3, 1, 1], 2), 6)
+console.log(countSubarrays([1, 3, 2, 3, 1, 1, 3], 2), 10)
+console.log(countSubarrays([1, 4, 2, 1], 3), 0)
+console.log(countSubarrays([37, 20, 38, 66, 34, 38, 9, 41, 1, 14, 25, 63, 8, 12, 66, 66, 60, 12, 35, 27, 16, 38, 12, 66, 38, 36, 59, 54, 66, 54, 66, 48, 59, 66, 34, 11, 50, 66, 42, 51, 53, 66, 31, 24, 66, 44, 66, 1, 66, 66, 29, 54], 5), 594)
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} k
+ * @return {number}
+ */
+var countSubarrays = function (numbers, k) {
+  let left = 0;
+  let maxNumberCount = 0;
+  const maxNumber = Math.max(...numbers);
+  let counter = 0;
+
+  for (const number of numbers) {
+    if (number === maxNumber) {
+      maxNumberCount++;
+    }
+    while (maxNumberCount > k) {
+      if (numbers[left] === maxNumber) {
+        maxNumberCount--;
+        left++;
+      }
+    }
+    while (numbers[left] != maxNumber) {
+      left++;
+    }
+
+    if (maxNumberCount === k) {
+      counter += left + 1;
+    }
+  }
+  return counter
+}
+
+
+
+
+
+// 132 Pattern
+// https://leetcode.com/problems/132-pattern/description/
+console.log(find132pattern([3, 1, 4, 2]), true)
+console.log(find132pattern([1, 2, 3, 4]), false)
+console.log(find132pattern([-1, 3, 2, 0]), true)
+console.log(find132pattern([3, 5, 0, 3, 4]), true)
+console.log(find132pattern([1, 0, 1, -4, -3]), false)
+console.log(find132pattern([-2, 1, 2, -2, 1, 2]), true)
+
+
+/**
+ * O(n), O(1)
+ * sliding window
+ * @param {number[]} numbers
+ * @return {boolean}
+ */
+var find132pattern = function (numbers) {
+  const stack = [];
+  let minLeft = numbers[0];
+
+  for (const number of numbers) {
+    while (stack.length > 0 &&
+      number >= stack[stack.length - 1][0]
+    ) stack.pop()
+
+    if (
+      stack.length > 0 &&
+      number < stack[stack.length - 1][0] &&
+      number > stack[stack.length - 1][1]
+    ) return true
+
+    stack.push([number, minLeft]);
+    minLeft = Math.min(minLeft, number);
+  }
+  return false
+}
+
+
+
+
+
+// Design Browser History
+// https://leetcode.com/problems/design-browser-history/description/
+
+
+class ListNode {
+  constructor(val = '', next = null, prev = null) {
+    this.val = val;
+    this.next = next;
+    this.prev = prev;
+  }
+}
+
+/**
+ * @param {string} homepage
+ */
+var BrowserHistory = function (homepage) {
+  this.home = new ListNode(homepage);
+  this.node = this.home;
+};
+
+/** 
+ * @param {string} url
+ * @return {void}
+ */
+BrowserHistory.prototype.visit = function (url) {
+  this.node.next = new ListNode(url, null, this.node);
+  this.node = this.node.next;
+};
+
+/** 
+ * @param {number} steps
+ * @return {string}
+ */
+BrowserHistory.prototype.back = function (steps) {
+  while (
+    steps &&
+    this.node.prev
+  ) {
+    this.node = this.node.prev;
+    steps--;
+  }
+  return this.node.val
+};
+
+/** 
+ * @param {number} steps
+ * @return {string}
+ */
+BrowserHistory.prototype.forward = function (steps) {
+  while (
+    steps &&
+    this.node.next
+  ) {
+    this.node = this.node.next;
+    steps--;
+  }
+  return this.node.val
+};
+
+/** 
+ * Your BrowserHistory object will be instantiated and called as such:
+ * var obj = new BrowserHistory(homepage)
+ * obj.visit(url)
+ * var param_2 = obj.back(steps)
+ * var param_3 = obj.forward(steps)
+ */
+
+
+const browserHistory = new BrowserHistory("leetcode.com")
+browserHistory.visit("google.com")  // You are in "leetcode.com". Visit "google.com"
+browserHistory.visit("facebook.com")  // You are in "google.com". Visit "facebook.com"
+browserHistory.visit("youtube.com")  // You are in "facebook.com". Visit "youtube.com"
+console.log(browserHistory.back(1))  // You are in "youtube.com", move back to "facebook.com" return "facebook.com"
+console.log(browserHistory.back(1))  // You are in "facebook.com", move back to "google.com" return "google.com"
+console.log(browserHistory.forward(1))  // You are in "google.com", move forward to "facebook.com" return "facebook.com"
+browserHistory.visit("linkedin.com")  // You are in "facebook.com". Visit "linkedin.com"
+console.log(browserHistory.forward(2))  // You are in "linkedin.com", you cannot move forward any steps.
+console.log(browserHistory.back(2))  // You are in "linkedin.com", move back two steps to "facebook.com" then to "google.com". return "google.com"
+console.log(browserHistory.back(7))  // You are in "google.com", you can move back only one step to "leetcode.com". return "leetcode.com"
+
+
+
+
+
+// Evaluate Boolean Binary Tree
+// https://leetcode.com/problems/evaluate-boolean-binary-tree/description/
+console.log(evaluateTree(buildTreeFromList([2, 1, 3, null, null, 0, 1])), true)
+console.log(evaluateTree(buildTreeFromList([0])), false)
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var evaluateTree = function (root) {
+  if (
+    !root ||
+    !root.val)
+    return false
+  else if (root.val === 1)
+    return true
+  else if (root.val === 2)
+    return (
+      evaluateTree(root.left) ||
+      evaluateTree(root.right))
+  else
+    return (
+      evaluateTree(root.left) &&
+      evaluateTree(root.right))
+}
+
+
+
+
+
+// K Closest Points to Origin
+// https://leetcode.com/problems/k-closest-points-to-origin/description/
+console.log(kClosest([[1, 3], [-2, 2]], 1), [[-2, 2]])
+console.log(kClosest([[3, 3], [5, -1], [-2, 4]], 2), [[3, 3], [-2, 4]])
+
+
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+
+/**
+ * O(nlogn), O(n)
+ * heap
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
+ */
+var kClosest = function (points, k) {
+  const minHeap = new MinPriorityQueue();  // (point, distance(as a priortiy))
+  const kPoints = Array(k).fill(0);
+
+  for (const point of points) {
+    const distance = Math.sqrt(point[0]**2 + point[1]**2);
+    minHeap.enqueue(point, distance)
+  }
+
+  for (let index = 0; index < k; index++) {
+    kPoints[index] = minHeap.dequeue();
+    // kPoints[index] = minHeap.dequeue().element;
+  }
+  
+  return kPoints
+}
+
+
+
+
+
+// Matchsticks to Square
+// https://leetcode.com/problems/matchsticks-to-square/description/
+console.log(makesquare([1, 1, 2, 2, 2]), true)
+console.log(makesquare([3, 3, 3, 3, 4]), false)
+console.log(makesquare([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3]), true)
+console.log(makesquare([7215807, 6967211, 5551998, 6632092, 2802439, 821366, 2465584, 9415257, 8663937, 3976802, 2850841, 803069, 2294462, 8242205, 9922998]), false)
+
+
+/**
+ * O(4^n), O(n)
+ * backtracking
+ * @param {number[]} matchsticks
+ * @return {boolean}
+ */
+var makesquare = function (matchsticks) {
+  if (matchsticks.reduce((total, current) => total + current) % 4)
+    return false
+
+  matchsticks.sort((a, b) => b - a);
+  const sideLength = matchsticks.reduce((total, current) => total + current) / 4;
+  const currentSideLength = new Array(4).fill(0);
+
+  function dfs(index) {
+    if (index === matchsticks.length) return true
+
+    for (let side = 0; side < 4; side++) {
+      if (currentSideLength[side] + matchsticks[index] <= sideLength) {
+        currentSideLength[side] += matchsticks[index]
+        if (dfs(index + 1)) return true
+        currentSideLength[side] -= matchsticks[index]
+      }
+    }
+    return false
+  }
+
+  return dfs(0)
+}
+
+
+
+
+
+// Extra Characters in a String
+// https://leetcode.com/problems/extra-characters-in-a-string/description/
+console.log(minExtraChar("leetcode", ["leet", "code", "leetcode"]), 0)
+console.log(minExtraChar("leetscode", ["leet", "code", "leetcode"]), 1)
+console.log(minExtraChar("sayhelloworld", ["hello", "world"]), 3)
+
+
+/**
+ * O(n3), O(n)
+ * dp, bottom-up, optimal
+ * @param {string} text
+ * @param {string[]} dictionary
+ * @return {number}
+ */
+var minExtraChar = function (text, dictionary) {
+  const cache = Array(text.length + 1).fill(0);
+  const words = new Set(dictionary);
+  const wordLengths = new Set(dictionary.map(word => word.length))
+
+  for (let index = text.length - 1; index >= 0; index--) {
+    cache[index] = cache[index + 1] + 1;
+
+    for (const wordLength of wordLengths) {
+      if (
+        index + wordLength <= text.length &&
+        words.has(text.slice(index, index + wordLength))
+      ) {
+        cache[index] = Math.min(cache[index], cache[index + wordLength]);
+      }
+    }
+  }
+
+  return cache[0]
+}
+
+
+class TrieNode {
+  constructor() {
+    this.letters = new Map();
+    this.isWord = false;
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode()
+  }
+
+  insert(word) {
+    let node = this.root;
+
+    for (const letter of word) {
+      if (!node.letters.has(letter))
+        node.letters.set(letter, new TrieNode());
+
+      node = node.letters.get(letter);
+    }
+    node.isWord = true;
+  }
+
+  search(word) {
+    let node = this.root;
+
+    for (const letter of word) {
+      if (!node.letters.has(letter))
+        return false
+
+      node = node.letters.get(letter);
+    }
+    return node.isWord
+  }
+}
+
+/**
+ * O(n3), O(n2)
+ * dp, bottom-up, trie
+ * @param {string} text
+ * @param {string[]} dictionary
+ * @return {number}
+ */
+var minExtraChar = function (text, dictionary) {
+  const trie = new Trie();
+  for (const word of dictionary) {
+    trie.insert(word);
+  }
+
+  const cache = Array(text.length + 1).fill(0);
+  const words = new Set(dictionary);
+  const wordLengths = new Set(dictionary.map(word => word.length))
+
+  for (let index = text.length - 1; index >= 0; index--) {
+    cache[index] = cache[index + 1] + 1;
+
+    for (const wordLength of wordLengths) {
+      if (
+        index + wordLength <= text.length &&
+        trie.search(text.slice(index, index + wordLength))
+      ) {
+        cache[index] = Math.min(cache[index], cache[index + wordLength]);
+      }
+    }
+  }
+
+  return cache[0]
+}
+
+
+
+
+
+// Delete and Earn
+// https://leetcode.com/problems/delete-and-earn/description/
+console.log(deleteAndEarn([3, 4, 2]), 6)
+console.log(deleteAndEarn([2, 2, 3, 3, 3, 4]), 9)
+console.log(deleteAndEarn([8, 10, 4, 9, 1, 3, 5, 9, 4, 10]), 37)
+
+
+/**
+ * O(n), O(n)
+ * dp, bottom-up
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var deleteAndEarn = function (numbers) {
+  numbers = numbers.sort((a, b) => a - b);
+  const numberSet = new Set(numbers);
+  const numbers2 = Array.from(numberSet)
+  const cache = Array(numbers).fill(0);
+  const counter = new Map();
+
+  for (const number of numbers) {
+    counter.set(number, (counter.get(number) || 0) + 1);
+  }
+
+  for (let index = 0; index < numbers2.length; index++) {
+    const number = numbers2[index];
+    const value = number * counter.get(number);
+
+    if (index === 0) {
+      cache[index] = value;
+    }
+    else if (index === 1) {
+      if (number === numbers2[index - 1] + 1)
+        cache[index] = Math.max(value, cache[index - 1]);
+      else
+        cache[index] = value + cache[index - 1]
+    }
+    else {
+      if (number === numbers2[index - 1] + 1)
+        cache[index] = Math.max(value + cache[index - 2], cache[index - 1]);
+      else
+        cache[index] = value + cache[index - 1]
+    }
+  }
+
+  return cache[numberSet.size - 1]
+}
+
+
+
+
+
+//Paint House
+//https://leetcode.com/problems/paint-house/
+//https://leetcode.ca/all/256.html
+console.log(minCost([[17, 2, 17], [16, 16, 5], [14, 3, 19]]), 10)
+console.log(minCost([[1, 2, 3], [1, 4, 6]]), 3)
+
+
+/**
+ * O(n), O(1)
+ * dp, bottom-up
+ * @param {number[][]} houses
+ * @return {number}
+ */
+var minCost = (houses) => {
+  let cache = houses[0];
+
+  for (let index = 1; index < houses.length; index ++) {
+    cache = [
+      houses[index][0] + Math.min(cache[1], cache[2]),
+      houses[index][1] + Math.min(cache[2], cache[0]),
+      houses[index][2] + Math.min(cache[0], cache[1])
+    ]
+  }
+
+  return Math.min(...cache)
+}
+
+
+
+
+
+// Destination City
+// https://leetcode.com/problems/destination-city/description/
+console.log(destCity([['London', 'New York'], ['New York', 'Lima'], ['Lima', 'Sao Paulo']]), 'Sao Paulo')
+console.log(destCity([['B', 'C'], ['D', 'B'], ['C', 'A']]), 'A')
+console.log(destCity([['A', 'Z']]), 'Z')
+
+
+/**
+ * O(n), O(n)
+ * hash set
+ * @param {string[][]} paths
+ * @return {string}
+ */
+var destCity = function (paths) {
+  const citiesA = new Set(paths.map(([a, _]) => a));
+  const citiesB = new Set(paths.map(([_, b]) => b));
+
+  for (const city of citiesB)
+    if (!citiesA.has(city))
+      return city
+}
+
+
+
+
+
+// Maximum Product Difference Between Two Pairs
+// https://leetcode.com/problems/maximum-product-difference-between-two-pairs/description/
+console.log(maxProductDifference([5, 6, 2, 7, 4]), 34)
+console.log(maxProductDifference([4, 2, 5, 9, 7, 4, 8]), 64)
+
+
+/**
+ * O(n), O(1)
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var maxProductDifference = function (numbers) {
+  let min1 = Math.max(...numbers);
+  let min2 = Math.max(...numbers);
+  let max1 = 0;
+  let max2 = 0;
+
+  for (const number of numbers) {
+    if (number < min1)
+      [min1, min2] = [number, min1];
+    else if (number < min2)
+      min2 = number;
+
+    if (number > max1)
+      [max1, max2] = [number, max1];
+    else if (number > max2)
+      max2 = number;
+  }
+
+  return max1 * max2 - min1 * min2
+}
+
+
+
+
+
+// K-th Symbol in Grammar
+// https://leetcode.com/problems/k-th-symbol-in-grammar/description/
+console.log(kthGrammar(1, 1), 0)
+console.log(kthGrammar(2, 1), 0)
+console.log(kthGrammar(2, 2), 1)
+console.log(kthGrammar(30, 434991989), 0)
+
+
+/**
+ * O(n), O(1)
+ * two pointers, binary search
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+var kthGrammar = function (n, k) {
+  let left = 1;
+  let right = 2 ** (n - 1);
+  let value = 0;
+
+  while (left < right) {
+    const middle = (left + right) / 2 | 0;
+
+    if (k <= middle)
+      right = middle;
+    else {
+      left = middle + 1;
+      value = value === 0 ? 1 : 0;
+    }
+  }
+
+  return value
+}
+
+
+
+
+
+// Subarrays with K Different Integers
+// https://leetcode.com/problems/subarrays-with-k-different-integers/description/
+console.log(subarraysWithKDistinct([1, 2, 1, 2, 3], 2), 7)
+console.log(subarraysWithKDistinct([1, 2, 1, 3, 4], 3), 3)
+
+
+/**
+ * O(n), O(n)
+ * sliding window
+ * @param {number[]} numbers
+ * @param {number} k
+ * @return {number}
+ */
+var subarraysWithKDistinct = function (numbers, k) {
+  const counter = new Map();
+  let left = 0;
+  let middle = 0;
+  let subarrayCount = 0;
+
+  for (const number of numbers) {
+    counter.set(number, (counter.get(number) || 0) + 1);
+
+    while (counter.size > k) {
+      counter.set(numbers[middle], counter.get(numbers[middle]) - 1);
+
+      if (counter.get(numbers[middle]) === 0)
+        counter.delete(numbers[middle]);
+
+      middle++;
+      left = middle;
+    }
+
+    while (counter.get(numbers[middle]) > 1) {
+      counter.set(numbers[middle], counter.get(numbers[middle]) - 1);
+      middle++;
+    }
+
+    if (counter.size === k) {
+      subarrayCount += (middle - left + 1);
+    }
+  }
+
+  return subarrayCount
+}
+
+
+
+
+
+// Search in Rotated Sorted Array II
+// https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
+console.log(search([2, 5, 6, 0, 0, 1, 2], 0), true)
+console.log(search([2, 5, 6, 0, 0, 1, 2], 3), false)
+console.log(search([1], 0), false)
+console.log(search([0, 1], 0), true)
+console.log(search([1, 0], 0), true)
+console.log(search([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], 2), true)
+console.log(search([1, 0, 1, 1, 1], 0), true)
+
+
+/**
+ * O(n), O(1)
+ * binary search
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {boolean}
+ */
+var search = function (numbers, target) {
+  let left = 0;
+  let right = numbers.length - 1;
+
+  while (left <= right) {
+    const middle = (left + right) / 2 | 0;
+
+    if (numbers[middle] === target)
+      return true
+    else if (numbers[middle] < numbers[right]) {
+      if (
+        numbers[middle] < target &&
+        target <= numbers[right]
+      ) left = middle + 1;
+      else
+        right = middle - 1;
+    }
+    else if (numbers[middle] > numbers[right]) {
+      if (
+        numbers[left] <= target &&
+        target < numbers[middle]
+      ) right = middle - 1;
+      else
+        left = middle + 1;
+    }
+    else
+      right--
+  }
+
+  return false
+}
+
+
+
+
+
+// Construct String from Binary Tree
+// https://leetcode.com/problems/construct-string-from-binary-tree/description/
+console.log(tree2str(buildTreeFromList([1, 2, 3, 4])), '1(2(4))(3)')
+console.log(tree2str(buildTreeFromList([1, 2, 3, null, 4])), '1(2()(4))(3)')
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var tree2str = function (root) {
+  const text = [];
+
+  var dfs = function (node) {
+    if (!node) return
+
+    text.push(node.val);
+
+    if (node.left || node.right)
+      text.push('(');
+    dfs(node.left);
+    if (node.left || node.right)
+      text.push(')');
+
+    if (node.right)
+      text.push('(');
+    dfs(node.right);
+    if (node.right)
+      text.push(')');
+  }
+
+  dfs(root);
+  return text.join('')
+}
+
+
+
+
+
+// Kth Largest Element in an Array
+// https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+console.log(findKthLargest([3, 2, 1, 5, 6, 4], 2), 5)
+console.log(findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4), 4)
+
+
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+
+/**
+ * O(nlogk), O(k)
+ * heap
+ * @param {number[]} numbers
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function (numbers, k) {
+  const minHeap = new MinPriorityQueue();
+
+  for (const number of numbers) {
+    minHeap.enqueue(number)
+    
+    if (minHeap.size() > k)
+      minHeap.dequeue()
+      // minHeap.dequeue().element
+
+  }
+  return minHeap.dequeue()
+  // return minHeap.dequeue().element
+}
+
+
+
+
+
+// Splitting a String Into Descending Consecutive Values
+// https://leetcode.com/problems/splitting-a-string-into-descending-consecutive-values/description/
+console.log(splitString('1'), false)
+console.log(splitString('21'), true)
+console.log(splitString('1234'), false)
+console.log(splitString('050043'), true)
+console.log(splitString('9080701'), false)
+console.log(splitString('0090089'), true)
+console.log(splitString('001'), false)
+
+
+/**
+ * O(n^2*2^n), O(n)
+ * backtracking
+ * @param {string} text
+ * @return {boolean}
+ */
+var splitString = function (text) {
+  var dfs = function (index, prev, parts) {
+    if (index === text.length)
+      return parts > 1
+
+    for (let right = index; right < text.length; right++) {
+      const value = Number(text.slice(index, right + 1));
+      
+      if (
+        prev === Infinity ||
+        value === prev - 1
+      ) {
+        if (dfs(right + 1, value, parts + 1))
+          return true
+      }
+    }
+
+    return false
+  }
+
+  return dfs(0, Infinity, 0)
+}
+
+
+
+
+
+// Island Perimeter
+// https://leetcode.com/problems/island-perimeter/description/
+console.log(islandPerimeter([[0, 1, 0, 0], [1, 1, 1, 0], [0, 1, 0, 0], [1, 1, 0, 0]]), 16)
+console.log(islandPerimeter([[1]]), 4)
+console.log(islandPerimeter([[1, 0]]), 4)
+
+
+/**
+ * O(n2), O(n2)
+ * matrix, dfs
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var islandPerimeter = function (grid) {
+  const rows = grid.length;
+  const cols = grid[0].length;
+  const tabu = new Set();
+
+  var dfs = function (row, col) {
+    if (tabu.has(`${row},${col}`))
+      return 0
+    else if (
+      row < 0 ||
+      row === rows ||
+      col < 0 ||
+      col === cols ||
+      grid[row][col] === 0
+    ) return 1
+  
+    tabu.add(`${row},${col}`);
+
+    return (
+      dfs(row - 1, col) +
+      dfs(row + 1, col) +
+      dfs(row, col - 1) +
+      dfs(row, col + 1)
+    )
+  }
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row][col] === 1)
+        return dfs(row, col)
+    }
+  }
+}
+
+
+
+
+
+// Verifying an Alien Dictionary
+// https://leetcode.com/problems/verifying-an-alien-dictionary/description/
+console.log(isAlienSorted(['hello', 'leetcode'], 'hlabcdefgijkmnopqrstuvwxyz'), true)
+console.log(isAlienSorted(['word', 'world', 'row'], 'worldabcefghijkmnpqstuvxyz'), false)
+console.log(isAlienSorted(['apple', 'app'], 'abcdefghijklmnopqrstuvwxyz'), false)
+console.log(isAlienSorted(["ubg", "kwh"], "qcipyamwvdjtesbghlorufnkzx"), true)
+
+
+/**
+ * O(n2), O(1)
+ * hash map
+ * @param {string[]} words
+ * @param {string} order
+ * @return {boolean}
+ */
+var isAlienSorted = function (words, order) {
+  const orderOfLetters = new Map(order.split('').map((letter, index) => [letter, index]));
+
+  for (let wordIndex = 0; wordIndex < words.length - 1; wordIndex++) {
+    for (let letterIndex = 0; letterIndex < words[wordIndex].length; letterIndex++) {
+      if (letterIndex === words[wordIndex + 1].length)
+        return false
+
+      const leftLetter = words[wordIndex][letterIndex];
+      const rightLetter = words[wordIndex + 1][letterIndex];
+
+      if (orderOfLetters.get(leftLetter) < orderOfLetters.get(rightLetter))
+        break
+      else if (orderOfLetters.get(leftLetter) > orderOfLetters.get(rightLetter))
+        return false
+    }
+  }
+  return true
+}
+
+
+
+
+
+// Find the Town Judge
+// https://leetcode.com/problems/find-the-town-judge/description/
+console.log(findJudge(2, [[1, 2]]), 2)
+console.log(findJudge(3, [[1, 3], [2, 3]]), 3)
+console.log(findJudge(3, [[1, 3], [2, 3], [3, 1]]), -1)
+console.log(findJudge(3, [[1, 2], [2, 3]]), -1)
+console.log(findJudge(1, []), 1)
+
+
+/**
+ * O(n), O(n)
+ * hash map
+ * @param {number} n
+ * @param {number[][]} trust
+ * @return {number}
+ */
+var findJudge = function (n, trustList) {
+  if (trustList.length === 0 &&
+    n === 1)
+    return 1
+
+  const aToB = new Map();
+  const bToA = new Map();
+
+  for (const [a, b] of trustList) {
+    if (!aToB.has(a))
+      aToB.set(a, []);
+    if (!bToA.has(b))
+      bToA.set(b, []);
+
+    aToB.get(a, []).push(b);
+    bToA.get(b, []).push(a);
+  }
+
+  for (const [key, val] of bToA.entries()) {
+    if (
+      val.length === n - 1 &&
+      !aToB.has(key))
+      return key
+  }
+
+  return -1
+}
+
+
+
+
+
+// Perfect Squares
+// https://leetcode.com/problems/perfect-squares/description/
+console.log(numSquares(13), 2)
+console.log(numSquares(12), 3)
+console.log(numSquares(9), 1)
+console.log(numSquares(1), 1)
+
+
+/**
+ * O(nsqrtn), O(n)
+ * dp, botom-up, tabulation with list
+ * @param {number} n
+ * @return {number}
+ */
+var numSquares = function (n) {
+  const cache = Array(n + 1).fill(n + 1);
+  const primarySquared = Array.from({length: Number(n ** 0.5) + 1}, (_, index) => index ** 2);
+
+  for (let index = 1; index <= n; index++) {
+    if (primarySquared.includes(index)) {
+      cache[index] = 1;
+    }
+    else {
+      for (const number of primarySquared) {
+        if (index - number > 0) {
+          cache[index] = Math.min(cache[index], cache[index - number] + 1)
+        }
+      }
+    }
+  }
+
+  return cache[cache.length - 1]
+};
+
+
+
+
+
+// Buy Two Chocolates
+// https://leetcode.com/problems/buy-two-chocolates/description/
+console.log(buyChoco([1, 2, 2], 3), 0)
+console.log(buyChoco([3, 2, 3], 3), 3)
+
+
+/**
+ * O(n), O(1)
+ * @param {number[]} prices
+ * @param {number} money
+ * @return {number}
+ */
+var buyChoco = function (prices, money) {
+  let min1 = Infinity;
+  let min2 = Infinity;
+
+  for (const price of prices) {
+    if (price < min1)
+      [min1, min2] = [price, min1];
+    else if (price < min2)
+      min2 = price;
+  }
+
+  if (min1 + min2 <= money)
+    return money - (min1 + min2)
+  else
+    return money
+};
+
+
+
+
+
+// Lemonade Change
+// https://leetcode.com/problems/lemonade-change/description/
+console.log(lemonadeChange([5, 5, 5, 10, 20]), true)
+console.log(lemonadeChange([5, 5, 10, 10, 20]), false)
+console.log(lemonadeChange([5, 5, 10, 20, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 5, 5, 20, 5, 20, 5]), true)
+console.log(lemonadeChange([5, 5, 5, 10, 5, 5, 10, 20, 20, 20]), false)
+
+
+/**
+ * O(n), O(1)
+ * @param {number[]} bills
+ * @return {boolean}
+ */
+var lemonadeChange = function (bills) {
+  let fives = 0;
+  let tens = 0;
+
+  for (const bill of bills) {
+    if (bill === 5)
+      fives += 1;
+    else if (bill === 10) {
+      fives -= 1;
+      tens += 1;
+    }
+    else if (tens > 0) {
+      tens -= 1;
+      fives -= 1;
+    }
+    else
+      fives -= 3;
+
+    if (
+      fives < 0 ||
+      tens < 0
+    ) return false
+  }
+
+  return true
+};
+
+
+
+
+
+// Maximum Odd Binary Number
+// https://leetcode.com/problems/maximum-odd-binary-number/description/
+console.log(maximumOddBinaryNumber("010"), "001")
+console.log(maximumOddBinaryNumber("0101"), "1001")
+console.log(maximumOddBinaryNumber("1"), "1")
+
+
+/**
+ * O(n), O(n)
+ * @param {string} text
+ * @return {string}
+ */
+var maximumOddBinaryNumber = function (text) {
+  let ones = 0;
+  let zeros = 0;
+
+  for (const digit of text) {
+    if (digit === '1')
+      ones++;
+    else
+      zeros++;
+  }
+
+  return '1'.repeat(ones - 1) + '0'.repeat(zeros) + '1'
+};
+
+
+
+
+
+// Maximum Nesting Depth of the Parentheses
+// https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/description/
+console.log(maxDepth('(1+(2*3)+((8)/4))+1'), 3)
+console.log(maxDepth('(1)+((2))+(((3)))'), 3)
+console.log(maxDepth('()(())((()()))'), 3)
+
+
+/**
+ * O(n), O(1)
+ * @param {string} text
+ * @return {number}
+ */
+var maxDepth = function (text) {
+  let detph = 0;
+  let opening = 0;
+
+  for (const char of text) {
+    if (char === '(')
+      opening += 1;
+    else if (char === ')')
+      opening -= 1;
+
+    detph = Math.max(detph, opening)
+  }
+  return detph
+};
+
+
+
+
+
+// Maximum Score After Splitting a String
+// https://leetcode.com/problems/maximum-score-after-splitting-a-string/description/
+console.log(maxScore("011101"), 5)
+console.log(maxScore("00111"), 5)
+console.log(maxScore("1111"), 3)
+console.log(maxScore("00"), 1)
+
+
+/**
+ * O(n), O(n)
+ * @param {string} s
+ * @return {number}
+ */
+var maxScore = function (text) {
+  let rightScore = text.split('').filter((digit) => digit === '1').length;
+  let leftScore = 0;
+  let maxScore = 0;
+
+  for (let index = 0; index < text.length - 1; index++) {
+    const digit = text[index];
+
+    if (digit === '0')
+      leftScore++;
+    else if (digit === '1')
+      rightScore--;
+
+    maxScore = Math.max(maxScore, leftScore + rightScore);
+  }
+
+  return maxScore
+}
+
+
+
+
+
+// Path Crossing
+// https://leetcode.com/problems/path-crossing/description/
+console.log(isPathCrossing('NES'), false)
+console.log(isPathCrossing('NESWW'), true)
+console.log(isPathCrossing('WNSN'), true)
+
+
+/**
+ * O(n), O(n)
+ * @param {string} path
+ * @return {boolean}
+ */
+var isPathCrossing = function (path) {
+  const stops = new Set([`0,0`]);
+  let prev = [0, 0];
+
+  const directions = new Map([
+    ['E', [1, 0]],
+    ['W', [-1, 0]],
+    ['N', [0, 1]],
+    ['S', [0, -1]]
+  ])
+
+  for (const direction of path) {
+    const next_x = prev[0] + directions.get(direction)[0];
+    const next_y = prev[1] + directions.get(direction)[1];
+
+    if (stops.has(`${next_x},${next_y}`))
+      return true
+    else {
+      stops.add(`${next_x},${next_y}`)
+      prev = [next_x, next_y]
+    }
+  }
+
+  return false
+};
+
+
+
+
+
+// Minimum Time to Make Rope Colorful
+// https://leetcode.com/problems/minimum-time-to-make-rope-colorful/description/
+console.log(minCost("abaac", [1, 2, 3, 4, 5]), 3)
+console.log(minCost("abc", [1, 2, 3]), 0)
+console.log(minCost("aabaa", [1, 2, 3, 4, 1]), 2)
+
+
+/**
+ * O(n), O(1)
+ * @param {string} colors
+ * @param {number[]} neededTime
+ * @return {number}
+ */
+var minCost = function (colors, neededTime) {
+  let left = 0;
+  let minTime = 0;
+
+  for (let right = 1; right < colors.length; right++) {
+    if (colors[left] === colors[right]) {
+      if (neededTime[left] < neededTime[right]) {
+        minTime += neededTime[left];
+        left = right;
+      } else {
+        minTime += neededTime[right];
+      }
+    } else {
+      left = right;
+    }
+  }
+  return minTime
+};
+
+
+
+
+
+// Find First and Last Position of Element in Sorted Array
+// https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/
+console.log(searchRange([5, 7, 7, 8, 8, 10], 8), [3, 4])
+console.log(searchRange([5, 7, 7, 8, 8, 10], 6), [-1, -1])
+console.log(searchRange([], 0), [-1, -1])
+console.log(searchRange([1], 1), [0, 0])
+
+
+/**
+ * O(logn), O(1)
+ * binary search
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var searchRange = function (numbers, target) {
+  let left = 0;
+  let right = numbers.length - 1;
+  let hasTarget = false;
+  let first_position = -1;
+  let last_position = -1;
+
+  while (left <= right) {
+    const middle = (left + right) / 2 | 0;
+    const middle_number = numbers[middle];
+
+    if (target > middle_number) {
+      left = middle + 1;
+    }
+    else {
+      if (target === middle_number) {
+        hasTarget = true;
+      }
+      first_position = middle;
+      right = middle - 1;
+    }
+  }
+
+  if (!hasTarget)
+    return [-1, -1]
+
+  left = 0;
+  right = numbers.length - 1;
+
+  while (left <= right) {
+    const middle = (left + right) / 2 | 0;
+    const middle_number = numbers[middle];
+
+    if (target < middle_number) {
+      right = middle - 1;
+    }
+    else {
+      last_position = middle;
+      left = middle + 1;
+    }
+  }
+
+  return [first_position, last_position]
+};
+
+
+
+
+
+// Find the Duplicate Number
+// https://leetcode.com/problems/find-the-duplicate-number/description/
+console.log(findDuplicate([1, 3, 4, 2, 2]), 2)
+console.log(findDuplicate([3, 1, 3, 4, 2]), 3)
+console.log(findDuplicate([3, 3, 3, 3, 3]), 3)
+console.log(findDuplicate([2, 5, 9, 6, 9, 3, 8, 9, 7, 1]), 9)
+
+
+/**
+ * O(n), O(1)
+ * linked list
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var findDuplicate = function (numbers) {
+  let slow = 0;
+  let fast = 0;
+
+  while (true) {
+    slow = numbers[slow];
+    fast = numbers[numbers[fast]];
+    if (slow === fast) break
+  }
+
+  let slow2 = 0;
+  while (true) {
+    slow = numbers[slow];
+    slow2 = numbers[slow2];
+    if (slow === slow2)
+      return slow
+  }
+};
+
+
+
+
+
+// Insert into a Binary Search Tree
+// https://leetcode.com/problems/insert-into-a-binary-search-tree/description/
+console.log(levelOrderTraversal(insertIntoBST(buildTreeFromList([4, 2, 7, 1, 3]), 5)), [4, 2, 7, 1, 3, 5])
+console.log(levelOrderTraversal(insertIntoBST(buildTreeFromList([40, 20, 60, 10, 30, 50, 70]), 25)), [40, 20, 60, 10, 30, 50, 70, null, null, 25])
+console.log(levelOrderTraversal(insertIntoBST(buildTreeFromList([4, 2, 7, 1, 3, null, null, null, null, null, null]), 5)), [4, 2, 7, 1, 3, 5])
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n), O(n)
+ * binary tree, recursion
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var insertIntoBST = function (root, val) {
+  if (!root)
+    return new TreeNode(val)
+  if (val < root.val)
+    root.left = insertIntoBST(root.left, val)
+  else
+    root.right = insertIntoBST(root.right, val)
+  
+  return root
+};
+
+
+
+
+
+// Task Scheduler
+// https://leetcode.com/problems/task-scheduler/description/
+console.log(leastInterval(['A', 'A', 'A', 'B', 'B', 'B'], 2), 8)  // A -> B -> idle -> A -> B -> idle -> A -> B
+console.log(leastInterval(['A', 'C', 'A', 'B', 'D', 'B'], 1), 6)  // A -> B -> C -> D -> A -> B
+console.log(leastInterval(['A', 'A', 'A', 'B', 'B', 'B'], 3), 10)  // A -> B -> idle -> idle -> A -> B -> idle -> idle -> A -> B
+
+
+import { MaxPriorityQueue } from '@datastructures-js/priority-queue';
+import { Queue } from '@datastructures-js/queue';
+
+/**
+ * O(n), O(n)
+ * heap, deque
+ * O(nlogn) -> log26 => const ->  O(n)
+ * @param {character[]} tasks
+ * @param {number} idle
+ * @return {number}
+ */
+var leastInterval = function (tasks, idle) {
+  const counter = new Map();
+
+  for (const task of tasks) {
+    counter.set(task, (counter.get(task) || 0) + 1)
+  }
+
+  consttaskList = MaxPriorityQueue.fromArray(Array.from(counter.values()));
+
+  // const taskList = new MaxPriorityQueue();
+  // for (const value of counter.values()) {
+  //   taskList.enqueue(value)
+  // }
+
+  let time = 0;
+  const queue = new Queue();
+
+  while (taskList.size() > 0 || queue.size() > 0) {
+    time++;
+
+    if (taskList.size() > 0) {
+      const task = taskList.dequeue() - 1;
+      // const task = taskList.dequeue().element - 1;
+      if (task)
+        queue.push([time + idle, task]);
+    }
+
+    if (queue.size() > 0 && queue.front()[0] === time) {
+      const [_, task] = queue.pop();
+      taskList.push(task);
+      // taskList.enqueue(task);
+    }
+
+  }
+  return time
+};
+
+
+
+
+
+// Design Twitter
+// https://leetcode.com/problems/design-twitter/description/
+
+
+
+// Find Unique Binary String
+// https://leetcode.com/problems/find-unique-binary-string/description/
+console.log(findDifferentBinaryString(['0']), '1')
+console.log(findDifferentBinaryString(['01', '10']), '11')
+console.log(findDifferentBinaryString(['00', '01']), '11')
+console.log(findDifferentBinaryString(['111', '011', '001']), '101')
+
+
+/**
+ * O(2^n), O(n)
+ * backtracking
+ * @param {string[]} numbers
+ * @return {string}
+ */
+var findDifferentBinaryString = function (numbers) {
+  const permutation = [];
+  const numberSet = new Set(numbers);
+
+  var dfs = (index) => {
+    if (index == numbers.length) {
+      if (numberSet.has(permutation.join('')))
+        return
+      else
+        return permutation.join('')
+    }
+
+    for (const digit of ['0', '1']) {
+      permutation.push(digit);
+      let unique = dfs(index + 1);
+      if (unique)
+        return unique
+      permutation.pop();
+    }
+  }
+
+  return dfs(0)
+};
+
+
+
+
+
+// Check if There is a Valid Partition For The Array
+// https://leetcode.com/problems/check-if-there-is-a-valid-partition-for-the-array/description/
+console.log(validPartition([4, 4, 4, 5, 6]), true)
+console.log(validPartition([1, 1, 1, 2]), false)
+console.log(validPartition([993335, 993336, 993337, 993338, 993339, 993340, 993341]), false)
+
+
+/**
+ * O(n), O(1)
+ * dp, bottom-up, iteration
+ * @param {number[]} numbers
+ * @return {boolean}
+ */
+var validPartition = function (numbers) {
+  const cache = [false, true, true];
+  
+  for (let index = numbers.length - 2; index >= 0; index--) {
+    let c0 = false;
+    
+    if (numbers[index] === numbers[index + 1]
+    ) {
+      c0 = cache[1];
+    }
+    if (
+      (numbers[index] === numbers[index + 1] &&
+        numbers[index + 1] === numbers[index + 2]) ||
+      (numbers[index] === numbers[index + 1] - 1 &&
+        numbers[index + 1] === numbers[index + 2] - 1)
+    ) {
+      c0 = c0 || cache[2];
+    }
+    cache[2] = cache[1];
+    cache[1] = cache[0];
+    cache[0] = c0;
+  }
+
+  return cache[0]
+};
+
+
+/**
+ * O(n), O(n)
+ * dp, bottom-up, iteration
+ * @param {number[]} numbers
+ * @return {boolean}
+ */
+var validPartition = function (numbers) {
+  const cache = Array(numbers.length + 1).fill(false);
+  cache[numbers.length] = true;
+
+  for (let index = numbers.length - 2; index >= 0; index--) {
+    if (numbers[index] === numbers[index + 1]
+    ) {
+      cache[index] = cache[index + 2];
+    }
+    if (
+      (numbers[index] === numbers[index + 1] &&
+        numbers[index + 1] === numbers[index + 2]) ||
+      (numbers[index] === numbers[index + 1] - 1 &&
+        numbers[index + 1] === numbers[index + 2] - 1)
+    ) {
+      cache[index] = cache[index] || cache[index + 3];
+    }
+  }
+
+  return cache[0]
+};
+
+
+/**
+ * O(n), O(n)
+ * dp, top-down with memoization
+ * @param {number[]} numbers
+ * @return {boolean}
+ */
+var validPartition = function (numbers) {
+  const memo = new Map();
+
+  var dfs = (index) => {
+    if (index === numbers.length)
+      return true
+    else if (memo.has(index))
+      return memo.get(index)
+
+    let isPartitioned = false
+    if (
+      index < numbers.length - 1 &&
+      numbers[index] === numbers[index + 1]
+    ) {
+      isPartitioned = dfs(index + 2)
+    }
+
+    if (index < numbers.length - 2)
+      if (
+        (numbers[index] === numbers[index + 1] &&
+          numbers[index + 1] === numbers[index + 2]) ||
+        ((numbers[index] + 1 === numbers[index + 1] && 
+          numbers[index + 1] + 1 === numbers[index + 2]))
+      ) {
+        isPartitioned = isPartitioned || dfs(index + 3)
+      }
+      
+    memo.set(index, isPartitioned)
+    return isPartitioned
+  }
+
+  return dfs(0)
+};
+
+
+/**
+ * O(2^n), O(n)
+ * brute force, recursion, tle
+ * @param {number[]} numbers
+ * @return {boolean}
+ */
+var validPartition = function (numbers) {
+  var dfs = (index) => {
+    if (index === numbers.length)
+      return true
+
+    if (
+      index < numbers.length - 1 &&
+      numbers[index] === numbers[index + 1]
+    ) {
+      if (dfs(index + 2))
+        return true
+    }
+
+    if (index < numbers.length - 2)
+      if (
+        (numbers[index] === numbers[index + 1] &&
+          numbers[index + 1] === numbers[index + 2]) ||
+        (numbers[index] === numbers[index + 1] - 1 &&
+          numbers[index + 1] === numbers[index + 2] - 1)
+      ) {
+        if (dfs(index + 3))
+          return true
+      }
+    
+    return false
+  }
+
+  return dfs(0)
+};
+
+
+
+
+// Maximum Subarray Min-Product
+// https://leetcode.com/problems/maximum-subarray-min-product/description/
+
+
+// Integer Break
+// https://leetcode.com/problems/integer-break/description/
+console.log(integerBreak(2), 1)  // Explanation: 2 = 1 + 1, 1 × 1 = 1.
+console.log(integerBreak(3), 2)  // Explanation: 3 = 1 + 2, 1 × 2 = 2.
+console.log(integerBreak(4), 4)  // Explanation: 4 = 2 + 2, 2 × 2 = 4.
+console.log(integerBreak(5), 6)  // Explanation: 5 = 2 + 3, 2 × 3 = 6.
+console.log(integerBreak(6), 9)  // Explanation: 6 = 3 + 3, 3 × 3 = 9.
+console.log(integerBreak(7), 12)  // Explanation: 7 = 3 + 4, 3 × 4 = 12; 2 = 2 + 2 + 3, 2 x 2 x 3 = 12.
+console.log(integerBreak(10), 36)  // Explanation: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36.
+console.log(integerBreak(24), 6561)  // tle testcase
+
+
+/**
+ * O(n2), O(n)
+ * dp, top-down with memoization as hash map
+ * @param {number} n
+ * @return {number}
+ */
+var integerBreak = function (n) {
+  const memo = new Map([[0, 1]]);  // {number: product}  maximum product for current number
+
+  var dfs = (index, isFirst) => {
+    if (memo.has(index)) {
+      return memo.get(index)
+    }
+
+    let maxNumber = 0;
+
+    for (let number = 1; number < index + Boolean(!isFirst); number++) {
+      maxNumber = Math.max(maxNumber, (number * dfs(index - number, false)))
+    }
+
+    memo.set(index, maxNumber);
+    return memo.get(index)
+  
+  }
+  return dfs(n, true)
+};
+
+
+
+
+
+
+// Minimum Number of Operations to Make Array Continuous
+// https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/description/
+console.log(minOperations([4, 2, 5, 3]), 0)
+console.log(minOperations([1, 2, 3, 5, 6]), 1)
+console.log(minOperations([1, 10, 100, 1000]), 3)
+
+
+/**
+ * O(n2), O(n)
+ * tle
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var minOperations = function(numbers) {
+  const numberSet = new Set(numbers);
+  let difference;
+  minDifference = numbers.length;
+
+  for (const number of numberSet) {
+    difference = 0;
+
+    for (let index = 1; index < numbers.length; index++)
+    {
+      difference += !numberSet.has(number + index);
+    }
+
+    minDifference = Math.min(minDifference, difference);
+  }
+
+  return minDifference
+}
+
+
+
+
+
+// Maximum Frequency Stack
+// https://leetcode.com/problems/maximum-frequency-stack/description/
+/** 
+ * Your FreqStack object will be instantiated and called as such:
+ * var obj = new FreqStack()
+ * obj.push(val)
+ * var param_2 = obj.pop()
+ */
+
+
+/** 
+ * O(n), O(n)
+ * 2 hash maps
+ */
+var FreqStack = function () {
+  this.counter = new Map();
+  this.bucket = new Map();
+  this.maxFrequency = 0;
+};
+
+/** 
+ * @param {number} val
+ * @return {void}
+ */
+FreqStack.prototype.push = function (val) {
+  this.counter.set(val, (this.counter.get(val) || 0) + 1);
+  this.maxFrequency = Math.max(this.maxFrequency, this.counter.get(val));
+  
+  if (!this.bucket.has(this.counter.get(val))) {
+    this.bucket.set(this.counter.get(val), []);
+  }
+  this.bucket.get(this.counter.get(val)).push(val);
+};
+
+/**
+ * @return {number}
+ */
+FreqStack.prototype.pop = function () {
+  const val = this.bucket.get(this.maxFrequency).pop();
+  this.counter.set(val, this.counter.get(val) - 1);
+  
+  if (this.bucket.get(this.maxFrequency).length === 0)
+    this.maxFrequency--;
+  
+  return val
+};
+
+
+// const freqStack = new FreqStack()
+// console.log(freqStack.push(5))  // The stack is [5]
+// console.log(freqStack.push(7))  // The stack is [5,7]
+// console.log(freqStack.push(5))  // The stack is [5,7,5]
+// console.log(freqStack.push(7))  // The stack is [5,7,5,7]
+// console.log(freqStack.push(4))  // The stack is [5,7,5,7,4]
+// console.log(freqStack.push(5))  // The stack is [5,7,5,7,4,5]
+// console.log(freqStack.pop())  // return 5, as 5 is the most frequent. The stack becomes [5,7,5,7,4].
+// console.log(freqStack.pop())  // return 7, as 5 and 7 is the most frequent, but 7 is closest to the top. The stack becomes [5,7,5,4].
+// console.log(freqStack.pop())  // return 5, as 5 is the most frequent. The stack becomes [5,7,4].
+// console.log(freqStack.pop())  // return 4, as 4, 5 and 7 is the most frequent, but 4 is closest to the top. The stack becomes [5,7].
+
+
+/** 
+ * @param {string[]} operations
+ * @param {number[][]} args
+ * @return {number[][]}
+ */
+var test_input = function (operations, args) {
+  const result = []
+  const freqStack = new FreqStack();
+
+  for (let index = 0; index < operations.length; index++) {
+    const operation = operations[index];
+    const argument = args[index];
+
+    if (operation === 'FreqStack') {
+      result.push(null);
+    } else if (operation === 'push') {
+      freqStack.push(...argument);
+      result.push(null);
+    } else if (operation === 'pop') {
+      result.push(freqStack.pop());
+    } 
+  }
+
+  return result
+}
+
+// Example Input
+const operations = ['FreqStack', 'push', 'push', 'push', 'push', 'push', 'push', 'pop', 'pop', 'pop', 'pop']
+const args = [[], [5], [7], [5], [7], [4], [5], [], [], [], []]
+const expected_output = [null, null, null, null, null, null, null, 5, 7, 5, 4]
+
+// const operations = ['FreqStack','push','push','push','push','pop', 'pop', 'push', 'push', 'push', 'pop', 'pop', 'pop']
+// const args = [[],[1], [1], [1], [2], [], [], [2], [2], [1], [], [], []]
+// const expected_output = [null, null, null, null, null, 1, 1, null, null, null, 2, 1, 2]
+
+// Run tests
+const test_output = test_input(operations, args)
+console.log(JSON.stringify(test_output) === JSON.stringify(expected_output))
+console.log(test_output)
+
+
+
+
+
+// Minimum Cost For Tickets
+// https://leetcode.com/problems/minimum-cost-for-tickets/description/
+console.log(mincostTickets([5], [2, 7, 15]), 2)
+console.log(mincostTickets([1, 4, 6, 7, 8, 20], [2, 7, 15]), 11)
+console.log(mincostTickets([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]), 17)
+console.log(mincostTickets([1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21,24,25,27,28,29,30,31,34,37,38,39,41,43,44,45,47,48,49,54,57,60,62,63,66,69,70,72,74,76,78,80,81,82,83,84,85,88,89,91,93,94,97,99], [9,38,134]), 423)
+
+
+/**
+ * O(n), O(n)
+ * dp, top-down with memoization as hash map
+ * @param {number[]} days
+ * @param {number[]} costs
+ * @return {number}
+ */
+var mincostTickets = function (days, costs) {
+  const memo = new Map();
+  const validities = [1, 7, 30];
+
+  var dfs = (dayIndex) => {
+    if (dayIndex >= days.length) {
+      return 0
+    } else if (memo.has(dayIndex)) {
+      return memo.get(dayIndex)
+    }
+
+    let minCost = Infinity;
+
+    for (let option = 0; option < costs.length; option++) {
+      const cost = costs[option];
+      const validity = validities[option];
+      let ticketIndex = 0;
+
+      while (
+        dayIndex + ticketIndex < days.length &&
+        days[dayIndex + ticketIndex] < days[dayIndex] + validity
+      ) {
+        ticketIndex++;
+      }
+
+      minCost = Math.min(minCost, cost + dfs(dayIndex + ticketIndex));
+    }
+
+    memo.set(dayIndex, minCost);
+    return minCost
+  }
+
+  return dfs(0)
+};
+
+
+
+
+
+// Number of Longest Increasing Subsequence
+// https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
+console.log(findNumberOfLIS([1, 3, 5, 4]), 2)  // [1, 3, 4] and [1, 3, 5]
+console.log(findNumberOfLIS([1, 3, 5, 4, 7]), 2)  // [1, 3, 4, 7] and [1, 3, 5, 7]
+console.log(findNumberOfLIS([2, 2, 2, 2, 2]), 5)  // [2] * 5
+console.log(findNumberOfLIS([1, 2, 4, 3, 5, 4, 7, 2]), 3)  // [1, 2, 3, 4, 7], [1, 2, 3, 5, 7], [1, 2, 4, 5, 7]
+console.log(findNumberOfLIS([1, 1, 1, 2, 2, 2, 3, 3, 3]), 27)
+
+
+/**
+ * O(n2), O(n)
+ * dp, bottom-up
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var findNumberOfLIS = function (numbers) {
+  const cache = Array.from({ length: numbers.length }, () => [1, 1]);
+
+  for (let right = 0; right < numbers.length; right++) {
+    for (let left = 0; left < right; left++) {
+      if (numbers[left] < numbers[right]) {
+        if (cache[left][0] + 1 > cache[right][0]) {
+          cache[right] = [cache[left][0] + 1, cache[left][1]]
+        } else if (cache[left][0] + 1 == cache[right][0]) {
+          cache[right] = [cache[right][0], cache[right][1] + cache[left][1]];
+        }
+      }
+    }
+  }
+
+  let maxLISLength = 0;
+  let maxFrequency = 0;
+  for (let [lis_length, frequency] of cache) {
+    if (lis_length > maxLISLength) {
+      maxLISLength = lis_length;
+      maxFrequency = frequency;
+    }
+    else if (lis_length == maxLISLength) {
+      maxFrequency += frequency;
+    }
+  }
+  return maxFrequency
+};
+
+
+
+
+
+// Uncrossed Lines
+// https://leetcode.com/problems/uncrossed-lines/description/
+console.log(maxUncrossedLines([1, 4, 2], [1, 2, 4]), 2)
+console.log(maxUncrossedLines([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]), 3)
+console.log(maxUncrossedLines([1, 3, 7, 1, 7, 5], [1, 9, 2, 5, 1]), 2)
+console.log(maxUncrossedLines([4, 1, 2, 5, 1, 5, 3, 4, 1, 5], [3, 1, 1, 3, 2, 5, 2, 4, 1, 3, 2, 2, 5, 5, 3, 5, 5, 1, 2, 1]), 7)
+console.log(maxUncrossedLines([5, 1, 2, 5, 1, 2, 2, 3, 1, 1, 1, 1, 1, 3, 1], [2, 5, 1, 3, 4, 5, 5, 2, 2, 4, 5, 2, 2, 3, 1, 4, 5, 3, 2, 4, 5, 2, 4, 4, 2, 2, 2, 1, 3, 1]), 11)
+
+
+/**
+ * O(n2), O(n2)
+ * dp, bottom-up
+ * reversed iteration
+ * @param {number[]} numbers_1
+ * @param {number[]} numbers_2
+ * @return {number}
+ */
+var maxUncrossedLines = function (numbers_1, numbers_2) {
+  const cache = Array.from({ length: numbers_1.length + 1 }, () => Array(numbers_2.length + 1).fill(0));
+
+  for (let index_1 = numbers_1.length - 1; index_1 >= 0; index_1--) {
+    for (let index_2 = numbers_2.length - 1; index_2 >= 0; index_2--) {
+      if (numbers_1[index_1] === numbers_2[index_2]) {
+        cache[index_1][index_2] = cache[index_1 + 1][index_2 + 1] + 1;
+      } else {
+        cache[index_1][index_2] =
+          Math.max(
+            cache[index_1 + 1][index_2],
+            cache[index_1][index_2 + 1]);
+      }
+    }
+  }
+
+  return cache[0][0]
+};
+
+
+/**
+ * O(n2), O(n2)
+ * dp, top-down with memoization as list
+ * @param {number[]} numbers_1
+ * @param {number[]} numbers_2
+ * @return {number}
+ */
+var maxUncrossedLines = function (numbers_1, numbers_2) {
+  const memo = Array.from({ length: numbers_1.length + 1 }, () => Array(numbers_2.length + 1).fill(-1));
+
+  var dfs = (index_1, index_2) => {
+    if (
+      index_1 === numbers_1.length ||
+      index_2 === numbers_2.length
+    ) {
+      return 0
+    } else if (memo[index_1][index_2] != -1) {
+      return memo[index_1][index_2]
+    }
+
+    if (numbers_1[index_1] == numbers_2[index_2]) {
+      memo[index_1][index_2] = 1 + dfs(index_1 + 1, index_2 + 1);
+    } else {
+      memo[index_1][index_2] = 
+      Math.max(
+        dfs(index_1 + 1, index_2),
+        dfs(index_1, index_2 + 1));
+    }
+
+    return memo[index_1][index_2]
+  }
+  return dfs(0, 0)
+};
+
+
+/**
+ * O(n2), O(n2)
+ * dp, top-down with memoization as hash map
+ * @param {number[]} numbers_1
+ * @param {number[]} numbers_2
+ * @return {number}
+ */
+var maxUncrossedLines = function (numbers_1, numbers_2) {
+  const memo = new Map();
+
+  var dfs = (index_1, index_2) => {
+    if (
+      index_1 === numbers_1.length ||
+      index_2 === numbers_2.length
+    ) {
+      return 0
+    } else if (memo.has(`${index_1},${index_2}`)) {
+      return memo.get(`${index_1},${index_2}`)
+    }
+
+    if (numbers_1[index_1] == numbers_2[index_2]) {
+      memo.set(`${index_1},${index_2}`, 1 + dfs(index_1 + 1, index_2 + 1));
+    } else {
+      memo.set(
+        `${index_1},${index_2}`,
+        Math.max(
+          dfs(index_1 + 1, index_2),
+          dfs(index_1, index_2 + 1)
+        )
+      );
+    }
+
+    return memo.get(`${index_1},${index_2}`)
+  }
+  return dfs(0, 0)
+};
+
+
+
+
+
+// Solving Questions With Brainpower
+// https://leetcode.com/problems/solving-questions-with-brainpower/description/
+console.log(mostPoints([[3, 2], [4, 3], [4, 4], [2, 5]]), 5)
+console.log(mostPoints([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]]), 7)
+console.log(mostPoints([[72, 5], [36, 5], [95, 5], [50, 1], [62, 1], [14, 3], [72, 5], [86, 2], [43, 3], [51, 3], [14, 1], [91, 5], [47, 4], [72, 4], [63, 5], [40, 3], [68, 1], [8, 3], [84, 5], [7, 5], [40, 1], [35, 3], [66, 2], [39, 5], [40, 1], [92, 3], [67, 5], [34, 3], [84, 4], [75, 5], [6, 1], [71, 3], [77, 3], [25, 3], [53, 3], [32, 3], [88, 5], [18, 2], [21, 3], [78, 2], [69, 5], [45, 4], [94, 2], [70, 1], [85, 2], [7, 2], [68, 4], [71, 4], [57, 2], [12, 5], [53, 5], [51, 3], [46, 1], [28, 3]]), 845)
+
+
+/**
+ * O(n), O(n)
+ * dp, bottom-up with tabulation as hash map
+ * @param {number[][]} questions
+ * @return {number}
+ */
+var mostPoints = function (questions) {
+  const cache = new Map();
+
+  for (let index = questions.length - 1; index > -1; index--) {
+    cache.set(index,
+      Math.max(
+        questions[index][0] + (cache.get(index + 1 + questions[index][1]) ?? 0),
+        cache.get(index + 1) ?? 0
+      ));
+  }
+
+  return cache.get(0)
+};
+
+
+
+
+
+// Count Ways To Build Good Strings
+// https://leetcode.com/problems/count-ways-to-build-good-strings/description/
+
+
+
+// Count Ways To Build Good Strings
+// https://leetcode.com/problems/count-ways-to-build-good-strings/description/
+console.log(countGoodStrings(1, 1, 1, 1), 2)
+console.log(countGoodStrings(1, 2, 1, 1), 6)
+console.log(countGoodStrings(2, 2, 1, 1), 4)
+console.log(countGoodStrings(1, 3, 1, 1), 14)
+console.log(countGoodStrings(3, 3, 1, 1), 8)
+console.log(countGoodStrings(2, 3, 1, 2), 5)
+console.log(countGoodStrings(200, 200, 10, 1), 764262396)  // tle
+
+
+/**
+ * O(n), O(n)
+ * dp, bottom-up
+ * @param {number} low
+ * @param {number} high
+ * @param {number} zero
+ * @param {number} one
+ * @return {number}
+ */
+var countGoodStrings = function (low, high, zero, one) {
+  const mod = 10 ** 9 + 7;
+  const cache = new Map([[0, 1]]);
+
+  for (let index = 1; index <= high; index++) {
+    const value = (
+      (cache.get(index - zero) ?? 0) + 
+      (cache.get(index - one) ?? 0)) % mod;
+    cache.set(index, value);
+  }
+
+  let counter = 0;
+  for (let index = low; index <= high; index++) {
+    counter += cache.get(index);
+  }
+
+  return counter % mod
+};
+
+
+
+
+
+// New 21 Game
+// https://leetcode.com/problems/new-21-game/description/
+
+

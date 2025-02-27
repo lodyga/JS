@@ -138,7 +138,9 @@ word.search(/\d/) // -1
 'a9b8'.search(/\d+/)  // 1
 word.match(/a/gi)  // [ 'A' ]
 word.match(/\w/)  // isalnum()
+/\w/.test(char)  // 
 word.match(/\d/)  // isdigit()
+/\d/.test(char)  // 
 word.match(/A/)  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
 word.match(/(A)/)[1]  // 'A'  // First capture group
 word.startsWith('A', 0)  // true
@@ -323,7 +325,7 @@ const fruits = ["Banana", "Orange", "Apple", "Mango"];
 console.log(fruits.splice(2, 1, "Lemon", "Kiwi"));   // adds new elements at (2) index and revmoves (1) from former shifted elements; [ 'Banana', 'Orange', 'Lemon', 'Kiwi', 'Mango' ]
 fruits.splice(0, 1);  // The first parameter (0) defines the position where new elements should be added (spliced in). The second parameter (1) defines how many elements should be removed. The rest of the parameters are omitted. No new elements will be added. The splice() method returns an array with the deleted items:
 fruits.toSpliced(0, 1);  // Similar to splpice but creates a new object
-fruits.slice()  // make a clone  # .copy() 
+fruits.slice()  // make a clone  # .copy()
 fruits.slice(1)  // [ 'Orange', 'Apple', 'Mango' ]
 fruits.slice(1, 3)  // [ 'Orange', 'Apple' ]
 
@@ -597,6 +599,8 @@ for (const [key, val] of fruits) console.log(val)  // list vals
 for (const [key, val] of fruits) console.log(key, val)  // list key, val pairs 
 
 
+
+
 /*
 Differences between JavaScript Objects and Maps:
 Object	                            Map
@@ -606,6 +610,41 @@ Keys must be Strings (or Symbols)	Keys can be any datatype
 Keys are not well ordered	        Keys are ordered by insertion
 Have default keys	                Do not have default keys
 */
+
+
+
+
+
+
+// Heap
+npm install --save @datastructures-js/heap
+import { Heap, MinHeap } from '@datastructures-js/heap';
+
+// Priority queue
+npm install --save @datastructures-js/priority-queue
+import { MaxPriorityQueue } from '@datastructures-js/priority-queue';
+const heap = new MaxPriorityQueue();
+heap.enqueue(task);
+heap.push(task);
+heap.dequeue();
+heap.dequeue().element
+heap.pop();
+heap.size();
+heap.front();  // peeks on the value with highest priority in the heap
+heap.root()
+heap.top()
+
+
+// Queue
+npm install --save @datastructures-js/queue
+import { Queue } from '@datastructures-js/queue';
+
+heap.front();  // peeks on the left most value
+queue.back();  // peeks on the right most value
+heap.pop();  // pops the left most value  heap.dequeue()
+const taskList = new MaxPriorityQueue();
+const taskList = MaxPriorityQueue.fromArray(Array.from(counter.values()));
+const taskList = MaxPriorityQueue.fromArray([...counter.values()]);
 
 
 
@@ -1219,5 +1258,9 @@ rectangle1.deleteHeight()
 
 console.log(rectangle1.height)
 console.log(rectangle1.width)
+
+
+
+
 
 

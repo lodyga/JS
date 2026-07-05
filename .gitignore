@@ -1,9 +1,11 @@
 *.swp
 __pycache__
 .DS_Store
-db.sqlite3
+node_modules
 *.pyc
 temp.js
 temp2.js
 temp.html
 .vscode
+ts.js
+ts.ts

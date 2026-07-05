@@ -550,38 +550,6 @@ function formatDuration(num) {
 
 
 
-
-
-
-
-
-
-
-
-
-// Directions Reduction
-var dir_reduc = (directions) => {
-  const oppos_direction = { "NORTH": "SOUTH", "SOUTH": "NORTH", "EAST": "WEST", "WEST": "EAST" };
-  const seen = [];
-
-  for (let direction of directions) {
-    if (oppos_direction[direction] === seen[seen.length - 1]) {
-      seen.pop();
-    } else {
-      seen.push(direction)
-    }
-  }
-  return seen
-}
-console.log(dir_reduc(['NORTH', 'SOUTH', 'SOUTH', 'EAST', 'WEST', 'NORTH', 'WEST']), ['WEST'])
-console.log(dir_reduc(['NORTH', 'EAST', 'WEST', 'SOUTH', 'WEST', 'WEST']), ['WEST', 'WEST'])
-console.log(dir_reduc(['NORTH', 'WEST', 'SOUTH', 'EAST']), ['NORTH', 'WEST', 'SOUTH', 'EAST'])
-console.log(dir_reduc([]), [])
-
-
-
-
-
 // Persistent Bugger.
 // https://www.codewars.com/kata/55bf01e5a717a0d57e0000ec
 console.log(persistence(39), 3)
@@ -4831,34 +4799,6 @@ var Ball = function (ballType = 'regular') {
 
 
 
-
-// Sum of Pairs
-// https://www.codewars.com/kata/54d81488b981293527000c8f
-console.log(sumPairs([10, 5, 2, 3, 7, 5], 10), [3, 7])
-console.log(sumPairs([1, 4, 8, 7, 3, 15], 8), [1, 7])
-console.log(sumPairs([1, -2, 3, 0, -6, 1], -6), [0, -6])
-console.log(sumPairs([1, 4, 8, 7, 3, 15], 8), [1, 7])
-console.log(sumPairs([1, -2, 3, 0, -6, 1], -6), [0, -6])
-console.log(sumPairs([20, -13, 40], -7), undefined)
-console.log(sumPairs([1, 2, 3, 4, 1, 0], 2), [1, 1])
-console.log(sumPairs([10, 5, 2, 3, 7, 5], 10), [3, 7])
-console.log(sumPairs([4, -2, 3, 3, 4], 8), [4, 4])
-console.log(sumPairs([0, 2, 0], 0), [0, 0])
-console.log(sumPairs([5, 9, 13, -3], 10), [13, -3])
-
-
-function sumPairs(numbers, target) {
-  const seen_numbers = new Set();
-
-  for (const number of numbers) {
-    const diff = target - number;
-
-    if (seen_numbers.has(diff)) return [diff, number]
-    else seen_numbers.add(number)
-  }
-
-  return undefined
-}
 
 
 

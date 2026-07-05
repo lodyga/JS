@@ -1,162 +1,112 @@
-// single line comment
-/* multi-line comment */
+// @ts-nocheck
+/* eslint-disable */
 
-variable = undefined;  // setting the value and the type to undefined
-variable = null;  // empty an object preserve type
-/*
-typeof undefined      // undefined
-typeof null           //  object
-
-null === undefined    // false
-null == undefined     // true
-*/
-
-// test if an object is empty.
-if (typeof myObj !== "undefined" && myObj !== null)
-
-  // typeof	Returns the type of a variable
-  // instanceof	Returns true if an object is an instance of an object type
-
-  /*
-  console.log("john".constructor) [Function: String]
-  console.log((3.14).constructor) [Function: Number]
-  console.log(false.constructor)  [Function: Boolean]
-  console.log(1234n.constructor)  [Function: BigInt]
-  console.log({}.constructor) [Function: Object]
-  console.log([].constructor) [Function: Array]
-  console.log(new Date().constructor) [Function: Date]
-  console.log(new Set().constructor)  [Function: Set]
-  console.log(new Map().constructor)  [Function: Map]
-  console.log(function () {}.constructor) [Function: Function]
-  */
+$ which node
+$ node --version
+$ node -v
+// -e tells Node.js:
+// execute this JavaScript code directly from the command line
+node -e "console.log(process.version)"
 
 
-
-  // Object Destructuring, unpacking
-
-  const person = {
-    firstName: "John",
-    lastName: "Doe",
-    age: 50
-  };
-let { firstName, lastName: name } = person;
-firstName  // 'John'
-name // 'Doe'
-
-const fruits = ["Bananas", "Oranges", "Apples", "Mangos"];
-let [fruit1, , fruit3] = fruits;
-console.log(fruit3)  // Apples
-let [fruit1, ...rest] = fruits;
-console.log(rest)  // [ 'Oranges', 'Apples', 'Mangos' ]
-
-
-
-
-
-// var declares a variable, older; Variables declared with the var always have Global Scope.
-// let declares a block variable
-// const declares a block constant
-
-let y, z, a;
-// You can also assign a value to the variable when you declare it:
-const x = 5;
-y = 6;
-z = x + y
-console.log(a)
-
-
-
-
-// Arithmetic Operators
-let x = 5, y
-y = x++
-console.log(y)
-
-
-
-
-  // String
-  `template
+// String
+`template
 multi-line
 string`
-let word = "ABC";
-word += "D"
-console.log(word)
-word.length  // 2
-word[0] // A
-word.at(-2) // A // supports negatives
-word.charAt(0) // A // return "" if not found
+`Joined ${word1}`  // string interpolation
+"ABCD".length
+"ABCD"[0] // A
+"ABCD".at(-1) // D // supports negatives, lookup
+"ABCD".charAt(0) // A // return "" if not found
 'a'.charCodeAt(0) // 97  // ord("a") => 97
 String.fromCharCode(97)  // 'a'  // chr(97) => "a"  // chr(65) => "A"
-word.slice(0, 4)  // ABCD  // slice
-word.slice(-2)  // CD  / takes last two elemnts
-word.slice(0, -2)  // AB  / drops two last elemnts
-word.slice(1, -2)  // B  / from first elemen and two last elemnts
-word.substring(0, 4)  // ABCD
-// split by character, 
-word.split('')  // split every char ['A', 'B', 'C']  // Python list(iter(word))
-word.split(',')  // split by ','
+"ABCD".slice(0, 4)  // ABCD  // slice
+"ABCD".slice(-2)  // CD  / takes last two elemnts
+"ABCD".slice(0, -2)  // AB  / drops two last elemnts
+"ABCD".slice(1, -2)  // B  / from first elemen and drop two last elemnts
+"ABCD".slice(2)  // CD  / starts from 2nd element
+"ABCD".substring(2)  // CD
+"ABCD".substring(0, 4)  // ABCD
+"ABCD".split('')  // split every char ['A', 'B', 'C']  // Python list(iter(word))
+"ABCD".split(',')  // split by ','
 '123'.split()  // [ '123' ]
 '123'.split('') // [ '1', '2', '3' ]
 '123'.split(',')  // [ '123' ]
 '123'.split(', ')  // [ '123' ]
-word.join('')  // joins wihout any separator
-word.join(',') // letters.join() by default joins with commas
-//
-word.toUpperCase()  // letter.upper()
-word.toLowerCase()  // letter.lower()
-letter === letter.toUpperCase() ? letter.toLowerCase() : letter.toUpperCase()  // isUpperCase() isLowerCase()
-'nsnsn'.split('').filter(letter => letter === 'n').length  // 3 .count()
-// removes whitespaces
-word.trim()  // strip()
+'abc'.toUpperCase()  // ABC  // letter.upper()
+'ABC'.toLowerCase()  // abc // letter.lower()
+'nsnsn'.split('').filter(letter => letter === 'n').length  // 3  // .count()
+word.trim()  // strip()  // removes whitespaces
 word.trimStart()  // lstrip()
 word.trimEnd()  // rstrip()
-// padding
-word.padStart(5, 'x')  // xABCD
-console.log('john\'s') // escape '
-  // convert, digit to string
-  (45).toString()  // 45
-console.log(String(45))  // 45
+'ABCD'.padStart(5, 'x')  // xABCD
+console.log('john\'s') // escape '  
+(45).toString()  // 45  // convert, digit to string
+String(45)  // 45
 number.toString(2)  // decinal to binary
-word.repeat(2)  // ABCDABCD  // *
-word.replace('a', 'b') // method replaces only the first match:
-word.replace(/a/ig, 'b') // insensitive, global
-'29'.replace(/\d/g, digit => digit < '5' ? '0' : '1')  // '01'
-'ATTGC'.dna.replace(/\w/g, letter => toComplement[letter])  // 'TAACG'
-s = s.replace(/[\W_]/ig, '').toLowerCase();  // delete all non-alnumeric including underscore  // re.sub()
-word.replaceAll('a', 'b') // method replaces all matchs:
-// index, find
-let word = 'ABC';
-word.indexOf('A', 0)  // 0
-word.lastIndexOf('A', 0)  // 0  // strats from the end
-'qwer'.split('').reverse().join('');  // rewq // string reverse through an array
-word.includes('A')  // true  // 'A' in word  // in
-word.search('A')  // 0  // index
-word.search(/\d/) // -1
+'a'.concat('b') // ab
+'ABC'.indexOf('B', 0)  // 1, 0: start position
+'ABC'.lastIndexOf('A', 0)  // 0  // strats from the end
+'ABC'.split('').reverse().join('');  // CBA // string reverse through an array
+'ABC'.includes('A')  // true  // 'A' in word  // in
 'a9b8'.match(/\d+/)  // for reqex // [ '9', index: 1, input: 'a9b8', groups: undefined ]
 'a90b8'.match(/\d+/g)  // [ '90', '8' ]
+'ABC'.match(/a/gi)  // [ 'A' ]
+'ABC'.match(/\W/) === null  // isalnum()
+'5'.match(/\d/)  // isdigit()
+/\w/.test('ABC')  // true
+/\d/.test('123')  // true
+'ABC'.match(/A/)  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
+'ABC'.match(/(A)/)[1]  // 'A'  // First capture group
+'ABC'.search('A')  // 0  // index
 'a9b8'.search(/\d+/)  // 1
-word.match(/a/gi)  // [ 'A' ]
-word.match(/\w/)  // isalnum()
-/\w/.test(char)  // 
-word.match(/\d/)  // isdigit()
-/\d/.test(char)  // 
-word.match(/A/)  // [ 'A', index: 0, input: 'ABC', groups: undefined ]
-word.match(/(A)/)[1]  // 'A'  // First capture group
-word.startsWith('A', 0)  // true
-// string interpolation
-let word1 = 'AB';
-let word2 = 'CD';
-`Joined ${word1} and ${word2}`
-console.log(Array.from("Hello"))  // [ 'H', 'e', 'l', 'l', 'o' ]
+'ABC'.search(/\d/) // -1
+'ABCD'.repeat(2)  // ABCDABCD  // *
+'ABCD'.replace('A', 'E')  // EBCD // method replaces only the first match:
+'ABCD'.replace(/a/ig, 'e')  // eBCD // insensitive, global
+'29'.replace(/\d/g, digit => digit < '5' ? '0' : '1')  // '01'
+'#1_A?'.replace(/[\W_]/ig, '').toLowerCase();  // 1a  // delete all non-alnumeric including underscore  // re.sub()
+'ABCD'.replaceAll('A', 'E') // method replaces all matchs:
+'ABC'.startsWith('A', 0)  // true
+Array.from('Hello')  // [ 'H', 'e', 'l', 'l', 'o' ]
+[...'Hello']  // [ 'H', 'e', 'l', 'l', 'o' ]  // spread, Python *
 typeof '1' === 'string'  // instanceof
-
 String(false)      // returns "false"
 String(true)       // returns "true"
 false.toString()   // returns "false"
 true.toString()    // returns "true"
 
+/**
+ * Adds a method to the `String` prototype to check if a string is entirely in lowercase.
+ * @return {boolean} Returns true if the string is in lowercase, otherwise false.
+ */
+String.prototype.isLowerCase = function () {
+  // Compare the string to its lowercase version.
+  return this === this.toLowerCase() ? true : false;
+}
 
+/**
+ * Removes adjacent pairs of letters that are the same character but with differing cases
+ * (e.g., 'aA' or 'Bb') from the input string, until no such pairs remain.
+ * @param {string} word The input string to be processed.
+ * @return {string} A new string with all problematic pairs removed.
+ */
+String.prototype.isUpperCase = function () {
+  // Compare the string to its uppercase version.
+  return this === this.toUpperCase() ? true : false;
+}
+
+/**
+ * Check if character is a alpha-numeric.
+ * @param {string} char
+ * @return {boolean}
+ */
+isAlnum(char) {
+   const isLower = (char >= 'a' && char <= 'z');
+   const isUpper = (char >= 'A' && char <= 'Z');
+   const isNumber = (char >= '0' && char <= '9');
+   return (isLower || isUpper || isNumber)
+};
 
 
 
@@ -165,50 +115,43 @@ true.toString()    // returns "true"
 
 // numbers
 // NaN Not a Number
+!isNaN('5')  // true  isnumeric() isdigit()
+!isNaN(5)  // true
 NaN || 5  // 5
 NaN ?? 5  // NaN
-isNaN(NaN)  // true
 isNaN(NaN)  // true
 isNaN(1 / 'a')  // true
 typeof 1 === 'number'  // instanceof
 typeof (NaN)  // number
 typeof (Infinity)  // number
-// hexadecimal to decimal
-0xFF  // 255
-let number = 255;
-// decimal to hex
-(255).toString(16);  // ff
-number.toString(16);  // ff
-// decimal to bin
-number.toString(2);  // 11111111
+0xFF  // 255  // hexadecimal to decimal
+(255).toString(16);  // ff  // decimal to hex
+(255).toString(2);  // 11111111  // decimal to bin
 // Greater than 9e15 ~= (2**53-1)
 let y = BigInt(1234567890123456789012345)
 let y = 1234567890123456789012345n
 Number.isInteger(2)  // true
-// round
-(1.234).toFixed(2);  // 1.23  // trailing zeros
+(1.234).toFixed(2);  // 1.23  // round
 (1.234).toPrecision(2);  // 1.2
-// convert to number
-Number(true)  // 1
-Number(false)  // 0
 +'10.2'  // 10.2 (number)
 Number('10.3')  // 10.3
-Number.parseInt('-10.3')  // -10  //
+Number.parseInt('-10.3')  // -10
 parseInt('-10.3')  // -10
-parseInt(binary, 2);  // binary to decimal
-
+parseInt(100, 2);  // 4  // binary to decimal
+(parseInt(a, 2) + parseInt(b, 2)).toString(2)  // binary (string) to decimal to binary (string)
 // convert to number
-Number("3.14")  // 3.14
+Number('3.14')  // 3.14
 Number(Math.PI)  // 3.141592653589793
-Number("    ")  // 0
-Number("")  // 0
+Number('    ')  // 0
+Number('')  // 0
 Number(false)  // 0
 Number(true)  // 1
-
 9 % 4  // 1  // mod
+// Do not use parseInt()
 13 / 4 | 0  // 3  == 13 // 4  // div()
-
-
+13 >> 1  // 13 / 2 | 0
+Math.floor()
+Math.trunc()
 
 
 
@@ -217,40 +160,45 @@ Number(true)  // 1
 
 
 // Array object
-bucket = Array.from({ length: nums.length + 1 }, () => []);
-board = Array.from({ length: n }, () => Array(n).fill('.'));  // n * n board filled with '.'
-bucket = new Array(nums.length + 1);
+Array(5).fill(0)  // [ 0, 0, 0, 0, 0 ]
+Array.from({ length: 5}, () => 0)  // [ 0, 0, 0, 0, 0 ]
+const parents = Array.from({ length: connections.length }, (_, index) => index);  // [0, 1, 2]
+board = Array.from({ length: n }, () => Array(n).fill('.'));  // n * n board filled with '.' matrix
 for (let i = 0; i < bucket.length; i++) {
   bucket[i] = [];
 }
 
 const letters = ['B', 'C'];
-const fruits = ["Banana", "Orange", "Apple", "Mango"];
-Array.isArray(letters)  // true
-letters instanceof Array  // true // type
+const fruits = ['Banana', 'Orange', 'Apple', 'Mango'];
+Array.isArray(['A', 'B'])  // true
+['A', 'B'] instanceof Array  // true // type
 
 letters.push('D')  // append the new value and returns the new array length
 letters.pop()  // pop the last value and returns it
 letters.shift()  // pop the first value and returns it
-nums = [5, 3, 2, 1, 4]  // remove, discard, delete
-nums.splice(3, 2, 'substitute') // [1, 4]; => nums = [5, 3, 2]
+arr.splice(index, 0, item); // will insert item into arr at the specified index (deleting 0 items first, that is, it's just an insert).
+numbers = [3, 4, 5, 6]  // pop, remove, discard, delete
+numbers.splice(2, 1) // === numebrs.pop(2); starting from index 2 remove 1 char, mutate numbers to [3, 4, 6], and output [5]
+numbers.splice(2, 0, 9)  // === numbers.insert(index, value) starting from index 2 revmove 0 chars and insert 9, mutate array, output deleted
 letters.unshift('A')  // append the new value at the beginning and returns the new array length
 delete fruits[0]  // removes value but leaves empy index
-letters[letters.length - 1] = 'D'
-letters  // [ 'B', 'C', 'D' ]
-letters[0]  // B
+fruits.length = 0;  // empty array, fruits.clear()
 letters[0] = 'A'
-const months = ["Januar", "Februar", "Mar", "April"];
-const myMonths = months.with(2, "March");  // creates new object  //don't use, slow
-const newPrefix = [...prefix, postfix[index]  // concat Arrays
-letters.at(0)
+const Array3 = [...Array1, ...Array2);
+res.push(...intervals.slice(idx,));  // extend()
+Array1.push(...Array2);  // extend()
+const Array3 = Array1.concat(Array2);  // extend()
+([[1, 2], [3, 4]]).flat() // [ 1, 2, 3, 4 ]
+letters.at(0)  // lookup
 letters.toString()  // B,C,D
 letters.join('')  // joins wihout any separator
 letters.join(',') // letters.join() by default joins with commas
 letters.join(' and ')  // B and C and D
 letters.length  // 3
+letters.length = 0  // clear Array
 letters.sort() // [ 'B', 'C', 'D' ]
 letters[letters.length - 1]  // 'D'
+[2, 3, 4].indexOf(4)  // 2
 fruits.indexOf("Apple")  // 2  //index
 fruits.lastIndexOf("Apple")  // 2 // Finds last occurrence
 fruits.includes("Apple")  // true  // 'Apple' in fuits  // in
@@ -260,10 +208,9 @@ fruits.toSorted()  // creates new sorted obj
 fruits.toReversed()  // creates new reversed obj
 [...'123']  // ['1', '2', '3']
 
-Math.max.apply(null, numbers)  // find max in array
 Math.max(...numbers)  // find max in array
+Math.max.apply(null, numbers)  // find max in array
 Math.max.apply(1, 2, 3)  // find max provided numbers
-Math.min.apply(null, numbers)  // find min in array
 Math.max(...window.values())  // find max in iterator
 Math.max(...Object.values(window))  // find max in iterator
 
@@ -282,14 +229,11 @@ console.log(isAppleIn)  // 2
 // keys
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 for (let f of fruits.keys()) {
-  console.log(f)
+  console.log(f)  // 0, 1, 2,  numbers
+///};
+for (let f of fruits {
+  console.log(f)  // 0, 1, 2,  string
 };
-/*
-0
-1
-2
-3
-*/
 console.log(Object.keys(fruits))  // [ '0', '1', '2', '3' ]
 
 // entries, items
@@ -299,7 +243,7 @@ for (let f of fruits.entries()) {
 };
 /*
 [ 0, 'Banana' ]
-[ 1, 'Orange' ]e
+[ 1, 'Orange' ]
 [ 2, 'Apple' ]
 [ 3, 'Mango' ]
 */
@@ -312,13 +256,14 @@ console.log(Object.entries(fruits))
     [ '3', 'Mango' ]
 ]*/
 
+// TypeError: Assignment to constant variable.
+[cache[0], cache[1]] = [currenCache, cache[1]]
+cache.forEach((value, index) => prevCache[index] = value);
+const bottomRow = [...currentRow];
 
+console.log(Object.getOwnPropertyNames(Array.prototype));  // get Array methods
 
-// join arrays
-const Array3 = [...permutation, nums[index]]
-const Array3 = Array1.concat(Array2);
-fruits.copyWithin(2, 0);
-([[1, 2], [3, 4]]).flat() // [ 1, 2, 3, 4 ]
+todo
 
 
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
@@ -326,6 +271,7 @@ console.log(fruits.splice(2, 1, "Lemon", "Kiwi"));   // adds new elements at (2)
 fruits.splice(0, 1);  // The first parameter (0) defines the position where new elements should be added (spliced in). The second parameter (1) defines how many elements should be removed. The rest of the parameters are omitted. No new elements will be added. The splice() method returns an array with the deleted items:
 fruits.toSpliced(0, 1);  // Similar to splpice but creates a new object
 fruits.slice()  // make a clone  # .copy()
+[...fruits]  // make a clone  # .copy()  
 fruits.slice(1)  // [ 'Orange', 'Apple', 'Mango' ]
 fruits.slice(1, 3)  // [ 'Orange', 'Apple' ]
 
@@ -351,19 +297,24 @@ fruits.forEach(fruit => console.log(fruit))
 
 
 // array compare
+numbers1.toString() === numbers2.toString();
+JSON.stringify(numbers1) === JSON.stringify(numbers1);
+
+
 // O(nlogn) 
-function comp(nums1, nums2) {
-  if (!nums1 || !nums2) return false
-  if (nums1.length != nums2.length) return false
+function comp(numbers1, numbers2) {
+  if (!numbers1 || !numbers2) return false
+  if (numbers1.length != numbers2.length) return false
 
-  nums1.sort()
-  nums2.sort()
+  numbers1.sort()
+  numbers2.sort()
 
-  return nums1.map(num => num**2).every((num, index) => num === nums2[index])
+  return numbers1.map(num => num**2).every((num, index) => num === numbers2[index])
 }
 
 // range
 // range(start, length)
+this.parents = Array.from({ length: N }, (_, index) => index);
 const range = (start, length) => 
   Array.from({ length: length }, (_, index) => (index) * start)
 // range(start, stop)
@@ -375,6 +326,17 @@ const range = (start, stop, step) =>
     (_, index) => start + (index * step))
 
 
+const fruits = ["Bananas", "Oranges", "Apples", "Mangos"];
+let [fruit1, , fruit3] = fruits;
+console.log(fruit3)  // Apples
+let [fruit1, ...rest] = fruits;
+console.log(rest)  // [ 'Oranges', 'Apples', 'Mangos' ]
+
+
+
+
+
+
 
 
 
@@ -382,19 +344,33 @@ const range = (start, stop, step) =>
 
 // Object
 // Create a JavaScript object
+
+//add a key, val
+// Using dot notation:
+obj.key3 = value3;
+// Using square bracket notation:
+obj[key3] = value3;
+
+
+for (const key of object) {} //  
+
+keys = {...keys1, ...keys2}  // concat objects
+
 const person = { firstName: "John", lastName: "Doe" };
 const dp = { [code.length]: 1 };
 
 // in
 'firstName' in person  // true
 !('firstName' in person)  // false
+grouped.hasOwnProperty(key)  // like in
 !person['firstName']  // false
 
 // keys()
+Object.keys({'a': 1, 'b': 2})  // [ 'a', 'b' ]
 const closing_brackest = Object.keys(oppos_brackets)
-console.log(closing_brackest)  // [ ')', ']' ]
+closing_brackest  // [ ')', ']' ]
 // values()
-const opening_brackest = Object.values(oppos_brackets)
+const opening_brackest = Object.values(oppos_brackets)  // get values from object
 console.log(opening_brackest)  // [ '(', '[' ]
 // like items() in Python; Object.entries(oppos_brackets))
 for (let [key, val] of Object.entries(oppos_brackets)) {
@@ -530,6 +506,24 @@ delete object.name
 delete object['name']
 
 
+// Object Destructuring, unpacking
+const numbers = [10, 20, 30];
+const [, second] = numbers; // Skip the first, take the second
+console.log(second); // Output: 20
+
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 50
+};
+let { firstName, lastName: name } = person;
+firstName  // 'John'
+name // 'Doe'
+
+buildLinkedList([5, 5])
+function buildLinkedList(numbers, { cyclePosition = null } = {})  // cyclePosition is null
+function buildLinkedList(numbers, { cyclePosition } = {})  // cyclePosition is undefined
+
 
 
 
@@ -544,35 +538,56 @@ letters.size  // 3
 letters.keys()  // [Set Iterator] { 'a', 'b', 'c' }
 letters.values()  // [Set Iterator] { 'a', 'b', 'c' }
 letters.entries()  // [Set Entries] { [ 'a', 'a' ], [ 'b', 'b' ], [ 'c', 'c' ] }
+letters.delete('c')
+[...letters].pop()  // pop()
 for (let elem of new Set([2, 3])) {  // 'in' gives no answer
   console.log(elem)
 }
 const equalSets = (x, y) => x.size == y.size && [...x].every(num => y.has(num))  // equal, same
+new Set([`${vertical},${horizontal}`]);
+new Set([...subset].map((element) => element + number));  // map Set
+subsetUpdate.forEach(value => subset.add(value));  // update set
+const merged = new Set([...set1, ...set2, ...set3])
+
+// union sets
+var merged = new Set([...set1, ...set2, ...set3])  // spread
+t.forEach(s.add, s);
+for (const prereq of direct_prereqs[course]) {
+  all_prereqs[course].add(prereq);
+}
+
+// intersection
+const s1 = new Set(numbers1);
+const s2 = new Set(numbers2);
+return [...s1].filter(value => s2.has(value))
 
 
 
 
 
 // Map
-fruits instanceof Map  // true  // type
-const fruits = new Map([
-  ["apples", 500],
-  ["bananas", 300],
-  ["oranges", 200],
+.set(key, val)
+.get(key)
+.has(key);
+.delete(key);
+.clear();
+.size;
+.keys()
+.values()
+.entries()  // items()
+
+adjs.get(manager).push(employee)
+m instanceof Map  // true  // type
+const = new Map([
+  [key1, val1],
+  [key2, val2]
 ])
 
-
-console.log(fruits.keys())  // [Map Iterator] { 'apples', 'bananas', 'oranges' }
-console.log(fruits.values())  // [Map Iterator] { 500, 300, 200 }
-console.log(fruits.entries())  // [Map Entries] {[ 'apples', 500 ], [ 'bananas', 300 ], [ 'oranges', 200 ]}
-
-fruits.set('oranges', 200)
-//_don't use fruits['apples']
-fruits.get('apples')  // 500
-fruits.has('apples');  // true
-fruits.delete("apples");
-fruits.clear();  // removes all elements
-fruits.size;  // 3
+for (let course = 0; course < courseCount; course++) {
+   prereqs.set(course, new Set());
+};
+const prereqs = new Map(Array.from({ length: courseCount }, (_, course) => [course, new Set()]));
+const prereqs = new Map([...Array(courseCount)].map((_, course) => [course, new Set()]));
 
 
 fruits.forEach((value, key) => {
@@ -582,71 +597,97 @@ fruits.forEach((value, key) => {
 for (const [key, value] of fruits) {
   console.log(key, value)
 }
-/*
-apples 500
-bananas 300
-oranges 200
 
-*/
-for (const item of fruits) console.log(item)  // list key, val pairs
-for (const key in fruits) console.log(key)  // ''
-for (const key of fruits.keys()) console.log(key)  // list keys
-for (const key in fruits.keys()) console.log(key)  // ''
-for (const val of fruits.values()) console.log(val)  // list values
-for (const val in fruits.values()) console.log(val)  // ''
-for (const [key, val] of fruits) console.log(key)  // list keys
-for (const [key, val] of fruits) console.log(val)  // list vals
-for (const [key, val] of fruits) console.log(key, val)  // list key, val pairs 
+for (const item of fruits)  // list key, val pairs
+for (const key of fruits.keys())  // list keys
+for (const val of fruits.values()) // list values
+for (const [key, val] of fruits)  // list key, val pairs 
 
-
-
+// int pair as a key
+const idx = `${idx1},${idx2}`;
+const idx = (BigInt(idx1) << 32n) | BigInt(idx2);
 
 /*
 Differences between JavaScript Objects and Maps:
 Object	                            Map
-Not directly iterable	            Directly iterable
+Not directly iterable	              Directly iterable
 Do not have a size property	        Have a size property
-Keys must be Strings (or Symbols)	Keys can be any datatype
-Keys are not well ordered	        Keys are ordered by insertion
-Have default keys	                Do not have default keys
+Keys must be Strings (or Symbols)	  Keys can be any datatype
+Keys are not well ordered	          Keys are ordered by insertion
+Have default keys	                  Do not have default keys
 */
 
 
 
 
+
+
+// Priority queue
+npm install --save @datastructures-js/priority-queue
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+const minHeap = new MinPriorityQueue();  // enqueue with priority eg. minHeap.enqueue("A", 5) or primitive values
+const minHeap = new MinPriorityQueue(x => x[0]);  // custom sort by [0] value; 
+const minHeap = new PriorityQueue((a, b) => a[0] - b[0]);  // custom sort by [0] value
+const enqueuedTasks = new PriorityQueue((a, b) => a[0] - b[0] || a[1] - b[1]);  // sort by 2 values
+const enqueuedTasks = new PriorityQueue((a, b) => (a[0] === b[0] ? a[1] - b[1] : a[0] - b[0]));  // sort by 2 values
+const minHeap = new PriorityQueue((a, b) => a.length === b.length ? a.localeCompare(b) : a.length - b.length);  // compare lexicographically
+const taskHeap = MaxPriorityQueue.fromArray([...taskFrequency.values()]);  // from array
+stones.forEach(stone => stoneHeap.enqueue(stone));
+heap.enqueue(number);  //heap.push()
+heap.dequeue();  // heap.pop()
+heap.size();
+heap.front();  // peeks on the (left most) value with highest priority in the heap
+heap.back();  // peeks on the right most value
+heap.isEmpty();
+heap.toArray();
+heap.clear();
 
 
 // Heap
 npm install --save @datastructures-js/heap
 import { Heap, MinHeap } from '@datastructures-js/heap';
 
-// Priority queue
-npm install --save @datastructures-js/priority-queue
-import { MaxPriorityQueue } from '@datastructures-js/priority-queue';
-const heap = new MaxPriorityQueue();
-heap.enqueue(task);
-heap.push(task);
-heap.dequeue();
-heap.dequeue().element
-heap.pop();
-heap.size();
-heap.front();  // peeks on the value with highest priority in the heap
-heap.root()
-heap.top()
+const maxHeap = new MaxHeap()  //
+const enqueuedTasks = new MinHeap(x => x[0])  // sort by [0] value
+const minHeap = new Heap((a, b) => a[0] - b[0]);  // custom sort by [0] value
+const enqueuedTasks = new Heap((a, b) => a[0] - b[0] === 0 ? a[1] - b[1] : a[0] - b[0]) // sort by 2 values
+const numberHeap = MinHeap.heapify(numbers)
+numberHeap.push(val);
+numberHeap.pop();
+numberHeap.top()  // numbersHeap.root()
+numberHeap.size()
+numberHeap.isEmpty();
 
 
 // Queue
 npm install --save @datastructures-js/queue
 import { Queue } from '@datastructures-js/queue';
 
-heap.front();  // peeks on the left most value
-queue.back();  // peeks on the right most value
-heap.pop();  // pops the left most value  heap.dequeue()
-const taskList = new MaxPriorityQueue();
-const taskList = MaxPriorityQueue.fromArray(Array.from(counter.values()));
-const taskList = MaxPriorityQueue.fromArray([...counter.values()]);
+const queue = new Queue([root]);
+queue.push()  // enqueue()
+queue.pop()  // dequeue()
+queue.front()  // peek
+queue.isEmpty()
+queue.size()
+queue.clone()
+queue.toArray()
+queue.clear()
 
 
+// Deque
+npm i @datastructures-js/deque
+import { Deque } from "@datastructures-js/deque";
+
+const deque = new Deque();
+const deque = Deque.fromArray([1, 2, 3]);
+deque.pushBack(3);
+deque.pushFront(1);
+deque.popFront();
+deque.popBack();
+deque.front();
+deque.back();
+deque.size()
+deque.isEmpty();
 
 
 
@@ -665,6 +706,8 @@ if (counts[num]) {
   counts[num] = 1
 }
 
+letter === letter.toUpperCase() ? letter.toLowerCase() : letter.toUpperCase()  // isUpperCase() isLowerCase()
+
 (counts[num]) ? counts[num]++ : counts[num] = 1;
 
 let age = 4
@@ -679,13 +722,16 @@ let text = 'missing';
 console.log(age ?? text)  // missing
 
 // compare || and ??
-(NaN ?? 0)  // NaN  # Nan is not null
-(NaN || 0)  // 0
+(NaN ?? 0)  // NaN  // ?? only falls back if the left side is null or undefined
+(NaN || 0)  // 0  // || falls back if the left side is falsy (like null, undefined, 0, '', false, NaN).
 
 // The Optional Chaining Operator (?.)
 const car = { type: "Fiat", model: "500", color: "white" };
 console.log(car?.name) // undefiend
 
+
+// Optional Chaining Operator
+nextCities.get(city)?.length > 0  // undefined
 
 
 
@@ -967,8 +1013,10 @@ const numbersAll = numbers.every(number => number > 10)  // false
 // any, some
 const numbers = [45, 4, 9, 16, 25];
 const numbersAny = numbers.some(number => number > 10)  // true
+let isPathRight = DIRECTIONS.some(([r, c]) => dfs(index + 1, row + r, col + c))
 
-
+if (grid.every(row => row.every(cell => cell === 0)))  // every cell is 0
+  return -1
 
 
 
@@ -986,26 +1034,12 @@ JSON.parse('{"name":"John", "age":30, "city":"New York"}')  // { name: 'John', a
 
 // function
 // function defining
-encode(words) { }
-encode = (words) => { }
-encode = function (words) { }
+function encode(words) { return }
+const encode = (words) => { return };
+const encode = (words) => ();
+const encode = function (words) { return };
 
 
-// function myFunction(a, b) {
-// (const) myFunction = function (a, b) {
-// (const) myFunction = (a, b) => {
-return a * b;
-}
-// myFunction = (a, b) => (a * b);
-console.log(myFunction(3, 4))
-
-
-
-
-// var dir_reduc = (directions) => {
-// var dir_reduc = function(directions) {
-// dir_reduc = function(directions) {
-// function dir_reduc(directions) {
 
 
 
@@ -1030,12 +1064,21 @@ console.log(hello4('World'))
 // In regular functions the this keyword represented the object that called the function, which could be the window, the document, a button or whatever.
 // With arrow functions the this keyword always represents the object that defined the arrow function [object Window].
 
-points.sort(function (x, y) { return (x - y) })
-points.sort((x, y) => { return (x - y) })
-points.sort((x, y) => (x - y))
+points.sort(function (a, b) { return (a - b) })
+points.sort((a, b) => { return (a - b) })
+points.sort((a, b) => (a - b))
+meetings.sort((a, b) => a[0] === b[0] ? a[1] - b[1] : a[0] - b[0]);
+meetings.sort((a, b) => a[0] - b[0] ?? a[1] - b[1]);  // same as above
+friendsOrder.sort((a, b) => times[b][0] - times[a][0]);  // sort by times array order
 
 
-// sort
+
+// sort()
+intervals.sort((a, b) => a.start - b.start);  // sort by object.start
+nums.sort();  // sort lexicographically
+nums.sort((a, b) => a.length === b.length ? b.localeCompare(a) : b.length - a.length);  // sort lexicographically
+tickets.sort((a, b) => a[0] === b[0] ? b[1].localeCompare(a[1]) : b[0].localeCompare(a[0]));
+
 const cars = [
   { type: "Volvo", year: 2016 },
   { type: "Saab", year: 2001 },
@@ -1186,6 +1229,9 @@ Math.pow(2, 5)  // 32
 Math.sqrt(64)  // 8
 Math.abs(-2)  // -2
 Math.min(1, 2, 3)  // 1
+Math.min(...[1, 2, 3])  // 1
+Math.min(...['a', 'b', 'c'])  // doesn't work. Try reduce.
+paths.reduce((prevPath, path) => prevPath < path ? prevPath : path);  // 'a'
 Math.max(1, 2, 3)  // 3
 Math.log(2)  // 0.69 base e
 Math.log2(8)  // 3
@@ -1198,10 +1244,10 @@ Math.log10(100)  // 2
 
 
 // reduce
-[1, 2, 100, 3].reduce((total, current) => total + current)  // 106  // sum (replacement)
-[1, 2, 100, 3].reduce((maxNumber, current) => maxNumber > current ? maxNumber : current)  // 100  // get max element
-
-
+[1, 2, 100, 3].reduce((sum, value) => sum + value, 0)  // 106  // sum(numbers)
+[1, 2, 100, 3].reduce((max, value) => max > value ? max : value)  // 100  // max(numbers)
+.split('').reduce((sum, number) => sum + Number(number), 0);
+.split('').filter((digit) => digit === '1').length;
 
 
 
@@ -1261,6 +1307,76 @@ console.log(rectangle1.width)
 
 
 
+
+
+
+variable = undefined;  // setting the value and the type to undefined
+variable = null;  // empty an object preserve type
+/*
+typeof undefined      // undefined
+typeof null           //  object
+
+null === undefined    // false
+null == undefined     // true
+*/
+
+// test if an object is empty.
+if (typeof myObj !== "undefined" && myObj !== null)
+
+// typeof	Returns the type of a variable
+// instanceof	Returns true if an object is an instance of an object type
+
+
+// iterator
+const lruKey = this.cache.keys().next().value;  // Map()
+
+
+
+
+
+
+
+// import module
+export file:
+  export function buildTree(nodeList) {}
+  or
+  function buildTree(nodeList) {}
+  export {buildTree}
+  
+import file:
+import { buildTree } from '../../../../JS/binary-tree.js';
+import { buildTree } from 'file:///home/ukasz/Documents/IT/JS/binary-tree.js';
+buildTree()
+or
+import * as TreeUtils from '../../../../JS/binary-tree.js';
+TreeUtils.buildTree()
+
+package.json in import dir or above:
+  package.json:
+  {
+    "type": "module"
+  }
+
+
+
+// Promise states: (Pending, Resolved, Rejected)
+const promise = new Promise(callback);
+
+promise
+   .then(() => console.log('Hello World!'))
+   .catch((err) => console.log(`Promise rejected: ${err}`))
+   .finally(() => console.log('Completed.'))
+
+function callback(resolve, reject) {
+   // setTimeout(() => resolve(), 500)
+   setTimeout((err) => reject('Error 404'), 500)
+}
+
+
+// Error
+const error = new Error("TLE")
+console.log(error.name);
+console.log(error.message);
 
 
 
